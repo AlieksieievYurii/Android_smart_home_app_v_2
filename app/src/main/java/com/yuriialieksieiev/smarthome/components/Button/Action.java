@@ -1,13 +1,16 @@
 package com.yuriialieksieiev.smarthome.components.Button;
 
+import com.yuriialieksieiev.smarthome.components.Device;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Action {
-    static final String ACTION_EXTRA_TYPE_PORT = "type_port";
-    static final String ACTION_EXTRA_PORT = "port";
-    static final String ACTION_EXTRA_PORT_STATUS = "port_status";
-    static final String ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
+    private static final String ACTION_EXTRA_DEVICE = "device";
+    private static final String ACTION_EXTRA_TYPE_PORT = "type_port";
+    private static final String ACTION_EXTRA_PORT = "port";
+    private static final String ACTION_EXTRA_PORT_STATUS = "port_status";
+    private static final String ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
 
     public enum TypePort {
         DIGITAL("digital"), ANALOG("analog");
@@ -51,20 +54,20 @@ public class Action {
     private int port;
     private PortStatus portStatus;
     private int portSignal;
+    private Device device;
 
-    public Action() {
-    }
-
-    public Action(int port, PortStatus portStatus) {
+    public Action(Device device, int port, PortStatus portStatus) {
+        this.device = device;
         this.typePort = TypePort.DIGITAL;
         this.port = port;
         this.portStatus = portStatus;
     }
 
-    public Action(int port, int portSignal) {
+    public Action(Device device,int port, int portSignal) {
         this.typePort = TypePort.ANALOG;
         this.port = port;
         this.portSignal = portSignal;
+        this.device = device;
     }
 
     public TypePort getTypePort() {
@@ -113,8 +116,24 @@ public class Action {
                 ", port=" + port +
                 ", portStatus=" + portStatus +
                 ", portSignal=" + portSignal +
+                ", device=" + device +
                 '}';
     }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(ACTION_EXTRA_DEVICE,device.getInJson());
+        jsonObject.put(ACTION_EXTRA_TYPE_PORT, typePort.inJson);
+        jsonObject.put(ACTION_EXTRA_PORT, port);
+
+        if (typePort == TypePort.ANALOG)
+            jsonObject.put(ACTION_EXTRA_SIGNAL_ON_PORT, portSignal);
+        else if(typePort == TypePort.DIGITAL)
+            jsonObject.put(ACTION_EXTRA_PORT_STATUS,portStatus.inJson);
+
+        return jsonObject;
+    }
+
 
     //----------------------------------------------------------------------
 
@@ -126,25 +145,13 @@ public class Action {
 
         if (typePort == TypePort.DIGITAL) {
             PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(ACTION_EXTRA_PORT_STATUS));
-            return new Action(port, portStatus);
+            return new Action(Device.getDeviceByName(jsonObject.getString(ACTION_EXTRA_DEVICE)),port, portStatus);
+
         } else if (typePort == TypePort.ANALOG) {
             int signalOnPort = jsonObject.getInt(ACTION_EXTRA_SIGNAL_ON_PORT);
-            return new Action(port, signalOnPort);
+            return new Action(Device.getDeviceByName(jsonObject.getString(ACTION_EXTRA_DEVICE)), port,signalOnPort);
         } else
             throw new JSONException("Can not convert " + jsonObject.toString() + " to Action object!");
-    }
-
-    JSONObject toJson() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(ACTION_EXTRA_TYPE_PORT, typePort.inJson);
-        jsonObject.put(ACTION_EXTRA_PORT, port);
-
-        if (typePort == TypePort.ANALOG)
-            jsonObject.put(ACTION_EXTRA_SIGNAL_ON_PORT, portSignal);
-        else if(typePort == TypePort.DIGITAL)
-            jsonObject.put(ACTION_EXTRA_PORT_STATUS,portStatus.inJson);
-
-        return jsonObject;
     }
 
 }

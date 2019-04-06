@@ -17,4 +17,8 @@ public enum Device
         else
             return null;
     }
+
+    public String getInJson() {
+        return inJson;
+    }
 }

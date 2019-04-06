@@ -14,11 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Device;
-import com.yuriialieksieiev.smarthome.components.JsonExtras;
-import com.yuriialieksieiev.smarthome.enums.Icons;
+import com.yuriialieksieiev.smarthome.utils.JsonManager;
+import com.yuriialieksieiev.smarthome.components.enums.Icons;
+
+import org.json.JSONException;
+
+import java.util.Objects;
 
 public class FragmentCreatorButton extends Fragment {
 
@@ -122,8 +125,14 @@ public class FragmentCreatorButton extends Fragment {
             {
                 port = edtPort.getText().toString();
 
-                if(checkAll());
-                    //addButton();
+                if(checkAll()) {
+                    try {
+                        JsonManager.addActionButton(getContext(),name,Integer.parseInt(port),icons,device);
+                        Objects.requireNonNull(getActivity()).finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
@@ -142,7 +151,7 @@ public class FragmentCreatorButton extends Fragment {
             return false;
         }
 
-        if(JsonExtras.isExist(Integer.parseInt(port),getContext()))
+        if(JsonManager.isExist(Integer.parseInt(port),getContext()))
         {
             Snackbar.make(root,"Port is already exist!",Snackbar.LENGTH_LONG).show();
             return false;

@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.enums;
+package com.yuriialieksieiev.smarthome.components.enums;
 
 
 import com.yuriialieksieiev.smarthome.R;

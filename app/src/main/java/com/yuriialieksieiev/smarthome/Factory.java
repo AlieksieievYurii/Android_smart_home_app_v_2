@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.yuriialieksieiev.smarthome.components.JsonExtras.JSON_EXTRA_TYPE;
+import static com.yuriialieksieiev.smarthome.utils.JsonManager.JSON_EXTRA_TYPE;
 
 public class Factory {
     public interface OnViewCreated {
@@ -39,6 +39,10 @@ public class Factory {
                 return SEEK_BAR;
             else
                 return null;
+        }
+
+        public String getInJson() {
+            return inJson;
         }
     }
 

@@ -13,6 +13,10 @@ import android.view.MenuItem;
 
 import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 import com.yuriialieksieiev.smarthome.framents.FragmentTasks;
+import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,10 +27,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //test();
         init();
 
         if(savedInstanceState == null)
             setDefaultFragment();
+    }
+
+    private void test()
+    {
+        String json = "[\n" +
+                "  {\n" +
+                "    \n" +
+                "    \"type\": \"button\",\n" +
+                "    \"icon\": \"lamp\",\n" +
+                "    \"name\": \"lamp_test\",\n" +
+                "    \"action\": {\n" +
+                "      \"device\":\"TCOD\",\n" +
+                "      \"type_port\": \"digital\",\n" +
+                "      \"port\":24,\n" +
+                "      \"port_status\":\"low\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \n" +
+                "    \"type\": \"button\",\n" +
+                "    \"icon\": \"computer\",\n" +
+                "    \"name\": \"comp\",\n" +
+                "    \"action\": {\n" +
+                "      \"device\":\"TCOD\",\n" +
+                "      \"type_port\": \"digital\",\n" +
+                "      \"port\":212,\n" +
+                "      \"port_status\":\"low\"\n" +
+                "    }\n" +
+                "  },{\n" +
+                "  \n" +
+                "  \"type\": \"seek_bar\",\n" +
+                "  \"name\": \"comp\",\n" +
+                "  \"action\": {\n" +
+                "    \"device\":\"TCOD\",\n" +
+                "    \"type_port\": \"analog\",\n" +
+                "    \"port\":212,\n" +
+                "    \"signal_on_port\":0\n" +
+                "  }\n" +
+                "},\n" +
+                "  {\n" +
+                "    \"type\": \"button\",\n" +
+                "    \"icon\": \"lamp\",\n" +
+                "    \"name\": \"lamp_test\",\n" +
+                "    \"action\": {\n" +
+                "      \"device\": \"TCOD\",\n" +
+                "      \"type_port\": \"digital\",\n" +
+                "      \"port\": 24,\n" +
+                "      \"port_status\": \"low\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "]";
+
+        try {
+            SharedPreferences.saveActionsViews(this,new JSONArray(json));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {

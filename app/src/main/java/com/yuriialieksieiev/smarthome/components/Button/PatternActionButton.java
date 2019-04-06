@@ -1,11 +1,12 @@
 package com.yuriialieksieiev.smarthome.components.Button;
 
-import com.yuriialieksieiev.smarthome.enums.Icons;
+import com.yuriialieksieiev.smarthome.Factory;
+import com.yuriialieksieiev.smarthome.components.enums.Icons;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.yuriialieksieiev.smarthome.components.JsonExtras.*;
+import static com.yuriialieksieiev.smarthome.utils.JsonManager.*;
 
 public class PatternActionButton
 {
@@ -48,9 +49,10 @@ public class PatternActionButton
 
     public JSONObject toJsonObject() throws JSONException {
         JSONObject pattern = new JSONObject();
+        pattern.put(JSON_EXTRA_TYPE, Factory.TypeView.BUTTON.getInJson());
         pattern.put(JSON_EXTRA_ICON,icon.getNameIcon());
         pattern.put(JSON_EXTRA_NAME,name);
-        pattern.put(JSON_EXTRA_ACTION,action.toJson().toString());
+        pattern.put(JSON_EXTRA_ACTION,action.toJson());
         return pattern;
     }
 

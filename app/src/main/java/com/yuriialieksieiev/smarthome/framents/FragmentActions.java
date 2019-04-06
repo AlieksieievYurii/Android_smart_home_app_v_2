@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-
 import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +30,23 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
-        init();
+        controller = new Controller(getContext(),listButtons,listSeekBars);
+        factoryViews = new Factory(getContext(), this, controller,controller);
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        init();
     }
 
     private void init()
     {
+        gl_root.removeAllViews();
+
         listButtons = new ArrayList<>();
         listSeekBars = new ArrayList<>();
-        controller = new Controller(getContext(),listButtons,listSeekBars);
-        factoryViews = new Factory(getContext(), this, controller,controller);
 
         try {
             factoryViews.build();
@@ -49,6 +54,7 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated {
             e.printStackTrace();
         }
     }
+
 
 
     @Override
