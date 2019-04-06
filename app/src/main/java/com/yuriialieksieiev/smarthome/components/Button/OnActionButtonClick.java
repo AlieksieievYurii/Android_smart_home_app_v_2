@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components;
+package com.yuriialieksieiev.smarthome.components.Button;
 
 public interface OnActionButtonClick
 {

@@ -1,32 +1,49 @@
-package com.yuriialieksieiev.smarthome.components;
+package com.yuriialieksieiev.smarthome.components.Button;
 
 import com.yuriialieksieiev.smarthome.enums.Icons;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.yuriialieksieiev.smarthome.components.JsonExtras.*;
+
 public class PatternActionButton
 {
-    private static final String JSON_EXTRA_ICON = "icon";
-    private static final String JSON_EXTRA_NAME = "name";
-    private static final String JSON_EXTRA_ACTION = "action";
-
     private Icons icon;
     private String name;
     private Action action;
 
-    public PatternActionButton(String json) throws JSONException {
-        JSONObject jsonObject = new JSONObject(json);
+    public PatternActionButton(JSONObject jsonObject) throws JSONException {
+        init(jsonObject);
+    }
 
+    private void init(JSONObject jsonObject) throws JSONException {
         this.icon = Icons.getEnumByName(jsonObject.getString(JSON_EXTRA_ICON));
         this.name = jsonObject.getString(JSON_EXTRA_NAME);
         this.action = Action.getActionByJSon(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
+    }
+
+    public PatternActionButton(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        init(jsonObject);
     }
 
     public PatternActionButton(Icons icon, String name, Action action) {
         this.icon = icon;
         this.name = name;
         this.action = action;
+    }
+
+    public Icons getIcon() {
+        return icon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Action getAction() {
+        return action;
     }
 
     public JSONObject toJsonObject() throws JSONException {
@@ -50,6 +67,7 @@ public class PatternActionButton
     [
 
         {
+            "type":"button"
             "icon":"lamp",
             "name":"lamp_one",
             "action": {

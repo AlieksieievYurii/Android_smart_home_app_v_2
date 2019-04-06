@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components;
+package com.yuriialieksieiev.smarthome.components.Button;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,13 +106,21 @@ public class Action {
             return false;
     }
 
-
+    @Override
+    public String toString() {
+        return "Action{" +
+                "typePort=" + typePort +
+                ", port=" + port +
+                ", portStatus=" + portStatus +
+                ", portSignal=" + portSignal +
+                '}';
+    }
 
     //----------------------------------------------------------------------
 
 
 
-    static Action getActionByJSon(JSONObject jsonObject) throws JSONException {
+    public static Action getActionByJSon(JSONObject jsonObject) throws JSONException {
         Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(ACTION_EXTRA_TYPE_PORT));
         int port = jsonObject.getInt(ACTION_EXTRA_PORT);
 
@@ -123,7 +131,7 @@ public class Action {
             int signalOnPort = jsonObject.getInt(ACTION_EXTRA_SIGNAL_ON_PORT);
             return new Action(port, signalOnPort);
         } else
-            throw new JSONException("Connect convert " + jsonObject.toString() + " to Action object!");
+            throw new JSONException("Can not convert " + jsonObject.toString() + " to Action object!");
     }
 
     JSONObject toJson() throws JSONException {

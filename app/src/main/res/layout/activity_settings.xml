@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btn_add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Add Button"/>
+    <Button
+        android:id="@+id/btn_add_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_add_button"
+        android:text="Add SeekBar"/>
+    <Button
+        android:id="@+id/btn_add_sensor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_add_seek_bar"
+        android:text="Add Sensor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_add_sensor"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings Server"
+            android:textSize="30sp"/>
+
+        <EditText
+            android:id="@+id/edt_url_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Url server"
+            android:inputType="text"
+            tools:ignore="Autofill,TextFields" />
+        <EditText
+            android:id="@+id/edt_name_servlet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name servlet"
+            android:inputType="text"
+            tools:ignore="Autofill,TextFields" />
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="text"
+            tools:ignore="Autofill,TextFields" />
+    </LinearLayout>
+
+</RelativeLayout>

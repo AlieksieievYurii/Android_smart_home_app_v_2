@@ -1,5 +1,6 @@
 package com.yuriialieksieiev.smarthome;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .commit();
                 break;
             case R.id.nav_settings:
+                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                 break;
             case R.id.nav_about:
                 break;

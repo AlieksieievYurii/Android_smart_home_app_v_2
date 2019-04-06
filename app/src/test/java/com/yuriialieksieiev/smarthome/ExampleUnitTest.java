@@ -1,7 +1,7 @@
 package com.yuriialieksieiev.smarthome;
 
-import com.yuriialieksieiev.smarthome.components.Action;
-import com.yuriialieksieiev.smarthome.components.PatternActionButton;
+import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.enums.Icons;
 
 import org.json.JSONException;
