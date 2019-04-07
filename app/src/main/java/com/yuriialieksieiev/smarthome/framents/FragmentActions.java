@@ -17,6 +17,7 @@ import com.yuriialieksieiev.smarthome.components.Button.Action;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,13 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
-        controller = new Controller(getContext(),listButtons,listSeekBars);
-        factoryViews = new Factory(getContext(), this, controller,controller,this);
+
+        controller = new Controller(getContext(), listButtons, listSeekBars);
+
+        factoryViews = new Factory(getContext(),
+                this,
+                controller,
+                this);
         return root;
     }
 
@@ -45,8 +51,7 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         gl_root.removeAllViews();
 
         listButtons = new ArrayList<>();
@@ -58,8 +63,6 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public void buttonCreated(ActionButton actionButton) {
@@ -79,8 +82,7 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
     }
 
     @Override
-    public void onLongActionPress(Action action, View v)
-    {
-        Toast.makeText(getContext(),action.toString()+" "+v.toString(),Toast.LENGTH_LONG).show();
+    public void onLongActionPress(Action action, View v) {
+        Toast.makeText(getContext(), action.toString() + " " + v.toString(), Toast.LENGTH_LONG).show();
     }
 }

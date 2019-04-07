@@ -2,11 +2,10 @@ package com.yuriialieksieiev.smarthome;
 
 import android.content.Context;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
-import com.yuriialieksieiev.smarthome.components.Button.OnActionButtonClick;
 import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
+import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
-import com.yuriialieksieiev.smarthome.components.seekbar.OnActionChangeSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
 import org.json.JSONArray;
@@ -46,19 +45,16 @@ public class Factory {
     }
 
     private OnViewCreated onViewCreated;
-    private OnActionButtonClick onActionButtonClick;
-    private OnActionChangeSeekBar onActionChangeSeekBar;
+    private OnAction onAction;
     private OnLongPressActionView onLongPressActionView;
     private Context context;
 
     public Factory(Context context,
                    OnViewCreated onViewCreated,
-                   OnActionButtonClick onActionButtonClick,
-                   OnActionChangeSeekBar onActionChangeSeekBar,
+                   OnAction onAction,
                    OnLongPressActionView onLongPressActionView) {
         this.onViewCreated = onViewCreated;
-        this.onActionButtonClick = onActionButtonClick;
-        this.onActionChangeSeekBar = onActionChangeSeekBar;
+        this.onAction = onAction;
         this.onLongPressActionView = onLongPressActionView;
         this.context = context;
     }
@@ -85,7 +81,7 @@ public class Factory {
 
         ActionSeekBar actionSeekBar =
                 ActionSeekBar.Builder.build(context,
-                        onActionChangeSeekBar,
+                        onAction,
                         onLongPressActionView,
                         patternActionSeekBar);
 
@@ -98,7 +94,7 @@ public class Factory {
 
         ActionButton actionButton =
                 ActionButton.Builder.build(context,
-                        onActionButtonClick,
+                        onAction,
                         onLongPressActionView,
                         patternActionButton);
 

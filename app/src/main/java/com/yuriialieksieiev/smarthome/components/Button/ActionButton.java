@@ -7,22 +7,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 
+import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 
 public class ActionButton implements View.OnClickListener, View.OnLongClickListener
 {
     private Button button;
     private Action action;
-    private OnActionButtonClick actionButtonClick;
+    private OnAction onAction;
     private OnLongPressActionView onLongPressActionView;
 
     private ActionButton(Button button,
                         Action action,
-                        OnActionButtonClick actionButtonClick,
+                        OnAction onAction,
                         OnLongPressActionView onLongPressActionView) {
         this.button = button;
         this.action = action;
-        this.actionButtonClick = actionButtonClick;
+        this.onAction = onAction;
         this.onLongPressActionView = onLongPressActionView;
         button.setOnClickListener(this);
         button.setOnLongClickListener(this);
@@ -52,7 +53,7 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
     {
        changeState();
        action.setPortStatus(button.isActivated()? Action.PortStatus.HIGH: Action.PortStatus.LOW);
-       actionButtonClick.onClickAction(action);
+       onAction.onAction(action);
     }
 
     public Button getButton() {
@@ -69,7 +70,7 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
     public static class Builder
     {
         public static ActionButton build(Context context,
-                                         OnActionButtonClick onActionButtonClick,
+                                         OnAction onAction,
                                          OnLongPressActionView onLongPressActionView,
                                          PatternActionButton patternActionButton)
         {
@@ -89,7 +90,7 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
 
             return new ActionButton(button,
                     patternActionButton.getAction(),
-                    onActionButtonClick,
+                    onAction,
                     onLongPressActionView);
         }
     }
