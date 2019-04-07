@@ -1,15 +1,14 @@
 package com.yuriialieksieiev.smarthome;
 
 import android.content.Context;
-
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.Button.OnActionButtonClick;
 import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
+import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.OnActionChangeSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,12 +48,18 @@ public class Factory {
     private OnViewCreated onViewCreated;
     private OnActionButtonClick onActionButtonClick;
     private OnActionChangeSeekBar onActionChangeSeekBar;
+    private OnLongPressActionView onLongPressActionView;
     private Context context;
 
-    public Factory(Context context, OnViewCreated onViewCreated, OnActionButtonClick onActionButtonClick, OnActionChangeSeekBar onActionChangeSeekBar) {
+    public Factory(Context context,
+                   OnViewCreated onViewCreated,
+                   OnActionButtonClick onActionButtonClick,
+                   OnActionChangeSeekBar onActionChangeSeekBar,
+                   OnLongPressActionView onLongPressActionView) {
         this.onViewCreated = onViewCreated;
         this.onActionButtonClick = onActionButtonClick;
         this.onActionChangeSeekBar = onActionChangeSeekBar;
+        this.onLongPressActionView = onLongPressActionView;
         this.context = context;
     }
 
@@ -77,16 +82,25 @@ public class Factory {
 
     private void buildSeekBar(JSONObject jsonObject) throws JSONException {
         PatternActionSeekBar patternActionSeekBar = new PatternActionSeekBar(jsonObject);
+
         ActionSeekBar actionSeekBar =
-                ActionSeekBar.Builder.build(context,onActionChangeSeekBar,patternActionSeekBar);
+                ActionSeekBar.Builder.build(context,
+                        onActionChangeSeekBar,
+                        onLongPressActionView,
+                        patternActionSeekBar);
 
         onViewCreated.seekBarCreated(actionSeekBar);
     }
 
     private void buildButton(JSONObject jsonObject) throws JSONException {
+
         PatternActionButton patternActionButton = new PatternActionButton(jsonObject);
+
         ActionButton actionButton =
-                ActionButton.Builder.build(context,onActionButtonClick,patternActionButton);
+                ActionButton.Builder.build(context,
+                        onActionButtonClick,
+                        onLongPressActionView,
+                        patternActionButton);
 
         onViewCreated.buttonCreated(actionButton);
     }

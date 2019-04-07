@@ -12,23 +12,29 @@ import android.widget.TextView;
 
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 
-public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener
-{
+public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View.OnLongClickListener {
     private static final String TAG_SEEK_BAR = "seekBar";
 
     private Action action;
     private View seekBar;
     private OnActionChangeSeekBar actionChangeSeekBar;
+    private OnLongPressActionView onLongPressActionView;
 
-    public ActionSeekBar(Action action, View seekBar, OnActionChangeSeekBar actionChangeSeekBar) {
+    private ActionSeekBar(Action action,
+                         View seekBar,
+                         OnActionChangeSeekBar actionChangeSeekBar,
+                         OnLongPressActionView onLongPressActionView) {
         this.action = action;
         this.seekBar = seekBar;
         this.actionChangeSeekBar = actionChangeSeekBar;
+        this.onLongPressActionView = onLongPressActionView;
         BoxedVertical boxedVertical = seekBar.findViewWithTag(TAG_SEEK_BAR);
         boxedVertical.setOnBoxedPointsChangeListener(this);
+        seekBar.setOnLongClickListener(this);
     }
 
     @Override
@@ -51,12 +57,17 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener
         actionChangeSeekBar.onActionChangeSeekBar(action);
     }
 
-    public static class Builder
-    {
+    @Override
+    public boolean onLongClick(View v) {
+        onLongPressActionView.onLongActionPress(action, v);
+        return true;
+    }
+
+    public static class Builder {
         public static ActionSeekBar build(Context context,
                                           OnActionChangeSeekBar onActionChangeSeekBar,
-                                          PatternActionSeekBar patternActionSeekBar)
-        {
+                                          OnLongPressActionView onLongPressActionView,
+                                          PatternActionSeekBar patternActionSeekBar) {
             BoxedVertical boxedVertical = new BoxedVertical(context);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -86,19 +97,22 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener
 
             LinearLayout linearLayout = new LinearLayout(context);
             final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(250,500));
-            layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
-            layoutParams.setMargins(10,20,10,10);
+                    new ViewGroup.LayoutParams(250, 500));
+            layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2);
+            layoutParams.setMargins(10, 20, 10, 10);
             linearLayout.setLayoutParams(layoutParams);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.setPadding(0,0,0,20);
+            linearLayout.setPadding(0, 0, 0, 20);
             linearLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
             linearLayout.setBackgroundResource(R.drawable.bc_seek_bar);
 
             linearLayout.addView(boxedVertical);
             linearLayout.addView(textView);
 
-            return new ActionSeekBar(patternActionSeekBar.getAction(),linearLayout,onActionChangeSeekBar);
+            return new ActionSeekBar(patternActionSeekBar.getAction(),
+                    linearLayout,
+                    onActionChangeSeekBar,
+                    onLongPressActionView);
         }
     }
 }

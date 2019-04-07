@@ -1,6 +1,5 @@
 package com.yuriialieksieiev.smarthome.components.Button;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -8,17 +7,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 
-public class ActionButton implements View.OnClickListener
+import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
+
+public class ActionButton implements View.OnClickListener, View.OnLongClickListener
 {
     private Button button;
     private Action action;
     private OnActionButtonClick actionButtonClick;
+    private OnLongPressActionView onLongPressActionView;
 
-    public ActionButton(Button button, Action action, OnActionButtonClick actionButtonClick) {
+    private ActionButton(Button button,
+                        Action action,
+                        OnActionButtonClick actionButtonClick,
+                        OnLongPressActionView onLongPressActionView) {
         this.button = button;
         this.action = action;
         this.actionButtonClick = actionButtonClick;
+        this.onLongPressActionView = onLongPressActionView;
         button.setOnClickListener(this);
+        button.setOnLongClickListener(this);
 
     }
 
@@ -52,10 +59,18 @@ public class ActionButton implements View.OnClickListener
         return button;
     }
 
+    @Override
+    public boolean onLongClick(View v)
+    {
+        onLongPressActionView.onLongActionPress(action,v);
+        return true;
+    }
+
     public static class Builder
     {
         public static ActionButton build(Context context,
                                          OnActionButtonClick onActionButtonClick,
+                                         OnLongPressActionView onLongPressActionView,
                                          PatternActionButton patternActionButton)
         {
             final Button button = new Button(context);
@@ -72,7 +87,10 @@ public class ActionButton implements View.OnClickListener
 
             //TODO Implement it for custom settings by user!!!
 
-            return new ActionButton(button,patternActionButton.getAction(),onActionButtonClick);
+            return new ActionButton(button,
+                    patternActionButton.getAction(),
+                    onActionButtonClick,
+                    onLongPressActionView);
         }
     }
 

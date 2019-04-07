@@ -8,15 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.Toast;
+
 import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.R;
+import com.yuriialieksieiev.smarthome.components.Button.Action;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentActions extends Fragment implements Factory.OnViewCreated {
+public class FragmentActions extends Fragment implements Factory.OnViewCreated, OnLongPressActionView {
     private View root;
     private Factory factoryViews;
     private Controller controller;
@@ -31,7 +35,7 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated {
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
         controller = new Controller(getContext(),listButtons,listSeekBars);
-        factoryViews = new Factory(getContext(), this, controller,controller);
+        factoryViews = new Factory(getContext(), this, controller,controller,this);
         return root;
     }
 
@@ -72,5 +76,11 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated {
     @Override
     public void buildingFinished() {
         //TODO DO request to server for set all actions
+    }
+
+    @Override
+    public void onLongActionPress(Action action, View v)
+    {
+        Toast.makeText(getContext(),action.toString()+" "+v.toString(),Toast.LENGTH_LONG).show();
     }
 }
