@@ -42,10 +42,6 @@ public class PatternActionButton implements Parcelable
         this.action = Action.getActionByJSon(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
     }
 
-    public PatternActionButton(String json) throws JSONException {
-        JSONObject jsonObject = new JSONObject(json);
-        init(jsonObject);
-    }
 
     public PatternActionButton(Icons icon, String name, Action action) {
         this.icon = icon;

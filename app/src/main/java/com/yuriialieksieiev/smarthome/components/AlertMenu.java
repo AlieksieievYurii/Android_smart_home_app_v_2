@@ -3,8 +3,8 @@ package com.yuriialieksieiev.smarthome.components;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-
 import com.yuriialieksieiev.smarthome.Factory;
+import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
@@ -45,10 +45,11 @@ public class AlertMenu {
     }
 
     private void showMenu(String nameView) {
-        final String[] items = {"Edit", "Remove"};
+        final String[] items = {context.getString(R.string.edit),
+                context.getString(R.string.remove)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle("Edit " + nameView)
+                .setTitle(context.getString(R.string.edit)+ " " + nameView)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -83,15 +84,15 @@ public class AlertMenu {
 
     private void alertRemove() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle("Removing \"" + name + "\"")
-                .setMessage("Do you want to remove?")
+                .setTitle(context.getString(R.string.remove) + " \"" + name + "\"")
+                .setMessage(R.string.do_yo_want_to_remove)
                 .setCancelable(true)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         remove();
                     }})
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //nothing

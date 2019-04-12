@@ -34,62 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setDefaultFragment();
     }
 
-    private void test()
-    {
-        String json = "[\n" +
-                "  {\n" +
-                "    \n" +
-                "    \"type\": \"button\",\n" +
-                "    \"icon\": \"lamp\",\n" +
-                "    \"name\": \"lamp_test\",\n" +
-                "    \"action\": {\n" +
-                "      \"device\":\"TCOD\",\n" +
-                "      \"type_port\": \"digital\",\n" +
-                "      \"port\":24,\n" +
-                "      \"port_status\":\"low\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \n" +
-                "    \"type\": \"button\",\n" +
-                "    \"icon\": \"computer\",\n" +
-                "    \"name\": \"comp\",\n" +
-                "    \"action\": {\n" +
-                "      \"device\":\"TCOD\",\n" +
-                "      \"type_port\": \"digital\",\n" +
-                "      \"port\":212,\n" +
-                "      \"port_status\":\"low\"\n" +
-                "    }\n" +
-                "  },{\n" +
-                "  \n" +
-                "  \"type\": \"seek_bar\",\n" +
-                "  \"name\": \"comp\",\n" +
-                "  \"action\": {\n" +
-                "    \"device\":\"TCOD\",\n" +
-                "    \"type_port\": \"analog\",\n" +
-                "    \"port\":212,\n" +
-                "    \"signal_on_port\":0\n" +
-                "  }\n" +
-                "},\n" +
-                "  {\n" +
-                "    \"type\": \"button\",\n" +
-                "    \"icon\": \"lamp\",\n" +
-                "    \"name\": \"lamp_test\",\n" +
-                "    \"action\": {\n" +
-                "      \"device\": \"TCOD\",\n" +
-                "      \"type_port\": \"digital\",\n" +
-                "      \"port\": 24,\n" +
-                "      \"port_status\": \"low\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "]";
-
-        try {
-            SharedPreferences.saveActionsViews(this,new JSONArray(json));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void init() {
         final Toolbar toolbar = findViewById(R.id.toolBar);

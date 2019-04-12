@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
+import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
 
 public class ActionButton implements View.OnClickListener, View.OnLongClickListener, Parcelable {
     private Button button;
@@ -136,8 +136,10 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
                                          PatternActionButton patternActionButton,
                                          OnLongPressAction onLongPressAction) {
             final Button button = new Button(context);
+            int width = SharedPreferences.getWidthViews(context);
+            int height = SharedPreferences.getHeightViews(context);
             final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(240, 240));
+                    new ViewGroup.LayoutParams(width, height));
             layoutParams.setMargins(10, 20, 10, 0);
             button.setLayoutParams(layoutParams);
             button.setTextColor(Color.WHITE);

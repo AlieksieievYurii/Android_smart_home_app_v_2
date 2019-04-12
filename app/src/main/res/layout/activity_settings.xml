@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <Button
         android:id="@+id/btn_add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Add Button"/>
+        android:text="@string/add_button"/>
     <Button
         android:id="@+id/btn_add_seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_add_button"
-        android:text="Add SeekBar"/>
+        android:text="@string/add_seekbar"/>
     <Button
         android:id="@+id/btn_add_sensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_add_seek_bar"
-        android:text="Add Sensor"/>
+        android:text="@string/add_sensor"/>
 
     <LinearLayout
+        android:id="@+id/ln_settings_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_add_sensor"
@@ -33,30 +37,107 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Settings Server"
+            android:text="@string/settings_server"
             android:textSize="30sp"/>
 
         <EditText
             android:id="@+id/edt_url_server"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Url server"
+            android:hint="@string/url_server"
             android:inputType="text"
             tools:ignore="Autofill,TextFields" />
         <EditText
             android:id="@+id/edt_name_servlet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name servlet"
+            android:hint="@string/name_module"
             android:inputType="text"
             tools:ignore="Autofill,TextFields" />
         <EditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="text"
             tools:ignore="Autofill,TextFields" />
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ln_settings_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ln_settings_server"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_app"
+            android:textSize="30sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/width_views"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/edt_width_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/dp"
+                tools:ignore="Autofill" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/height_views"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/edt_height_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/dp"
+                tools:ignore="Autofill" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vibration_on_press"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+            <Switch
+                android:id="@+id/sw_vibrate"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save"
+        android:layout_below="@id/ln_settings_app"
+        android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>

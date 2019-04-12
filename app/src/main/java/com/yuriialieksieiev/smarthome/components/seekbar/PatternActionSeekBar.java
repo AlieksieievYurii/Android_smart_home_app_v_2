@@ -21,15 +21,11 @@ public class PatternActionSeekBar implements Parcelable
     }
 
     public PatternActionSeekBar(JSONObject jsonObject) throws JSONException {
-        init(jsonObject);
+        this.name = jsonObject.getString(JsonManager.JSON_EXTRA_NAME);
+        this.action = Action.getActionByJSon(jsonObject.getJSONObject(JsonManager.JSON_EXTRA_ACTION));
     }
 
-    public PatternActionSeekBar(String json) throws JSONException {
-        JSONObject jsonObject = new JSONObject(json);
-        init(jsonObject);
-    }
-
-    protected PatternActionSeekBar(Parcel in) {
+    private PatternActionSeekBar(Parcel in) {
         name = in.readString();
         action = in.readParcelable(Action.class.getClassLoader());
     }
@@ -52,11 +48,6 @@ public class PatternActionSeekBar implements Parcelable
         jsonObject.put(JsonManager.JSON_EXTRA_NAME,name);
         jsonObject.put(JsonManager.JSON_EXTRA_ACTION,action.toJson());
         return jsonObject;
-    }
-
-    private void init(JSONObject jsonObject) throws JSONException {
-        this.name = jsonObject.getString(JsonManager.JSON_EXTRA_NAME);
-        this.action = Action.getActionByJSon(jsonObject.getJSONObject(JsonManager.JSON_EXTRA_ACTION));
     }
 
     public String getName() {

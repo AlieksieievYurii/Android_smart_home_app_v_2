@@ -6,4 +6,25 @@
     <string name="nav_item_about">About</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="do_yo_want_to_remove">Do you want to remove?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="port_existed">Port is already exist!</string>
+    <string name="name_can_not_be_empty">Name can not be empty!</string>
+    <string name="port_can_not_be_empty">Port can not be empty!</string>
+    <string name="add_button">Add Button</string>
+    <string name="add_seekbar">Add SeekBar</string>
+    <string name="add_sensor">Add Sensor</string>
+    <string name="settings_server">Settings Server</string>
+    <string name="url_server">Url server</string>
+    <string name="name_module">Name module...</string>
+    <string name="password">Password</string>
+    <string name="settings_app">Settings app</string>
+    <string name="width_views">Width views</string>
+    <string name="dp">Dp...</string>
+    <string name="vibration_on_press">Vibration on press</string>
+    <string name="save">Save</string>
+    <string name="height_views">Height views</string>
 </resources>

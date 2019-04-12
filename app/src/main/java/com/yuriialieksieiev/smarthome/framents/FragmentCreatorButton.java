@@ -190,7 +190,7 @@ public class FragmentCreatorButton extends Fragment {
 
         if (port != actionButton.getAction().getPort())
             if (JsonManager.isExist(port, device,getContext())) {
-                Snackbar.make(root, "Port is already exist!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(root, R.string.port_existed, Snackbar.LENGTH_LONG).show();
                 return;
             }
 
@@ -211,12 +211,12 @@ public class FragmentCreatorButton extends Fragment {
 
     private boolean checkFields() {
         if (name == null || name.trim().length() == 0) {
-            Snackbar.make(root, "Name can not be empty!", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(root, R.string.name_can_not_be_empty, Snackbar.LENGTH_LONG).show();
             return false;
         }
 
         if (edtPort.getText() == null || edtPort.getText().toString().trim().length() == 0) {
-            Snackbar.make(root, "Port can not be empty!", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(root, R.string.port_can_not_be_empty, Snackbar.LENGTH_LONG).show();
             return false;
         }
 
