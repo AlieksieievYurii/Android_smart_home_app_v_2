@@ -2,7 +2,7 @@ package com.yuriialieksieiev.smarthome;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.framents.FragmentCreatorButton;
 import com.yuriialieksieiev.smarthome.framents.FragmentCreatorSeekBar;

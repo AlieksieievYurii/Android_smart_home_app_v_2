@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
 
 import org.json.JSONException;

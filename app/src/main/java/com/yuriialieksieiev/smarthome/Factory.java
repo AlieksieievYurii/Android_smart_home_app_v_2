@@ -1,12 +1,14 @@
 package com.yuriialieksieiev.smarthome;
 
 import android.content.Context;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
-import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
+import com.yuriialieksieiev.smarthome.components.button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,11 +20,12 @@ public class Factory {
     public interface OnViewCreated {
         void buttonCreated(ActionButton actionButton);
         void seekBarCreated(ActionSeekBar actionSeekBar);
+        void sensorCreated(SensorView sensorView);
         void buildingFinished();
     }
 
     public enum TypeView {
-        BUTTON("button"), SEEK_BAR("seek_bar");
+        BUTTON("button"), SEEK_BAR("seek_bar"),SENSOR("sensor");
 
         private String inJson;
 
@@ -68,12 +71,32 @@ public class Factory {
                     TypeView.getTypeViewByName(
                             jsonObject.getString(JSON_EXTRA_TYPE));
 
-            if (typeView == TypeView.BUTTON)
-                buildButton(jsonObject);
-            else if (typeView == TypeView.SEEK_BAR)
-                buildSeekBar(jsonObject);
+            assert typeView != null;
+            switch (typeView)
+            {
+                case BUTTON:
+                    buildButton(jsonObject);
+                    break;
+                case SEEK_BAR:
+                    buildSeekBar(jsonObject);
+                    break;
+                case SENSOR:
+                    buildSensor(jsonObject);
+
+            }
         }
         onViewCreated.buildingFinished();
+    }
+
+    private void buildSensor(JSONObject jsonObject)
+    {
+        try {
+            SensorVal sensorVal = new SensorVal(jsonObject);
+
+            onViewCreated.sensorCreated(SensorView.Builder.build(context,sensorVal,onLongPressAction));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void buildSeekBar(JSONObject jsonObject) throws JSONException {

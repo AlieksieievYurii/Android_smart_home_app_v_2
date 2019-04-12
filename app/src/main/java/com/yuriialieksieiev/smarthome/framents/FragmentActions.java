@@ -13,16 +13,15 @@ import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.MakerView;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
-import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
-import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
-
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +86,14 @@ public class FragmentActions extends Fragment implements
     }
 
     @Override
+    public void sensorCreated(SensorView sensorView) {
+
+    }
+
+    @Override
     public void buildingFinished() {
         //TODO DO request to server for set all actions
+        gl_root.addView(SensorView.Builder.build(getContext(),new SensorVal(SensorVal.Sensors.TEMPERATURE,123),null).getTvValue());
     }
 
     @Override
@@ -99,6 +104,11 @@ public class FragmentActions extends Fragment implements
     @Override
     public void onLongPressSeekBarAction(ActionSeekBar actionSeekBar) {
         new AlertMenu(getContext(),this).startEdition(actionSeekBar);    }
+
+    @Override
+    public void onLongPressSensor(SensorVal sensorVal) {
+
+    }
 
     @Override
     public void remove(Action action)

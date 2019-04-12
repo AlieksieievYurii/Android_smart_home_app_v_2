@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.yuriialieksieiev.smarthome.MakerView;
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.Device;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;

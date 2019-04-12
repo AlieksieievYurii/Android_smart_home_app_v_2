@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.Button.Action;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 
 public class AlertMenu {

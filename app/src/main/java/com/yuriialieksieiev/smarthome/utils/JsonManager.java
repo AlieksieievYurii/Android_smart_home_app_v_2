@@ -1,10 +1,10 @@
 package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
-import android.util.Log;
+
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.components.Button.Action;
-import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
+import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
@@ -18,6 +18,9 @@ public class JsonManager
     public static final String JSON_EXTRA_ICON = "icon";
     public static final String JSON_EXTRA_NAME = "name";
     public static final String JSON_EXTRA_ACTION = "action";
+    public static final String JSON_EXTRA_SENSORS = "sensors";
+    public static final String JSON_EXTRA_SENSOR = "sensor";
+    public static final String JSON_EXTRA_SENSOR_VALUE = "value";
 
     public static boolean isExist(int port,Device device ,Context context)
     {

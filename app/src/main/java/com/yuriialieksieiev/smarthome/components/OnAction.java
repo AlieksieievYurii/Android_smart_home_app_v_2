@@ -1,6 +1,6 @@
 package com.yuriialieksieiev.smarthome.components;
 
-import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.button.Action;
 
 public interface OnAction
 {

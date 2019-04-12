@@ -3,8 +3,8 @@ package com.yuriialieksieiev.smarthome;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.yuriialieksieiev.smarthome.components.Button.Action;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
+import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 
