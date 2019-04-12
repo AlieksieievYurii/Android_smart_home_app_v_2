@@ -1,5 +1,8 @@
 package com.yuriialieksieiev.smarthome.components.seekbar;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
@@ -7,7 +10,7 @@ import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PatternActionSeekBar
+public class PatternActionSeekBar implements Parcelable
 {
     private String name;
     private Action action;
@@ -25,6 +28,23 @@ public class PatternActionSeekBar
         JSONObject jsonObject = new JSONObject(json);
         init(jsonObject);
     }
+
+    protected PatternActionSeekBar(Parcel in) {
+        name = in.readString();
+        action = in.readParcelable(Action.class.getClassLoader());
+    }
+
+    public static final Creator<PatternActionSeekBar> CREATOR = new Creator<PatternActionSeekBar>() {
+        @Override
+        public PatternActionSeekBar createFromParcel(Parcel in) {
+            return new PatternActionSeekBar(in);
+        }
+
+        @Override
+        public PatternActionSeekBar[] newArray(int size) {
+            return new PatternActionSeekBar[size];
+        }
+    };
 
     public JSONObject toJsonObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -45,5 +65,16 @@ public class PatternActionSeekBar
 
     public Action getAction() {
         return action;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeParcelable(action, flags);
     }
 }

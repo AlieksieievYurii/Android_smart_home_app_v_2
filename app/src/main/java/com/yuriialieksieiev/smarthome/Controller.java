@@ -11,7 +11,7 @@ import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import java.util.List;
 
 public class Controller implements OnAction {
-
+    //TODO IMPLEMENT CONNECTION TPO SERVER AND POST GET REQUEST
     private List<ActionButton> listButtons;
     private List<ActionSeekBar> listSeekBars;
     private Context context;

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Device;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
@@ -23,8 +24,7 @@ import org.json.JSONException;
 
 import java.util.Objects;
 
-public class FragmentCreatorSeekBar extends Fragment
-{
+public class FragmentCreatorSeekBar extends Fragment {
     private View root;
     private EditText edtName;
     private EditText edtPort;
@@ -36,7 +36,7 @@ public class FragmentCreatorSeekBar extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_creator_seek_bar,container,false);
+        root = inflater.inflate(R.layout.fragment_creator_seek_bar, container, false);
         init();
         return root;
     }
@@ -49,7 +49,7 @@ public class FragmentCreatorSeekBar extends Fragment
         final Spinner spDevice = root.findViewById(R.id.sp_device);
 
         final ArrayAdapter<Device> adapter =
-                new ArrayAdapter<>(root.getContext(),android.R.layout.simple_spinner_item, Device.values());
+                new ArrayAdapter<>(root.getContext(), android.R.layout.simple_spinner_item, Device.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spDevice.setAdapter(adapter);
@@ -65,7 +65,8 @@ public class FragmentCreatorSeekBar extends Fragment
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }});
+            }
+        });
 
         edtName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,9 +106,9 @@ public class FragmentCreatorSeekBar extends Fragment
         root.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkAll()) {
+                if (checkAll()) {
                     try {
-                        JsonManager.addActionSeekBar(getContext(),name, Integer.parseInt(port),device);
+                        JsonManager.addActionSeekBar(getContext(), name, Integer.parseInt(port), device);
                         Objects.requireNonNull(getActivity()).finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -120,21 +121,18 @@ public class FragmentCreatorSeekBar extends Fragment
 
     private boolean checkAll() {
 
-        if(name == null || name.trim().length() == 0)
-        {
-            Snackbar.make(root,"Name can not be empty!",Snackbar.LENGTH_LONG).show();
+        if (name == null || name.trim().length() == 0) {
+            Snackbar.make(root, "Name can not be empty!", Snackbar.LENGTH_LONG).show();
             return false;
         }
 
-        if(port == null || port.trim().length() == 0)
-        {
-            Snackbar.make(root,"Port can not be empty!",Snackbar.LENGTH_LONG).show();
+        if (port == null || port.trim().length() == 0) {
+            Snackbar.make(root, "Port can not be empty!", Snackbar.LENGTH_LONG).show();
             return false;
         }
 
-        if(JsonManager.isExist(Integer.parseInt(port),getContext()))
-        {
-            Snackbar.make(root,"Port is already exist!",Snackbar.LENGTH_LONG).show();
+        if (JsonManager.isExist(Integer.parseInt(port), device, getContext())) {
+            Snackbar.make(root, "Port is already exist!", Snackbar.LENGTH_LONG).show();
             return false;
         }
 

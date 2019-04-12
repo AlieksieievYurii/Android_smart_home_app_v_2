@@ -4,7 +4,7 @@ import android.content.Context;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.OnAction;
-import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
+import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
@@ -46,17 +46,17 @@ public class Factory {
 
     private OnViewCreated onViewCreated;
     private OnAction onAction;
-    private OnLongPressActionView onLongPressActionView;
     private Context context;
+    private OnLongPressAction onLongPressAction;
 
     public Factory(Context context,
                    OnViewCreated onViewCreated,
                    OnAction onAction,
-                   OnLongPressActionView onLongPressActionView) {
+                   OnLongPressAction onLongPressAction) {
         this.onViewCreated = onViewCreated;
         this.onAction = onAction;
-        this.onLongPressActionView = onLongPressActionView;
         this.context = context;
+        this.onLongPressAction = onLongPressAction;
     }
 
     public void build() throws Exception {
@@ -82,8 +82,10 @@ public class Factory {
         ActionSeekBar actionSeekBar =
                 ActionSeekBar.Builder.build(context,
                         onAction,
-                        onLongPressActionView,
-                        patternActionSeekBar);
+                        patternActionSeekBar,
+                        onLongPressAction);
+
+        actionSeekBar.setName(patternActionSeekBar.getName());
 
         onViewCreated.seekBarCreated(actionSeekBar);
     }
@@ -95,8 +97,11 @@ public class Factory {
         ActionButton actionButton =
                 ActionButton.Builder.build(context,
                         onAction,
-                        onLongPressActionView,
-                        patternActionButton);
+                        patternActionButton,
+                        onLongPressAction);
+
+        actionButton.setIcons(patternActionButton.getIcon());
+        actionButton.setName(patternActionButton.getName());
 
         onViewCreated.buttonCreated(actionButton);
     }

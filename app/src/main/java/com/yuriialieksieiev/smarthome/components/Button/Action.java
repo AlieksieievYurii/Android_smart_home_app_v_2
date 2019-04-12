@@ -1,11 +1,16 @@
 package com.yuriialieksieiev.smarthome.components.Button;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.yuriialieksieiev.smarthome.components.Device;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Action {
+import java.util.Objects;
+
+public class Action implements Parcelable {
     private static final String ACTION_EXTRA_DEVICE = "device";
     private static final String ACTION_EXTRA_TYPE_PORT = "type_port";
     private static final String ACTION_EXTRA_PORT = "port";
@@ -94,19 +99,15 @@ public class Action {
         this.portSignal = portSignal;
     }
 
+    public Device getDevice() {
+        return device;
+    }
 
     public boolean equals(Action action)
     {
-        if(action.typePort == this.typePort &&
-            action.port == this.port)
-            if(action.typePort == TypePort.DIGITAL)
-                return action.portStatus == this.portStatus;
-            else if(action.typePort == TypePort.ANALOG)
-                return action.portSignal == this.portSignal;
-            else
-                return false;
-        else
-            return false;
+            return (action.typePort == this.typePort &&
+                    action.port == this.port &&
+                    action.device == this.device);
     }
 
     @Override
@@ -133,6 +134,37 @@ public class Action {
 
         return jsonObject;
     }
+
+    protected Action(Parcel in) {
+        port = in.readInt();
+        device = Device.getDeviceByName(Objects.requireNonNull(in.readString()));
+        typePort = TypePort.getTypePort(Objects.requireNonNull(in.readString()));
+    }
+
+    public static final Creator<Action> CREATOR = new Creator<Action>() {
+        @Override
+        public Action createFromParcel(Parcel in) {
+            return new Action(in);
+        }
+
+        @Override
+        public Action[] newArray(int size) {
+            return new Action[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(port);
+        dest.writeString(device.getInJson());
+        dest.writeString(typePort.inJson);
+    }
+
 
 
     //----------------------------------------------------------------------

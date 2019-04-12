@@ -1,5 +1,6 @@
 package com.yuriialieksieiev.smarthome.framents;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,20 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.Toast;
-
 import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.R;
+import com.yuriialieksieiev.smarthome.MakerView;
+import com.yuriialieksieiev.smarthome.components.AlertMenu;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
+import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
+import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
-import com.yuriialieksieiev.smarthome.components.OnLongPressActionView;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentActions extends Fragment implements Factory.OnViewCreated, OnLongPressActionView {
+public class FragmentActions extends Fragment implements
+        Factory.OnViewCreated,
+        OnLongPressAction,
+        AlertMenu.MenuCallBack {
+
     private View root;
     private Factory factoryViews;
     private Controller controller;
@@ -48,10 +52,10 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
     @Override
     public void onStart() {
         super.onStart();
-        init();
+        upDate();
     }
 
-    private void init() {
+    private void upDate() {
         gl_root.removeAllViews();
 
         listButtons = new ArrayList<>();
@@ -61,6 +65,7 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
             factoryViews.build();
         } catch (Exception e) {
             e.printStackTrace();
+            //TODO Show SnackBar error(Nothing)
         }
     }
 
@@ -82,7 +87,34 @@ public class FragmentActions extends Fragment implements Factory.OnViewCreated, 
     }
 
     @Override
-    public void onLongActionPress(Action action, View v) {
-        Toast.makeText(getContext(), action.toString() + " " + v.toString(), Toast.LENGTH_LONG).show();
+    public void onLongPressButtonAction(ActionButton actionButton) {
+        new AlertMenu(getContext(),this).startEdition(actionButton);
+    }
+
+    @Override
+    public void onLongPressSeekBarAction(ActionSeekBar actionSeekBar) {
+        new AlertMenu(getContext(),this).startEdition(actionSeekBar);    }
+
+    @Override
+    public void remove(Action action) {
+
+    }
+
+    @Override
+    public void editActionButton(ActionButton actionButton) {
+        Intent intent = new Intent(getContext(),MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_BUTTON);
+        intent.putExtra(MakerView.EXTRA_ACTION_BUTTON,actionButton);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void editActionSeekBar(ActionSeekBar actionSeekBar) {
+        Intent intent = new Intent(getContext(),MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SEEK_BAR);
+        intent.putExtra(MakerView.EXTRA_ACTION_BUTTON,actionSeekBar);
+
+        startActivity(intent);
     }
 }
