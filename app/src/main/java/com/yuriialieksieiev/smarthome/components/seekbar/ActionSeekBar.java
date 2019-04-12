@@ -71,6 +71,21 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
         return name;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    @Override
+    public String toString() {
+        return "ActionSeekBar{" +
+                "action=" + action +
+                ", seekBar=" + seekBar +
+                ", onAction=" + onAction +
+                ", onLongPressAction=" + onLongPressAction +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public void setName(String name) {
         this.name = name;
     }

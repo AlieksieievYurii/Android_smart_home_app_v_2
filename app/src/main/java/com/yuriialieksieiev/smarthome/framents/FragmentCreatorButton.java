@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,17 +51,16 @@ public class FragmentCreatorButton extends Fragment {
         assert bundle != null;
 
         this.actionButton = bundle.getParcelable(MakerView.EXTRA_ACTION_BUTTON);
-        Log.i("TAG--.",actionButton.toString());
 
         init();
 
         if (actionButton != null)
-            setFields(actionButton);
+            setFields();
 
         return root;
     }
 
-    private void setFields(ActionButton actionButton)
+    private void setFields()
     {
         name = actionButton.getName();
         icons = actionButton.getIcons();

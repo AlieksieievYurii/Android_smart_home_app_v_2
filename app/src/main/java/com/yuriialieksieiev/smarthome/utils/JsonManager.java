@@ -2,15 +2,12 @@ package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
-import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.Button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +73,6 @@ public class JsonManager
 
     public static void replaceActionButton(Context context, PatternActionButton patternActionButton, Action oldAction) throws JSONException {
         JSONArray jsonArray = new JSONArray(SharedPreferences.getActionsViewsJson(context));
-        Log.i("TAG","M:-> " + oldAction.toString());
 
         for(int i = 0; i < jsonArray.length(); i++)
         {
@@ -96,4 +92,27 @@ public class JsonManager
             }
         }
     }
+
+    public static void replaceActionSeekBar(Context context, PatternActionSeekBar patternActionSeekBar, Action oldAction) throws JSONException {
+        JSONArray jsonArray = new JSONArray(SharedPreferences.getActionsViewsJson(context));
+
+        for(int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+            if(Factory.TypeView.getTypeViewByName(jsonObject.getString(JSON_EXTRA_TYPE))
+                    == Factory.TypeView.SEEK_BAR)
+            {
+                PatternActionSeekBar p = new PatternActionSeekBar(jsonObject);
+
+                if(p.getAction().equals(oldAction))
+                {
+                    jsonArray.put(i, patternActionSeekBar.toJsonObject());
+                    SharedPreferences.saveActionsViews(context,jsonArray);
+                    break;
+                }
+            }
+        }
+    }
+
 }

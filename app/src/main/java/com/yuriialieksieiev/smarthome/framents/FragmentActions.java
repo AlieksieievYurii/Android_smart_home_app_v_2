@@ -113,7 +113,7 @@ public class FragmentActions extends Fragment implements
     public void editActionSeekBar(ActionSeekBar actionSeekBar) {
         Intent intent = new Intent(getContext(),MakerView.class);
         intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SEEK_BAR);
-        intent.putExtra(MakerView.EXTRA_ACTION_BUTTON,actionSeekBar);
+        intent.putExtra(MakerView.EXTRA_ACTION_SEEK_BAR,actionSeekBar);
 
         startActivity(intent);
     }
