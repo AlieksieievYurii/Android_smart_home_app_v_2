@@ -2,21 +2,19 @@ package com.yuriialieksieiev.smarthome.components;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.MakerView;
 import com.yuriialieksieiev.smarthome.components.Button.Action;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 
-public class AlertMenu
-{
-    public interface MenuCallBack
-    {
+public class AlertMenu {
+    public interface MenuCallBack {
         void remove(Action action);
+
         void editActionButton(ActionButton actionButton);
+
         void editActionSeekBar(ActionSeekBar actionSeekBar);
     }
 
@@ -25,29 +23,29 @@ public class AlertMenu
     private ActionButton actionButton;
     private ActionSeekBar actionSeekBar;
     private MenuCallBack menuCallBack;
+    private String name;
 
-    public AlertMenu(Context context,MenuCallBack menuCallBack) {
+    public AlertMenu(Context context, MenuCallBack menuCallBack) {
         this.context = context;
         this.menuCallBack = menuCallBack;
     }
 
-    public void startEdition(ActionButton actionButton)
-    {
+    public void startEdition(ActionButton actionButton) {
         typeView = Factory.TypeView.BUTTON;
         this.actionButton = actionButton;
-        showMenu(actionButton.getName());
+        name = actionButton.getName();
+        showMenu(name);
     }
 
-    public void startEdition(ActionSeekBar actionSeekBar)
-    {
+    public void startEdition(ActionSeekBar actionSeekBar) {
         typeView = Factory.TypeView.SEEK_BAR;
         this.actionSeekBar = actionSeekBar;
-        showMenu(actionSeekBar.getName());
+        name = actionSeekBar.getName();
+        showMenu(name);
     }
 
-    private void showMenu(String nameView)
-    {
-        final String[] items = {"Edit","Remove"};
+    private void showMenu(String nameView) {
+        final String[] items = {"Edit", "Remove"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle("Edit " + nameView)
@@ -55,13 +53,12 @@ public class AlertMenu
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        switch (which)
-                        {
+                        switch (which) {
                             case 0:
                                 edit();
                                 break;
                             case 1:
-                                remove();
+                                alertRemove();
                                 break;
                         }
 
@@ -72,15 +69,40 @@ public class AlertMenu
         builder.create().show();
     }
 
-    private void remove()
-    {
+
+    private void remove() {
+        switch (typeView) {
+            case BUTTON:
+                menuCallBack.remove(actionButton.getAction());
+                break;
+            case SEEK_BAR:
+                menuCallBack.remove(actionSeekBar.getAction());
+                break;
+        }
+    }
+
+    private void alertRemove() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                .setTitle("Removing \"" + name + "\"")
+                .setMessage("Do you want to remove?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        remove();
+                    }})
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //nothing
+                    }
+                });
+        builder.create().show();
 
     }
 
-    private void edit()
-    {
-        switch (typeView)
-        {
+    private void edit() {
+        switch (typeView) {
             case BUTTON:
                 menuCallBack.editActionButton(actionButton);
                 break;

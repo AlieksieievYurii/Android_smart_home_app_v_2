@@ -18,6 +18,11 @@ import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
+import com.yuriialieksieiev.smarthome.utils.JsonManager;
+import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,8 +101,14 @@ public class FragmentActions extends Fragment implements
         new AlertMenu(getContext(),this).startEdition(actionSeekBar);    }
 
     @Override
-    public void remove(Action action) {
-
+    public void remove(Action action)
+    {
+        try {
+            JsonManager.remove(getContext(),action);
+            upDate();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.yuriialieksieiev.smarthome.components;
 
 public enum Device
 {
-    TCOD("TCOD");
+    TCOD("TCOD"),TWCOD("TWCOD");
 
     private String inJson;
 
@@ -14,6 +14,8 @@ public enum Device
     {
         if(name.equals(TCOD.inJson))
             return TCOD;
+        else if(name.equals(TWCOD.inJson))
+            return TWCOD;
         else
             return null;
     }

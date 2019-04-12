@@ -19,7 +19,7 @@ public class PatternActionButton implements Parcelable
         init(jsonObject);
     }
 
-    protected PatternActionButton(Parcel in) {
+    private PatternActionButton(Parcel in) {
         name = in.readString();
         action = in.readParcelable(Action.class.getClassLoader());
     }
