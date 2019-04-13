@@ -1,12 +1,16 @@
 package com.yuriialieksieiev.smarthome.components.sensor;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.Objects;
 
-public class SensorVal {
+public class SensorVal implements Parcelable {
+
     public enum Sensors {
         TEMPERATURE("temperature", R.drawable.ic_celsius),
         LIGHT("light",R.drawable.ic_day),
@@ -24,6 +28,10 @@ public class SensorVal {
             return res;
         }
 
+        public String getInJson() {
+            return inJson;
+        }
+
         public static Sensors getByName(String name) {
             switch (name) {
                 case "temperature":
@@ -35,7 +43,6 @@ public class SensorVal {
                 default:
                     return null;
             }
-
         }
     }
     private Sensors sensor;
@@ -58,4 +65,47 @@ public class SensorVal {
     public int getValue() {
         return value;
     }
+
+    public boolean equals(SensorVal sensorVal) {
+        return sensorVal.sensor == this.sensor;
+    }
+
+    public JSONObject toJsonObject() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(JsonManager.JSON_EXTRA_TYPE,Factory.TypeView.SENSOR.getInJson());
+        jsonObject.put(JsonManager.JSON_EXTRA_SENSOR,sensor.inJson);
+        jsonObject.put(JsonManager.JSON_EXTRA_SENSOR_VALUE,value);
+
+        return jsonObject;
+    }
+
+
+    private SensorVal(Parcel in) {
+        value = in.readInt();
+        sensor = Sensors.getByName(Objects.requireNonNull(in.readString()));
+    }
+
+    public static final Creator<SensorVal> CREATOR = new Creator<SensorVal>() {
+        @Override
+        public SensorVal createFromParcel(Parcel in) {
+            return new SensorVal(in);
+        }
+
+        @Override
+        public SensorVal[] newArray(int size) {
+            return new SensorVal[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(value);
+        dest.writeString(sensor.inJson);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components.Button;
+package com.yuriialieksieiev.smarthome.components.button;
 
 import android.content.Context;
 import android.graphics.Color;

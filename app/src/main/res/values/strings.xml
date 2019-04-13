@@ -27,4 +27,7 @@
     <string name="vibration_on_press">Vibration on press</string>
     <string name="save">Save</string>
     <string name="height_views">Height views</string>
+    <string name="apply">Apply</string>
+    <string name="sensor_removed">Sensor removed!</string>
+    <string name="action_removed">Action removed!</string>
 </resources>

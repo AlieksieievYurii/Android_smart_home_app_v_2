@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
 import com.yuriialieksieiev.smarthome.framents.FragmentCreatorButton;
 import com.yuriialieksieiev.smarthome.framents.FragmentCreatorSeekBar;
+import com.yuriialieksieiev.smarthome.framents.FragmentCreatorSensor;
 
 public class MakerView extends AppCompatActivity {
     public static final String EXTRA_WHAT_VIEW = "what_view";
@@ -15,6 +17,7 @@ public class MakerView extends AppCompatActivity {
 
     public static final String EXTRA_ACTION_BUTTON = "action_button";
     public static final String EXTRA_ACTION_SEEK_BAR = "action_seek_bar";
+    public static final String EXTRA_SENSOR_VAL = "sensor_val";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +31,24 @@ public class MakerView extends AppCompatActivity {
                 creatorSeekBar((ActionSeekBar) getIntent().getParcelableExtra(EXTRA_ACTION_SEEK_BAR));
                 break;
             case EXTRA_SENSOR:
-                //TODO
+                creatorSensor((SensorVal) getIntent().getParcelableExtra(EXTRA_SENSOR_VAL));
                 break;
         }
 
+    }
+
+    private void creatorSensor(SensorVal sensorVal) {
+        FragmentCreatorSensor fragmentCreatorSensor =
+                new FragmentCreatorSensor();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_SENSOR_VAL,sensorVal);
+
+        fragmentCreatorSensor.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root,fragmentCreatorSensor)
+                .commit();
     }
 
     private void creatorButton(ActionButton actionButton) {

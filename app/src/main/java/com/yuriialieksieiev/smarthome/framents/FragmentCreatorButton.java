@@ -23,9 +23,7 @@ import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.Device;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
-
 import org.json.JSONException;
-
 import java.util.Objects;
 
 public class FragmentCreatorButton extends Fragment {
@@ -156,7 +154,6 @@ public class FragmentCreatorButton extends Fragment {
         root.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!checkFields())
                     return;
 
@@ -166,11 +163,9 @@ public class FragmentCreatorButton extends Fragment {
                     editAction(actionButton);
                 else
                     createNewAction();
-
             }
         });
     }
-
 
     private void createNewAction() {
 
@@ -207,7 +202,6 @@ public class FragmentCreatorButton extends Fragment {
             e.printStackTrace();
         }
     }
-
 
     private boolean checkFields() {
         if (name == null || name.trim().length() == 0) {

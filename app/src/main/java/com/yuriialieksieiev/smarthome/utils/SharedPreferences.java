@@ -2,8 +2,6 @@ package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.view.View;
-
 import org.json.JSONArray;
 
 public class SharedPreferences
@@ -19,12 +17,17 @@ public class SharedPreferences
         editor.apply();
     }
 
-    public static String getActionsViewsJson(Context context)
+    public static JSONArray getActionsViewsJson(Context context)
     {
         final android.content.SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
 
-        return sharedPreferences.getString(ACTIONS_VIEWS_JSON,null);
+        try {
+            return new JSONArray(sharedPreferences.getString(ACTIONS_VIEWS_JSON,null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONArray();
+        }
     }
 
     private static final String  URL_SERVER = "com.yuiialieksieiev.smarthome.url_to_server";

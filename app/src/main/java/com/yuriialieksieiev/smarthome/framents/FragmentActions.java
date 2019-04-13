@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class FragmentActions extends Fragment implements
 
     private List<ActionButton> listButtons;
     private List<ActionSeekBar> listSeekBars;
+    private List<SensorView> listSensors;
 
     @Nullable
     @Override
@@ -44,7 +46,7 @@ public class FragmentActions extends Fragment implements
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
 
-        controller = new Controller(getContext(), listButtons, listSeekBars);
+        controller = new Controller(getContext(), listButtons, listSeekBars,listSensors);
 
         factoryViews = new Factory(getContext(),
                 this,
@@ -64,12 +66,12 @@ public class FragmentActions extends Fragment implements
 
         listButtons = new ArrayList<>();
         listSeekBars = new ArrayList<>();
+        listSensors = new ArrayList<>();
 
         try {
             factoryViews.build();
         } catch (Exception e) {
             e.printStackTrace();
-            //TODO Show SnackBar error(Nothing)
         }
     }
 
@@ -87,13 +89,13 @@ public class FragmentActions extends Fragment implements
 
     @Override
     public void sensorCreated(SensorView sensorView) {
-
+        listSensors.add(sensorView);
+        gl_root.addView(sensorView.getTvValue());
     }
 
     @Override
     public void buildingFinished() {
         //TODO DO request to server for set all actions
-        gl_root.addView(SensorView.Builder.build(getContext(),new SensorVal(SensorVal.Sensors.TEMPERATURE,123),null).getTvValue());
     }
 
     @Override
@@ -107,15 +109,27 @@ public class FragmentActions extends Fragment implements
 
     @Override
     public void onLongPressSensor(SensorVal sensorVal) {
-
+        new AlertMenu(getContext(),this).startEdition(sensorVal);
     }
 
     @Override
-    public void remove(Action action)
+    public void removeAction(Action action)
     {
         try {
             JsonManager.remove(getContext(),action);
             upDate();
+            Snackbar.make(root, R.string.action_removed,Snackbar.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeSensor(SensorVal sensorVal) {
+        try {
+            JsonManager.remove(getContext(),sensorVal);
+            upDate();
+            Snackbar.make(root, R.string.sensor_removed,Snackbar.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -135,6 +149,15 @@ public class FragmentActions extends Fragment implements
         Intent intent = new Intent(getContext(),MakerView.class);
         intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SEEK_BAR);
         intent.putExtra(MakerView.EXTRA_ACTION_SEEK_BAR,actionSeekBar);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void editSensor(SensorVal sensorVal) {
+        Intent intent = new Intent(getContext(),MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SENSOR);
+        intent.putExtra(MakerView.EXTRA_SENSOR_VAL,sensorVal);
 
         startActivity(intent);
     }

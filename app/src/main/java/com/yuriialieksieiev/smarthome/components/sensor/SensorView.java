@@ -54,7 +54,7 @@ public class SensorView implements View.OnLongClickListener {
             int height = SharedPreferences.getHeightViews(context);
             final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
                     new ViewGroup.LayoutParams(width, height));
-            layoutParams.setMargins(10, 20, 10, 0);
+            layoutParams.setMargins(10, 25, 10, 0);
             textView.setLayoutParams(layoutParams);
             textView.setTextColor(Color.WHITE);
             textView.setTextSize(12);

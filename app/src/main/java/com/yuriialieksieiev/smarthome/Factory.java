@@ -38,6 +38,8 @@ public class Factory {
                 return BUTTON;
             else if (name.equals(SEEK_BAR.inJson))
                 return SEEK_BAR;
+            else if(name.equals(SENSOR.inJson))
+                return SENSOR;
             else
                 return null;
         }
@@ -63,7 +65,7 @@ public class Factory {
     }
 
     public void build() throws Exception {
-        JSONArray jsonArray = new JSONArray(SharedPreferences.getActionsViewsJson(context));
+        JSONArray jsonArray = SharedPreferences.getActionsViewsJson(context);
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -82,7 +84,7 @@ public class Factory {
                     break;
                 case SENSOR:
                     buildSensor(jsonObject);
-
+                    break;
             }
         }
         onViewCreated.buildingFinished();

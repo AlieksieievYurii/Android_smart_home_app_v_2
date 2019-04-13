@@ -8,20 +8,22 @@ import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
+import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
 
 public class AlertMenu {
     public interface MenuCallBack {
-        void remove(Action action);
-
+        void removeAction(Action action);
+        void removeSensor(SensorVal sensorVal);
         void editActionButton(ActionButton actionButton);
-
         void editActionSeekBar(ActionSeekBar actionSeekBar);
+        void editSensor(SensorVal sensorVal);
     }
 
     private Context context;
     private Factory.TypeView typeView;
     private ActionButton actionButton;
     private ActionSeekBar actionSeekBar;
+    private SensorVal sensorVal;
     private MenuCallBack menuCallBack;
     private String name;
 
@@ -41,6 +43,14 @@ public class AlertMenu {
         typeView = Factory.TypeView.SEEK_BAR;
         this.actionSeekBar = actionSeekBar;
         name = actionSeekBar.getName();
+        showMenu(name);
+    }
+
+    public void startEdition(SensorVal sensorVal)
+    {
+        typeView = Factory.TypeView.SENSOR;
+        this.sensorVal = sensorVal;
+        name = sensorVal.getSensor().getInJson();
         showMenu(name);
     }
 
@@ -74,10 +84,13 @@ public class AlertMenu {
     private void remove() {
         switch (typeView) {
             case BUTTON:
-                menuCallBack.remove(actionButton.getAction());
+                menuCallBack.removeAction(actionButton.getAction());
                 break;
             case SEEK_BAR:
-                menuCallBack.remove(actionSeekBar.getAction());
+                menuCallBack.removeAction(actionSeekBar.getAction());
+                break;
+            case SENSOR:
+                menuCallBack.removeSensor(sensorVal);
                 break;
         }
     }
@@ -109,6 +122,9 @@ public class AlertMenu {
                 break;
             case SEEK_BAR:
                 menuCallBack.editActionSeekBar(actionSeekBar);
+                break;
+            case SENSOR:
+                menuCallBack.editSensor(sensorVal);
                 break;
         }
     }

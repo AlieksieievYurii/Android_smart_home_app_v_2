@@ -54,6 +54,15 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
 
+        findViewById(R.id.btn_add_sensor).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this,MakerView.class);
+                intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SENSOR);
+                startActivity(intent);
+            }
+        });
+
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
