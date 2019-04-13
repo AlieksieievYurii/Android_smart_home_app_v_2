@@ -3,7 +3,7 @@ package com.yuriialieksieiev.smarthome.components.button;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.yuriialieksieiev.smarthome.components.Device;
+import com.yuriialieksieiev.smarthome.components.enums.Device;
 
 import org.json.JSONException;
 import org.json.JSONObject;

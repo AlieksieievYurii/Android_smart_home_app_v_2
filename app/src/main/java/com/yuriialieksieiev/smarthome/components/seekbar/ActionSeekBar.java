@@ -16,7 +16,6 @@ import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
-
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 
 public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View.OnLongClickListener, Parcelable {
@@ -155,7 +154,7 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
             int height = SharedPreferences.getHeightViews(context);
             int wight = SharedPreferences.getWidthViews(context);
             final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(wight, height*2 + 20));
+                    new ViewGroup.LayoutParams(wight, height*2 + 25));
             layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2);
             layoutParams.setMargins(10, 20, 10, 10);
             linearLayout.setLayoutParams(layoutParams);

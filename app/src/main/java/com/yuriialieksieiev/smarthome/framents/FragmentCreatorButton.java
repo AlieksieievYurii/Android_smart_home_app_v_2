@@ -20,7 +20,7 @@ import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
-import com.yuriialieksieiev.smarthome.components.Device;
+import com.yuriialieksieiev.smarthome.components.enums.Device;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import org.json.JSONException;

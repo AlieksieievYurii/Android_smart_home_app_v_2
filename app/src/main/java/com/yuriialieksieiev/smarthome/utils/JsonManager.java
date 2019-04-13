@@ -5,7 +5,7 @@ import android.content.Context;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
-import com.yuriialieksieiev.smarthome.components.Device;
+import com.yuriialieksieiev.smarthome.components.enums.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;

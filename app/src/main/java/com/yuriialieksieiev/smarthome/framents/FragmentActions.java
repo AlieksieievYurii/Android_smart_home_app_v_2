@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
+import com.yuriialieksieiev.smarthome.IController;
 import com.yuriialieksieiev.smarthome.MakerView;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
 import com.yuriialieksieiev.smarthome.components.button.Action;
@@ -33,7 +34,7 @@ public class FragmentActions extends Fragment implements
 
     private View root;
     private Factory factoryViews;
-    private Controller controller;
+    private IController controller;
     private GridLayout gl_root;
 
     private List<ActionButton> listButtons;
@@ -46,7 +47,8 @@ public class FragmentActions extends Fragment implements
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
 
-        controller = new Controller(getContext(), listButtons, listSeekBars,listSensors);
+        Controller controller = new Controller(getContext());
+        this.controller = controller;
 
         factoryViews = new Factory(getContext(),
                 this,
@@ -96,6 +98,9 @@ public class FragmentActions extends Fragment implements
     @Override
     public void buildingFinished() {
         //TODO DO request to server for set all actions
+        controller.start(listButtons,
+                listSeekBars,
+                listSensors);
     }
 
     @Override

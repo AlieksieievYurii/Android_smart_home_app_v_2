@@ -10,13 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 import com.yuriialieksieiev.smarthome.framents.FragmentTasks;
-import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //test();
         init();
 
         if(savedInstanceState == null)
