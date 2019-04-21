@@ -14,6 +14,7 @@ import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.IController;
 import com.yuriialieksieiev.smarthome.MakerView;
+import com.yuriialieksieiev.smarthome.components.A;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
 import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
@@ -98,9 +99,8 @@ public class FragmentActions extends Fragment implements
     @Override
     public void buildingFinished() {
         //TODO DO request to server for set all actions
-        controller.start(listButtons,
-                listSeekBars,
-                listSensors);
+        A a = new A(listButtons,listSeekBars,listSensors);
+        controller.onStart(a);
     }
 
     @Override
@@ -165,5 +165,11 @@ public class FragmentActions extends Fragment implements
         intent.putExtra(MakerView.EXTRA_SENSOR_VAL,sensorVal);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        controller.stop();
     }
 }

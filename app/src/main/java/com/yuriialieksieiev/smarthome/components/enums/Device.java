@@ -2,7 +2,7 @@ package com.yuriialieksieiev.smarthome.components.enums;
 
 public enum Device
 {
-    TCOD("TCOD"),TWCOD("TWCOD");
+    TCOD("tcod"),TWCOD("twcod");
 
     private String inJson;
 

@@ -11,6 +11,9 @@ import java.util.Objects;
 
 public class SensorVal implements Parcelable {
 
+    private final static String API_EXTRA_SENSOR = "sensor";
+    private final static String API_EXTRA_VALUE = "value";
+
     public enum Sensors {
         TEMPERATURE("temperature", R.drawable.ic_celsius),
         LIGHT("light",R.drawable.ic_day),
@@ -62,6 +65,8 @@ public class SensorVal implements Parcelable {
         return sensor;
     }
 
+
+
     public int getValue() {
         return value;
     }
@@ -106,6 +111,13 @@ public class SensorVal implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(value);
         dest.writeString(sensor.inJson);
+    }
+
+    public static SensorVal fromAPI(JSONObject jsonObject) throws JSONException {
+        Sensors sensors = Sensors.getByName(jsonObject.getString(API_EXTRA_SENSOR));
+        int val = jsonObject.getInt(API_EXTRA_VALUE);
+
+        return new SensorVal(sensors,val);
     }
 
 }

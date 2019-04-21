@@ -62,7 +62,7 @@ public class SharedPreferences
         editor.apply();
     }
 
-    public static String getModuleName(Context context)
+    public static String getServerName(Context context)
     {
         final android.content.SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);

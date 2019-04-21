@@ -11,11 +11,13 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
+
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 
 public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View.OnLongClickListener, Parcelable {
@@ -27,16 +29,17 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
     private OnLongPressAction onLongPressAction;
 
     private String name;
+    private BoxedVertical boxedVertical;
 
     private ActionSeekBar(Action action,
-                         View seekBar,
-                         OnAction onAction,
+                          View seekBar,
+                          OnAction onAction,
                           OnLongPressAction onLongPressAction) {
         this.action = action;
         this.seekBar = seekBar;
         this.onAction = onAction;
         this.onLongPressAction = onLongPressAction;
-        BoxedVertical boxedVertical = seekBar.findViewWithTag(TAG_SEEK_BAR);
+        boxedVertical = seekBar.findViewWithTag(TAG_SEEK_BAR);
         boxedVertical.setOnBoxedPointsChangeListener(this);
         seekBar.setOnLongClickListener(this);
     }
@@ -73,6 +76,12 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
 
     public Action getAction() {
         return action;
+    }
+
+    public void setAction(Action action)
+    {
+        this.action.setPortSignal(action.getPortSignal());
+        boxedVertical.setValue(action.getPortSignal());
     }
 
     @Override
@@ -154,7 +163,7 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
             int height = SharedPreferences.getHeightViews(context);
             int wight = SharedPreferences.getWidthViews(context);
             final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(wight, height*2 + 25));
+                    new ViewGroup.LayoutParams(wight, height * 2 + 25));
             layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2);
             layoutParams.setMargins(10, 20, 10, 10);
             linearLayout.setLayoutParams(layoutParams);
@@ -168,7 +177,7 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
 
             return new ActionSeekBar(patternActionSeekBar.getAction(),
                     linearLayout,
-                    onAction,onLongPressAction);
+                    onAction, onLongPressAction);
         }
     }
 }

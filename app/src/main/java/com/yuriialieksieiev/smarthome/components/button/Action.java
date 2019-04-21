@@ -17,6 +17,12 @@ public class Action implements Parcelable {
     private static final String ACTION_EXTRA_PORT_STATUS = "port_status";
     private static final String ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
 
+    private static final String API_EXTRA_PORT_TYPE = "port_type";
+    private static final String API_EXTRA_PORT_ID = "port_id";
+    private static final String API_EXTRA_FOR_DEVICE = "for_device";
+    private static final String API_EXTRA_PORT_STATUS = "port_status";
+    private static final String API_EXTRA_PORT_VALUE = "port_value";
+
     public enum TypePort {
         DIGITAL("digital"), ANALOG("analog");
 
@@ -37,7 +43,7 @@ public class Action implements Parcelable {
     }
 
     public enum PortStatus {
-        HIGH("high"), LOW("low");
+        HIGH("HIGH"), LOW("LOW");
 
         private String inJson;
 
@@ -171,7 +177,7 @@ public class Action implements Parcelable {
 
 
 
-    public static Action getActionByJSon(JSONObject jsonObject) throws JSONException {
+    public static Action getActionFromBuilding(JSONObject jsonObject) throws JSONException {
         Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(ACTION_EXTRA_TYPE_PORT));
         int port = jsonObject.getInt(ACTION_EXTRA_PORT);
 
@@ -183,7 +189,23 @@ public class Action implements Parcelable {
             int signalOnPort = jsonObject.getInt(ACTION_EXTRA_SIGNAL_ON_PORT);
             return new Action(Device.getDeviceByName(jsonObject.getString(ACTION_EXTRA_DEVICE)), port,signalOnPort);
         } else
-            throw new JSONException("Can not convert " + jsonObject.toString() + " to Action object!");
+            throw new JSONException("From Building:: Can not convert " + jsonObject.toString() + " to Action object!");
+    }
+
+    public static Action fromAPI(JSONObject jsonObject) throws JSONException {
+        Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(API_EXTRA_PORT_TYPE));
+        int port = jsonObject.getInt(API_EXTRA_PORT_ID);
+        Device device = Device.getDeviceByName(jsonObject.getString(API_EXTRA_FOR_DEVICE));
+
+        if (typePort == TypePort.DIGITAL) {
+            PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(API_EXTRA_PORT_STATUS));
+            return new Action(device,port, portStatus);
+
+        } else if (typePort == TypePort.ANALOG) {
+            int signalOnPort = jsonObject.getInt(API_EXTRA_PORT_VALUE);
+            return new Action(device, port,signalOnPort);
+        } else
+            throw new JSONException("From API:: Can not convert " + jsonObject.toString() + " to Action object!");
     }
 
 }

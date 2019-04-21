@@ -22,7 +22,7 @@ public class PatternActionSeekBar implements Parcelable
 
     public PatternActionSeekBar(JSONObject jsonObject) throws JSONException {
         this.name = jsonObject.getString(JsonManager.JSON_EXTRA_NAME);
-        this.action = Action.getActionByJSon(jsonObject.getJSONObject(JsonManager.JSON_EXTRA_ACTION));
+        this.action = Action.getActionFromBuilding(jsonObject.getJSONObject(JsonManager.JSON_EXTRA_ACTION));
     }
 
     private PatternActionSeekBar(Parcel in) {

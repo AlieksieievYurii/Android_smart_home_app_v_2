@@ -39,7 +39,7 @@ public class PatternActionButton implements Parcelable
     private void init(JSONObject jsonObject) throws JSONException {
         this.icon = Icons.getEnumByName(jsonObject.getString(JSON_EXTRA_ICON));
         this.name = jsonObject.getString(JSON_EXTRA_NAME);
-        this.action = Action.getActionByJSon(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
+        this.action = Action.getActionFromBuilding(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
     }
 
 

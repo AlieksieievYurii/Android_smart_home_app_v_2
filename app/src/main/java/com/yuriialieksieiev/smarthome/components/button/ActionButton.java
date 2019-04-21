@@ -61,13 +61,12 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
     }
 
     public void setAction(Action action) {
-        this.action = action;
-
         if (action.getPortStatus() == Action.PortStatus.HIGH)
             button.setActivated(true);
         else if (action.getPortStatus() == Action.PortStatus.LOW)
             button.setActivated(false);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -118,17 +117,6 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
         dest.writeString(icons.getNameIcon());
     }
 
-    @Override
-    public String toString() {
-        return "ActionButton{" +
-                "button=" + button +
-                ", action=" + action +
-                ", onAction=" + onAction +
-                ", onLongPressAction=" + onLongPressAction +
-                ", name='" + name + '\'' +
-                ", icons=" + icons +
-                '}';
-    }
 
     public static class Builder {
         public static ActionButton build(Context context,

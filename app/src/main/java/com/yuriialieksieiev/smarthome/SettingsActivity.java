@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity
         if(urlServer != null)
             edtUrlServer.setText(urlServer);
 
-        String moduleName = SharedPreferences.getModuleName(this);
+        String moduleName = SharedPreferences.getServerName(this);
 
         if(moduleName != null)
             edtModuleName.setText(moduleName);
