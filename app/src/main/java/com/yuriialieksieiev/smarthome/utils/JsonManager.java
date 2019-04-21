@@ -162,4 +162,18 @@ public class JsonManager {
         }
     }
 
+    public static String convertToAPI(Action action) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("for_device",action.getDevice().getInJson());
+        jsonObject.put("port_type",action.getTypePort().getInJson());
+        jsonObject.put("port_id",action.getPort());
+
+        if(action.getTypePort() == Action.TypePort.DIGITAL)
+            jsonObject.put("port_status",action.getPortStatus().getInJson());
+        else if(action.getTypePort() == Action.TypePort.ANALOG)
+            jsonObject.put("port_value",action.getPortSignal());
+
+        return jsonObject.toString();
+    }
+
 }

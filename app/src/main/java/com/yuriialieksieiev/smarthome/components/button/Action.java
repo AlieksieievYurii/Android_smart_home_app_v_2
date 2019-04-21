@@ -32,6 +32,10 @@ public class Action implements Parcelable {
             this.inJson = inJson;
         }
 
+        public String getInJson() {
+            return inJson;
+        }
+
         public static TypePort getTypePort(String inJson) {
             if (inJson.equals(DIGITAL.inJson))
                 return DIGITAL;
@@ -49,6 +53,10 @@ public class Action implements Parcelable {
 
         PortStatus(String inJson) {
             this.inJson = inJson;
+        }
+
+        public String getInJson() {
+            return inJson;
         }
 
         public static PortStatus getPortStatus(String inJson) {

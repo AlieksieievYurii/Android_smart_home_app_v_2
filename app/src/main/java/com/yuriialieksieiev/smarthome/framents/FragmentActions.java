@@ -13,6 +13,7 @@ import android.widget.GridLayout;
 import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.IController;
+import com.yuriialieksieiev.smarthome.IView;
 import com.yuriialieksieiev.smarthome.MakerView;
 import com.yuriialieksieiev.smarthome.components.A;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
@@ -31,7 +32,8 @@ import java.util.List;
 public class FragmentActions extends Fragment implements
         Factory.OnViewCreated,
         OnLongPressAction,
-        AlertMenu.MenuCallBack {
+        AlertMenu.MenuCallBack,
+        IView {
 
     private View root;
     private Factory factoryViews;
@@ -48,7 +50,7 @@ public class FragmentActions extends Fragment implements
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
 
-        Controller controller = new Controller(getContext());
+        Controller controller = new Controller(getContext(),this);
         this.controller = controller;
 
         factoryViews = new Factory(getContext(),
@@ -171,5 +173,10 @@ public class FragmentActions extends Fragment implements
     public void onStop() {
         super.onStop();
         controller.stop();
+    }
+
+    @Override
+    public void error(String mes) {
+        Snackbar.make(root,mes,Snackbar.LENGTH_SHORT).show();
     }
 }

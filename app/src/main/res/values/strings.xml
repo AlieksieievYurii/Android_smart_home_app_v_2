@@ -30,4 +30,6 @@
     <string name="apply">Apply</string>
     <string name="sensor_removed">Sensor removed!</string>
     <string name="action_removed">Action removed!</string>
+    <string name="name">Name...</string>
+    <string name="port">Port...</string>
 </resources>
