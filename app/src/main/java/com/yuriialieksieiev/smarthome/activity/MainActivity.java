@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome;
+package com.yuriialieksieiev.smarthome.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 import com.yuriialieksieiev.smarthome.framents.FragmentTasks;
 
@@ -86,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .commit();
                 break;
             case R.id.nav_settings:
-                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
             case R.id.nav_about:
+                startActivity(new Intent(MainActivity.this, ActivityAbout.class));
                 break;
         }
 

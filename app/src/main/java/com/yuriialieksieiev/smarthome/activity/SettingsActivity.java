@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome;
+package com.yuriialieksieiev.smarthome.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+
+import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
 
 public class SettingsActivity extends AppCompatActivity
@@ -39,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity
         findViewById(R.id.btn_add_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this,MakerView.class);
+                Intent intent = new Intent(SettingsActivity.this, MakerView.class);
                 intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_BUTTON);
                 startActivity(intent);
             }

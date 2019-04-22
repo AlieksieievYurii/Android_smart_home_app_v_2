@@ -11,9 +11,8 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
@@ -82,17 +81,6 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
     {
         this.action.setPortSignal(action.getPortSignal());
         boxedVertical.setValue(action.getPortSignal());
-    }
-
-    @Override
-    public String toString() {
-        return "ActionSeekBar{" +
-                "action=" + action +
-                ", seekBar=" + seekBar +
-                ", onAction=" + onAction +
-                ", onLongPressAction=" + onLongPressAction +
-                ", name='" + name + '\'' +
-                '}';
     }
 
     public void setName(String name) {

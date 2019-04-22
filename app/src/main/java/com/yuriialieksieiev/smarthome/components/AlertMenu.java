@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.button.Action;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
@@ -59,7 +58,7 @@ public class AlertMenu {
                 context.getString(R.string.remove)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.edit)+ " " + nameView)
+                .setTitle(context.getString(R.string.edit)+ " \"" + nameView+"\"")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

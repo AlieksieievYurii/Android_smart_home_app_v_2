@@ -47,21 +47,31 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <EditText
-                android:id="@+id/edt_name"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:inputType="text"
-                tools:ignore="Autofill" />
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/edt_port"
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/port"
-                android:inputType="number"
-                tools:ignore="Autofill" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/port"
+                    android:inputType="number"
+                    tools:ignore="Autofill" />
+            </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:id="@+id/sp_device"

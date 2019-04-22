@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.yuriialieksieiev.smarthome.MakerView;
+import com.yuriialieksieiev.smarthome.activity.MakerView;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;

@@ -16,7 +16,7 @@ public class SensorView implements View.OnLongClickListener {
     private SensorVal sensorVal;
     private OnLongPressAction onLongPressAction;
 
-    public SensorView(TextView tvValue, SensorVal sensorVal, OnLongPressAction onLongPressAction) {
+    private SensorView(TextView tvValue, SensorVal sensorVal, OnLongPressAction onLongPressAction) {
         this.tvValue = tvValue;
         this.sensorVal = sensorVal;
         this.onLongPressAction = onLongPressAction;

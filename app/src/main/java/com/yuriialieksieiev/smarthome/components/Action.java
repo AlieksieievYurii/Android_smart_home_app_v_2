@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components.button;
+package com.yuriialieksieiev.smarthome.components;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -105,7 +105,7 @@ public class Action implements Parcelable {
         return portSignal;
     }
 
-    void setPortStatus(PortStatus portStatus) {
+    public void setPortStatus(PortStatus portStatus) {
         this.portStatus = portStatus;
     }
 
@@ -124,16 +124,6 @@ public class Action implements Parcelable {
                     action.device == this.device);
     }
 
-    @Override
-    public String toString() {
-        return "Action{" +
-                "typePort=" + typePort +
-                ", port=" + port +
-                ", portStatus=" + portStatus +
-                ", portSignal=" + portSignal +
-                ", device=" + device +
-                '}';
-    }
 
     public JSONObject toJson() throws JSONException {
         JSONObject jsonObject = new JSONObject();

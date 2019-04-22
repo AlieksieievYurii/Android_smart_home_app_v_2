@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
@@ -136,8 +138,6 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
 
             button.setText(patternActionButton.getName());
             button.setBackgroundResource(patternActionButton.getIcon().getDrawable());
-
-            //TODO Implement it for custom settings by user!!!
 
             return new ActionButton(button,
                     patternActionButton.getAction(),

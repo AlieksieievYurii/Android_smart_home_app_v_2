@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
+    tools:context=".activity.MainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:openDrawer="start">
 
@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="Test"/>
+                    android:text="@string/bottom_text"/>
             </LinearLayout>
 
     </android.support.design.widget.NavigationView>

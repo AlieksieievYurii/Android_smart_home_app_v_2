@@ -14,10 +14,11 @@ import com.yuriialieksieiev.smarthome.Controller;
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.IController;
 import com.yuriialieksieiev.smarthome.IView;
-import com.yuriialieksieiev.smarthome.MakerView;
+import com.yuriialieksieiev.smarthome.activity.MakerView;
 import com.yuriialieksieiev.smarthome.components.A;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
-import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.SnackBarRetry;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
@@ -100,7 +101,6 @@ public class FragmentActions extends Fragment implements
 
     @Override
     public void buildingFinished() {
-        //TODO DO request to server for set all actions
         A a = new A(listButtons,listSeekBars,listSensors);
         controller.onStart(a);
     }
@@ -178,5 +178,10 @@ public class FragmentActions extends Fragment implements
     @Override
     public void error(String mes) {
         Snackbar.make(root,mes,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void error(SnackBarRetry.CallBack callBack) {
+        SnackBarRetry.showSnackRetry(root,callBack);
     }
 }

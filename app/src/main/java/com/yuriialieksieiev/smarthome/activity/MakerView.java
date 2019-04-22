@@ -1,7 +1,9 @@
-package com.yuriialieksieiev.smarthome;
+package com.yuriialieksieiev.smarthome.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;

@@ -67,7 +67,7 @@ public class SensorVal implements Parcelable {
 
 
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 

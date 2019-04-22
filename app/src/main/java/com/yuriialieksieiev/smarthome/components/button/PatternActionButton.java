@@ -3,6 +3,7 @@ package com.yuriialieksieiev.smarthome.components.button;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.yuriialieksieiev.smarthome.Factory;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import org.json.JSONException;
 import org.json.JSONObject;

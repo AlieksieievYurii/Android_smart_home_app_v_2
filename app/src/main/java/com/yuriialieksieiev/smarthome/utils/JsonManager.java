@@ -2,7 +2,7 @@ package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.enums.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;

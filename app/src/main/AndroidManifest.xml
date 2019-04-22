@@ -3,24 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yuriialieksieiev.smarthome">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SettingsActivity" android:screenOrientation="locked"/>
-        <activity android:name=".MakerView" android:screenOrientation="locked" />
+        <activity android:name=".activity.ActivityAbout"
+            android:screenOrientation="locked"/>
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="locked">
+            android:name=".activity.SettingsActivity"
+            android:screenOrientation="locked" />
+        <activity
+            android:name=".activity.MakerView"
+            android:screenOrientation="locked" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="locked"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

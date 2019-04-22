@@ -34,8 +34,4 @@ public enum Icons
         return null;
     }
 
-    @Override
-    public String toString() {
-        return nameIcon;
-    }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,7 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.yuriialieksieiev.smarthome.components.A;
-import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.SnackBarRetry;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.utils.ActionUtils;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
@@ -35,7 +35,7 @@ public class Controller implements OnAction, IController {
     private A a;
     private IView iView;
 
-    public Controller(Context context,IView iView) {
+    public Controller(Context context, IView iView) {
         this.context = context;
         this.iView = iView;
     }
@@ -43,22 +43,20 @@ public class Controller implements OnAction, IController {
     @Override
     public void onAction(Action action) {
         vibrate();
-        Toast.makeText(context, action.toString(), Toast.LENGTH_SHORT).show();
         postAction(action);
     }
 
-    private void postAction(final Action action)
-    {
+    private void postAction(final Action action) {
         final PostActionListener postActionListener = new PostActionListener();
         StringRequest stringRequest =
                 new StringRequest(
                         Request.Method.POST,
                         UrlUtils.getUrlForPostAction(context),
                         postActionListener,
-                        postActionListener){
+                        postActionListener) {
                     @Override
                     protected Map<String, String> getParams() {
-                        Map<String,String> param = new HashMap<>();
+                        Map<String, String> param = new HashMap<>();
                         try {
                             param.put("data", JsonManager.convertToAPI(action));
                         } catch (JSONException e) {
@@ -71,14 +69,12 @@ public class Controller implements OnAction, IController {
         requestQueue.add(stringRequest);
     }
 
-    private void vibrate()
-    {
-        if(SharedPreferences.isVibrated(context))
-        {
+    private void vibrate() {
+        if (SharedPreferences.isVibrated(context)) {
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                vibrator.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
             else
                 vibrator.vibrate(100);
         }
@@ -90,10 +86,10 @@ public class Controller implements OnAction, IController {
         currentlyHashCode = 0;
         this.requestQueue = Volley.newRequestQueue(context);
 
-        startThreadHashCode();
+        startProcess();
     }
 
-    private void startThreadHashCode() {
+    private void startProcess() {
         final HashCodeListener hashCodeListener = new HashCodeListener();
         final SensorsListener sensorsListener = new SensorsListener();
 
@@ -142,8 +138,10 @@ public class Controller implements OnAction, IController {
 
     @Override
     public void stop() {
-        timer.cancel();
-        timer = null;
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
 
@@ -151,7 +149,13 @@ public class Controller implements OnAction, IController {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            iView.error("Error connection: " + error.getMessage());
+            iView.error(new SnackBarRetry.CallBack() {
+                @Override
+                public void onRetry() {
+                    startProcess();
+                }
+            });
+            stop();
         }
 
         @Override
@@ -170,7 +174,7 @@ public class Controller implements OnAction, IController {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            iView.error("Error connection: " + error.getMessage());
+            iView.error("Error connection: Actions ");
         }
 
         @Override
@@ -187,7 +191,6 @@ public class Controller implements OnAction, IController {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            iView.error("Error connection: " + error.getMessage());
         }
 
         @Override
@@ -201,8 +204,7 @@ public class Controller implements OnAction, IController {
         }
     }
 
-    private class PostActionListener implements Response.Listener<String>, Response.ErrorListener
-    {
+    private class PostActionListener implements Response.Listener<String>, Response.ErrorListener {
 
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -211,11 +213,10 @@ public class Controller implements OnAction, IController {
 
         @Override
         public void onResponse(String response) {
-            if(response != null)
-            {
+            if (response != null) {
                 try {
                     JSONObject resp = new JSONObject(response);
-                    if(resp.getString("Response").equals("WRONG"))
+                    if (resp.getString("Response").equals("WRONG"))
                         iView.error("Error with JSON!");
                 } catch (JSONException e) {
                     e.printStackTrace();

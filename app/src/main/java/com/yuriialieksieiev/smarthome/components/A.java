@@ -1,9 +1,7 @@
 package com.yuriialieksieiev.smarthome.components;
-
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
-
 import java.util.List;
 
 public class A
@@ -28,17 +26,5 @@ public class A
 
     public List<SensorView> getListSensorView() {
         return listSensorView;
-    }
-
-    public void setListButtons(List<ActionButton> listButtons) {
-        this.listButtons = listButtons;
-    }
-
-    public void setListSeekBars(List<ActionSeekBar> listSeekBars) {
-        this.listSeekBars = listSeekBars;
-    }
-
-    public void setListSensorView(List<SensorView> listSensorView) {
-        this.listSensorView = listSensorView;
     }
 }

@@ -30,6 +30,11 @@
     <string name="apply">Apply</string>
     <string name="sensor_removed">Sensor removed!</string>
     <string name="action_removed">Action removed!</string>
-    <string name="name">Name...</string>
-    <string name="port">Port...</string>
+    <string name="name">Name</string>
+    <string name="port">Port</string>
+    <string name="about">Program SmartHome By Yurii Alieksieiev &amp; Oleg Horbatuk</string>
+    <string name="bottom_text">Yurii Alieksieiev 2018</string>
+    <string name="no_connection">Not connection!</string>
+    <string name="retry">Retry</string>
+    <string name="logo">logo</string>
 </resources>

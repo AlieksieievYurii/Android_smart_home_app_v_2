@@ -1,6 +1,6 @@
 package com.yuriialieksieiev.smarthome.utils;
 import com.yuriialieksieiev.smarthome.components.A;
-import com.yuriialieksieiev.smarthome.components.button.Action;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
