@@ -19,11 +19,11 @@
     <string name="add_sensor">Add Sensor</string>
     <string name="settings_server">Settings Server</string>
     <string name="url_server">Url server</string>
-    <string name="name_module">Name module...</string>
+    <string name="name_module">Name module</string>
     <string name="password">Password</string>
     <string name="settings_app">Settings app</string>
     <string name="width_views">Width views</string>
-    <string name="dp">Dp...</string>
+    <string name="dp">Dp…</string>
     <string name="vibration_on_press">Vibration on press</string>
     <string name="save">Save</string>
     <string name="height_views">Height views</string>
@@ -37,4 +37,7 @@
     <string name="no_connection">Not connection!</string>
     <string name="retry">Retry</string>
     <string name="logo">logo</string>
+    <string name="see_think_act">See.Think.Act</string>
+    <string name="smarthome">SmartHome</string>
+    <string name="description">Desctiption</string>
 </resources>

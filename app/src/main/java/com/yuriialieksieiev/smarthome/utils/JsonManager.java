@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JsonManager {
     public static final String JSON_EXTRA_TYPE = "type";
     public static final String JSON_EXTRA_ICON = "icon";
@@ -160,6 +163,15 @@ public class JsonManager {
                 }
             }
         }
+    }
+
+    public static List<Action> parseActions(JSONArray jsonArray) throws JSONException {
+        final List<Action> actions = new ArrayList<>();
+
+        for(int i = 0; i < jsonArray.length(); i++)
+            actions.add(Action.parseAPI(jsonArray.getJSONObject(i)));
+
+        return actions;
     }
 
     public static String convertToAPI(Action action) throws JSONException {

@@ -73,6 +73,13 @@
                     tools:ignore="Autofill" />
             </android.support.design.widget.TextInputLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Device"
+                android:textSize="13sp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/colorPrimary"/>
             <Spinner
                 android:id="@+id/sp_device"
                 android:layout_width="match_parent"

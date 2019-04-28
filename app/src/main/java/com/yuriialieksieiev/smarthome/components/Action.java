@@ -190,7 +190,7 @@ public class Action implements Parcelable {
             throw new JSONException("From Building:: Can not convert " + jsonObject.toString() + " to Action object!");
     }
 
-    public static Action fromAPI(JSONObject jsonObject) throws JSONException {
+    public static Action parseAPI(JSONObject jsonObject) throws JSONException {
         Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(API_EXTRA_PORT_TYPE));
         int port = jsonObject.getInt(API_EXTRA_PORT_ID);
         Device device = Device.getDeviceByName(jsonObject.getString(API_EXTRA_FOR_DEVICE));

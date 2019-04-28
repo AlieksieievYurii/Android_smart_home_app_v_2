@@ -7,7 +7,7 @@ import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
 
 import java.util.List;
 
-public interface IController
+public interface IControllerAction
 {
     void onStart(A a);
     void stop();

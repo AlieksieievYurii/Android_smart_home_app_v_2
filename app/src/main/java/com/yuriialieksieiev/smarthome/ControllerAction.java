@@ -11,9 +11,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.yuriialieksieiev.smarthome.components.A;
-import com.yuriialieksieiev.smarthome.components.SnackBarRetry;
 import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
+import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 import com.yuriialieksieiev.smarthome.utils.ActionUtils;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Controller implements OnAction, IController {
+public class ControllerAction implements OnAction, IControllerAction {
     private final static int TIME_REQUEST = 3000;
     private long currentlyHashCode = 0;
     private Context context;
@@ -35,7 +35,7 @@ public class Controller implements OnAction, IController {
     private A a;
     private IView iView;
 
-    public Controller(Context context, IView iView) {
+    public ControllerAction(Context context, IView iView) {
         this.context = context;
         this.iView = iView;
     }
@@ -149,7 +149,7 @@ public class Controller implements OnAction, IController {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            iView.error(new SnackBarRetry.CallBack() {
+            iView.error(new FragmentActions.CallBack() {
                 @Override
                 public void onRetry() {
                     startProcess();

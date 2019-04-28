@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import com.yuriialieksieiev.smarthome.Controller;
+import com.yuriialieksieiev.smarthome.ControllerAction;
 import com.yuriialieksieiev.smarthome.Factory;
-import com.yuriialieksieiev.smarthome.IController;
+import com.yuriialieksieiev.smarthome.IControllerAction;
 import com.yuriialieksieiev.smarthome.IView;
 import com.yuriialieksieiev.smarthome.activity.MakerView;
 import com.yuriialieksieiev.smarthome.components.A;
 import com.yuriialieksieiev.smarthome.components.AlertMenu;
-import com.yuriialieksieiev.smarthome.components.SnackBarRetry;
 import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.R;
@@ -36,14 +35,20 @@ public class FragmentActions extends Fragment implements
         AlertMenu.MenuCallBack,
         IView {
 
+    public interface CallBack{
+        void onRetry();
+    }
+
     private View root;
     private Factory factoryViews;
-    private IController controller;
+    private IControllerAction controller;
     private GridLayout gl_root;
 
     private List<ActionButton> listButtons;
     private List<ActionSeekBar> listSeekBars;
     private List<SensorView> listSensors;
+
+    private Snackbar snackbarError;
 
     @Nullable
     @Override
@@ -51,12 +56,12 @@ public class FragmentActions extends Fragment implements
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
 
-        Controller controller = new Controller(getContext(),this);
-        this.controller = controller;
+        ControllerAction controllerAction = new ControllerAction(getContext(),this);
+        this.controller = controllerAction;
 
         factoryViews = new Factory(getContext(),
                 this,
-                controller,
+                controllerAction,
                 this);
         return root;
     }
@@ -170,6 +175,15 @@ public class FragmentActions extends Fragment implements
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(snackbarError != null && snackbarError.isShown()) {
+            snackbarError.dismiss();
+            snackbarError = null;
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         controller.stop();
@@ -181,7 +195,14 @@ public class FragmentActions extends Fragment implements
     }
 
     @Override
-    public void error(SnackBarRetry.CallBack callBack) {
-        SnackBarRetry.showSnackRetry(root,callBack);
+    public void error(final CallBack callBack) {
+        snackbarError = Snackbar.make(root,"Error connection",Snackbar.LENGTH_INDEFINITE);
+        snackbarError.setAction(R.string.retry, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.onRetry();
+            }
+        });
+        snackbarError.show();
     }
 }

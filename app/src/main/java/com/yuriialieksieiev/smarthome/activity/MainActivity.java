@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_actions:
+                setTitle("Actions");
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container,
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_tasks:
+                setTitle("Tasks");
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container,

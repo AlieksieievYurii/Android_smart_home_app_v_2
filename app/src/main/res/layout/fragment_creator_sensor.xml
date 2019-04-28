@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC">
+    android:background="#ECECEC"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,14 +23,23 @@
             android:textSize="20sp"
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensor"
+            android:textSize="12sp"
+            android:layout_marginTop="70dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/tv_example"/>
             <Spinner
                 android:id="@+id/sp_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:layout_below="@id/tv_example"
-                android:layout_marginTop="70dp"/>
+                android:layout_below="@id/tv_hint" />
 
 
         <Button

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    app:cardBackgroundColor="#F1EDED"
+    android:layout_marginBottom="4dp"
+    android:elevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+        <TextView
+            android:id="@+id/tv_hint_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            style=""
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_hint_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/tv_name"
+            android:layout_marginEnd="-40dp"
+            android:text="Mode"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+        <TextView
+            android:id="@+id/tv_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hint_mode"
+            android:textColor="@android:color/holo_orange_dark"
+            android:text="once"
+            android:layout_alignStart="@id/tv_hint_mode" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textSize="20sp"
+            android:layout_marginTop="-5dp"
+            android:layout_below="@id/tv_hint_name"
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/tv_hint_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hint_description"
+            android:text="This is description of taskrfes"
+            android:textSize="15sp"
+            android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/tv_hint_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:layout_alignStart="@id/sw_status"
+            android:layout_alignBottom="@id/sw_status"
+            android:layout_marginBottom="-10dp"
+            android:textColor="@color/colorPrimary" />
+
+        <Switch
+            android:id="@+id/sw_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,10 +1,11 @@
 package com.yuriialieksieiev.smarthome;
 
-import com.yuriialieksieiev.smarthome.components.SnackBarRetry;
+
+import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 
 public interface IView
 {
     void error(String mes);
-    void error(SnackBarRetry.CallBack callBack);
+    void error(FragmentActions.CallBack callBack);
 }
 

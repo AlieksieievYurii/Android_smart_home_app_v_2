@@ -24,7 +24,7 @@ public class ActionUtils {
     private static void setActionButtons(JSONArray jsonArray, List<ActionButton> list) throws JSONException {
         for(int i = 0; i < jsonArray.length(); i++)
         {
-            Action action = Action.fromAPI(jsonArray.getJSONObject(i));
+            Action action = Action.parseAPI(jsonArray.getJSONObject(i));
 
             for(ActionButton actionButton : list)
                 if(action.equals(actionButton.getAction()))
@@ -35,7 +35,7 @@ public class ActionUtils {
     private static void setActionSeekBars(JSONArray jsonArray, List<ActionSeekBar> list) throws JSONException {
         for(int i = 0; i < jsonArray.length(); i++)
         {
-            Action action = Action.fromAPI(jsonArray.getJSONObject(i));
+            Action action = Action.parseAPI(jsonArray.getJSONObject(i));
 
             for(ActionSeekBar actionSeekBar : list)
                 if(action.equals(actionSeekBar.getAction()))
