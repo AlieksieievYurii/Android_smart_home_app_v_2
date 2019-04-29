@@ -11,17 +11,23 @@ import java.util.List;
 
 public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcActionViewHolder>
 {
-    private List<Action> actions;
+    public interface OnLongPressAction{
+        void onLongPressAction(Action action);
+    }
 
-    public RcActionsAdapter(List<Action> actions) {
+    private List<Action> actions;
+    private final OnLongPressAction onLongPressAction;
+
+    public RcActionsAdapter(List<Action> actions, OnLongPressAction onLongPressAction) {
         this.actions = actions;
+        this.onLongPressAction = onLongPressAction;
     }
 
     @NonNull
     @Override
     public RcActionViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_action,viewGroup,false);
-        return new RcActionViewHolder(v);
+        return new RcActionViewHolder(v,actions,onLongPressAction);
     }
 
     @Override
@@ -56,7 +62,7 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
         private TextView tvPortStatus;
         private TextView tvDevice;
 
-        public RcActionViewHolder(@NonNull View itemView) {
+        public RcActionViewHolder(@NonNull View itemView, final List<Action> actions, final OnLongPressAction onLongClickListener) {
             super(itemView);
 
             tvPort = itemView.findViewById(R.id.tv_port);
@@ -64,6 +70,14 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
             tvPortStatusHint = itemView.findViewById(R.id.tv_hint_status_port);
             tvPortStatus = itemView.findViewById(R.id.tv_status);
             tvDevice = itemView.findViewById(R.id.tv_device);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onLongClickListener.onLongPressAction(actions.get(getAdapterPosition()));
+                    return true;
+                }
+            });
+
 
         }
     }

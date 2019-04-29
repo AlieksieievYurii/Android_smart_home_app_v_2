@@ -11,22 +11,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.yuriialieksieiev.smarthome.R;
-import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.enums.TaskMode;
 import com.yuriialieksieiev.smarthome.components.enums.TypeTask;
 
-import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.List;
 import java.util.Objects;
 
 public class FragmentCreatorTask extends Fragment {
-    public interface TakerActions {
-        List<Action> getActions();
+    public interface TakerJob {
+        JSONObject getJob();
     }
 
     private View root;
@@ -35,7 +32,7 @@ public class FragmentCreatorTask extends Fragment {
     private EditText edtDescription;
     private Spinner spTaskType;
     private Spinner spMode;
-    private TakerActions takerActions;
+    private TakerJob takerJob;
 
     @Nullable
     @Override
@@ -73,15 +70,7 @@ public class FragmentCreatorTask extends Fragment {
         root.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Action> a  = takerActions.getActions();
-
-                for(Action aqa: a) {
-                    try {
-                        Log.d("Lol",aqa.toJson().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                Log.d("TAG", takerJob.getJob().toString());
             }
         });
 
@@ -90,7 +79,7 @@ public class FragmentCreatorTask extends Fragment {
     private void setFragmentTimerJob()
     {
         FragmentJobTimer f = new FragmentJobTimer();
-        takerActions = f;
+        takerJob = f;
         assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().replace(R.id.fl_job,f).commit();
     }

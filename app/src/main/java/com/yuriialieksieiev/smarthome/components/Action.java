@@ -11,11 +11,11 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 public class Action implements Parcelable {
-    private static final String ACTION_EXTRA_DEVICE = "device";
-    private static final String ACTION_EXTRA_TYPE_PORT = "type_port";
-    private static final String ACTION_EXTRA_PORT = "port";
-    private static final String ACTION_EXTRA_PORT_STATUS = "port_status";
-    private static final String ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
+    private static final String F_ACTION_EXTRA_DEVICE = "device";
+    private static final String F_ACTION_EXTRA_TYPE_PORT = "type_port";
+    private static final String F_ACTION_EXTRA_PORT = "port";
+    private static final String F_ACTION_EXTRA_PORT_STATUS = "port_status";
+    private static final String F_ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
 
     private static final String API_EXTRA_PORT_TYPE = "port_type";
     private static final String API_EXTRA_PORT_ID = "port_id";
@@ -124,21 +124,6 @@ public class Action implements Parcelable {
                     action.device == this.device);
     }
 
-
-    public JSONObject toJson() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(ACTION_EXTRA_DEVICE,device.getInJson());
-        jsonObject.put(ACTION_EXTRA_TYPE_PORT, typePort.inJson);
-        jsonObject.put(ACTION_EXTRA_PORT, port);
-
-        if (typePort == TypePort.ANALOG)
-            jsonObject.put(ACTION_EXTRA_SIGNAL_ON_PORT, portSignal);
-        else if(typePort == TypePort.DIGITAL)
-            jsonObject.put(ACTION_EXTRA_PORT_STATUS,portStatus.inJson);
-
-        return jsonObject;
-    }
-
     protected Action(Parcel in) {
         port = in.readInt();
         device = Device.getDeviceByName(Objects.requireNonNull(in.readString()));
@@ -169,23 +154,21 @@ public class Action implements Parcelable {
         dest.writeString(typePort.inJson);
     }
 
-
-
     //----------------------------------------------------------------------
 
 
 
-    public static Action getActionFromBuilding(JSONObject jsonObject) throws JSONException {
-        Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(ACTION_EXTRA_TYPE_PORT));
-        int port = jsonObject.getInt(ACTION_EXTRA_PORT);
+    public static Action parseFactoryJson(JSONObject jsonObject) throws JSONException {
+        Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(F_ACTION_EXTRA_TYPE_PORT));
+        int port = jsonObject.getInt(F_ACTION_EXTRA_PORT);
 
         if (typePort == TypePort.DIGITAL) {
-            PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(ACTION_EXTRA_PORT_STATUS));
-            return new Action(Device.getDeviceByName(jsonObject.getString(ACTION_EXTRA_DEVICE)),port, portStatus);
+            PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(F_ACTION_EXTRA_PORT_STATUS));
+            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)),port, portStatus);
 
         } else if (typePort == TypePort.ANALOG) {
-            int signalOnPort = jsonObject.getInt(ACTION_EXTRA_SIGNAL_ON_PORT);
-            return new Action(Device.getDeviceByName(jsonObject.getString(ACTION_EXTRA_DEVICE)), port,signalOnPort);
+            int signalOnPort = jsonObject.getInt(F_ACTION_EXTRA_SIGNAL_ON_PORT);
+            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)), port,signalOnPort);
         } else
             throw new JSONException("From Building:: Can not convert " + jsonObject.toString() + " to Action object!");
     }
@@ -204,6 +187,34 @@ public class Action implements Parcelable {
             return new Action(device, port,signalOnPort);
         } else
             throw new JSONException("From API:: Can not convert " + jsonObject.toString() + " to Action object!");
+    }
+
+    public static JSONObject toFactoryJson(Action action) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(F_ACTION_EXTRA_DEVICE,action.getDevice().getInJson());
+        jsonObject.put(F_ACTION_EXTRA_TYPE_PORT, action.getTypePort().inJson);
+        jsonObject.put(F_ACTION_EXTRA_PORT, action.getPort());
+
+        if (action.getTypePort() == TypePort.ANALOG)
+            jsonObject.put(F_ACTION_EXTRA_SIGNAL_ON_PORT, action.getPortSignal());
+        else if(action.getTypePort() == TypePort.DIGITAL)
+            jsonObject.put(F_ACTION_EXTRA_PORT_STATUS,action.getPortStatus().inJson);
+
+        return jsonObject;
+    }
+
+    public static JSONObject toAPI(Action action) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(API_EXTRA_FOR_DEVICE, action.getDevice().getInJson());
+        jsonObject.put(API_EXTRA_PORT_TYPE, action.getTypePort().getInJson());
+        jsonObject.put(API_EXTRA_PORT_ID, action.getPort());
+
+        if (action.getTypePort() == Action.TypePort.DIGITAL)
+            jsonObject.put(API_EXTRA_PORT_STATUS, action.getPortStatus().getInJson());
+        else if (action.getTypePort() == Action.TypePort.ANALOG)
+            jsonObject.put(API_EXTRA_PORT_VALUE, action.getPortSignal());
+
+        return jsonObject;
     }
 
 }

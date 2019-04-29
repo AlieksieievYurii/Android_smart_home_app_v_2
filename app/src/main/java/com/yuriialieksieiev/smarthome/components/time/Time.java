@@ -1,30 +1,33 @@
 package com.yuriialieksieiev.smarthome.components.time;
 
-public class Time
-{
-    private byte hh;
-    private byte mm;
+public class Time {
+    private int hh;
+    private int mm;
 
-    public Time(byte hh, byte mm) {
+    public Time(int hh, int mm) {
         this.hh = hh;
         this.mm = mm;
     }
 
-    public byte getHh() {
+    public int getHh() {
         return hh;
     }
 
-    public byte getMm() {
+    public int getMm() {
         return mm;
     }
 
-    public static Time parse(String s)
-    {
+    @Override
+    public String toString() {
+        return (hh<10?"0"+hh:hh) + ":" + (mm<10?"0"+mm:mm);
+    }
+
+    public static Time parse(String s) {
         final String[] p = s.split(":");
 
         final byte hh = Byte.parseByte(p[0]);
         final byte mm = Byte.parseByte(p[1]);
 
-        return new Time(hh,mm);
+        return new Time(hh, mm);
     }
 }

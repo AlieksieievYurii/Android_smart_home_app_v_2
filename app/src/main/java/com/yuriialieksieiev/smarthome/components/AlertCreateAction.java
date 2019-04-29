@@ -35,11 +35,19 @@ public class AlertCreateAction extends AlertDialog
     private TextInputLayout analogTYpe;
 
     private List<Action> actions;
+    private Action actionForEdit;
 
     public AlertCreateAction(@NonNull Context context, CallBack callBack, List<Action> actions) {
         super(context);
         this.callBack = callBack;
         this.actions = actions;
+    }
+
+    public AlertCreateAction(@NonNull Context context, CallBack callBack,List<Action> actions, Action actionForEdit) {
+        super(context);
+        this.actions = actions;
+        this.actionForEdit = actionForEdit;
+        this.callBack = callBack;
     }
 
     @Override
@@ -59,14 +67,24 @@ public class AlertCreateAction extends AlertDialog
 
         spPortStatus = findViewById(R.id.sp_port_status);
         spPortStatus.setAdapter(new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, Action.PortStatus.values()));
+        if(actionForEdit != null && actionForEdit.getTypePort() == Action.TypePort.DIGITAL)
+            spPortStatus.setSelection(actionForEdit.getPortStatus().ordinal());
 
         edtSignalPort = findViewById(R.id.edt_port_signal);
+        if(actionForEdit != null && actionForEdit.getTypePort() == Action.TypePort.ANALOG)
+            edtSignalPort.setText(String.valueOf(actionForEdit.getPortSignal()));
+
         lnDigitalType = findViewById(R.id.ln_tool_digital);
         analogTYpe = findViewById(R.id.tool_analog);
 
         edtPort = findViewById(R.id.edt_port);
+        if(actionForEdit != null)
+            edtPort.setText(String.valueOf(actionForEdit.getPort()));
+
         spTypePort = findViewById(R.id.sp_type_port);
         spTypePort.setAdapter(new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, Action.TypePort.values()));
+        if(actionForEdit != null)
+            spTypePort.setSelection(actionForEdit.getTypePort().ordinal());
 
         spTypePort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -90,6 +108,8 @@ public class AlertCreateAction extends AlertDialog
 
         spDevice = findViewById(R.id.sp_device);
         spDevice.setAdapter(new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, Device.values()));
+        if(actionForEdit != null)
+            spDevice.setSelection(actionForEdit.getDevice().ordinal());
 
 
     }
@@ -124,7 +144,15 @@ public class AlertCreateAction extends AlertDialog
 
         if(spTypePort.getSelectedItem() == Action.TypePort.ANALOG)
         {
-            int signal = Integer.parseInt(edtSignalPort.getText().toString());
+            final String sig = edtSignalPort.getText().toString();
+
+            if(sig.trim().length() == 0)
+            {
+                Toast.makeText(getContext(),"Signal can not be empty!",Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            int signal = Integer.parseInt(sig);
             if (signal < 0 || signal > 255 )
             {
                 Toast.makeText(getContext(),"Signal: only 0..255",Toast.LENGTH_LONG).show();

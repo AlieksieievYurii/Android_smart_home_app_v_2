@@ -5,7 +5,7 @@ import android.content.Context;
 public class UrlUtils
 {
     private final static String TYPE_HASH_CODE_ACTIONS = "getHashCodeActions";
-    private final static String TYPE_GET_ACTIONS = "getActions";
+    private final static String TYPE_GET_ACTIONS = "getJob";
     private final static String TYPE_GET_SENSORS = "getSensors";
     private final static String TYPE_POST_ACTION = "postAction";
     private final static String MODULE_LISTENER_TASKS = "listenerTasks";

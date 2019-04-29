@@ -2,25 +2,25 @@ package com.yuriialieksieiev.smarthome.components.time;
 
 public class Date
 {
-    private byte dd;
-    private byte mm;
-    private short yy;
+    private int dd;
+    private int mm;
+    private int yy;
 
-    public Date(byte dd, byte mm, short yy) {
+    public Date(int dd, int mm, int yy) {
         this.dd = dd;
         this.mm = mm;
         this.yy = yy;
     }
 
-    public byte getDd() {
+    public int getDd() {
         return dd;
     }
 
-    public byte getMm() {
+    public int getMm() {
         return mm;
     }
 
-    public short getYy() {
+    public int getYy() {
         return yy;
     }
 
@@ -33,5 +33,10 @@ public class Date
         final short yy = Short.parseShort(s[2]);
 
         return new Date(dd,mm,yy);
+    }
+
+    @Override
+    public String toString() {
+        return (dd<10?"0"+dd:dd)+"."+(mm<10?"0"+mm:mm)+"."+yy;
     }
 }

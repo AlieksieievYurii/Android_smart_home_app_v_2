@@ -1,6 +1,7 @@
 package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
+
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
@@ -8,6 +9,7 @@ import com.yuriialieksieiev.smarthome.components.enums.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
 import com.yuriialieksieiev.smarthome.components.seekbar.PatternActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,7 @@ public class JsonManager {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 if (isAction(jsonObject)) {
-                    Action action = Action.getActionFromBuilding(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
+                    Action action = Action.parseFactoryJson(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
 
                     if (action.getPort() == port && device == action.getDevice())
                         return true;
@@ -83,7 +85,7 @@ public class JsonManager {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             if (isAction(jsonObject)) {
-                Action action1 = Action.getActionFromBuilding(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
+                Action action1 = Action.parseFactoryJson(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
                 if (action.equals(action1))
                     jsonArray.remove(i);
             }
@@ -168,24 +170,24 @@ public class JsonManager {
     public static List<Action> parseActions(JSONArray jsonArray) throws JSONException {
         final List<Action> actions = new ArrayList<>();
 
-        for(int i = 0; i < jsonArray.length(); i++)
+        for (int i = 0; i < jsonArray.length(); i++)
             actions.add(Action.parseAPI(jsonArray.getJSONObject(i)));
 
         return actions;
     }
 
-    public static String convertToAPI(Action action) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("for_device",action.getDevice().getInJson());
-        jsonObject.put("port_type",action.getTypePort().getInJson());
-        jsonObject.put("port_id",action.getPort());
+    public static JSONArray getJsonArray(List<Action> actions) {
+        final JSONArray jsonArray = new JSONArray();
 
-        if(action.getTypePort() == Action.TypePort.DIGITAL)
-            jsonObject.put("port_status",action.getPortStatus().getInJson());
-        else if(action.getTypePort() == Action.TypePort.ANALOG)
-            jsonObject.put("port_value",action.getPortSignal());
-
-        return jsonObject.toString();
+        try {
+            for (final Action action : actions)
+                jsonArray.put(Action.toAPI(action));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
+
+
 
 }

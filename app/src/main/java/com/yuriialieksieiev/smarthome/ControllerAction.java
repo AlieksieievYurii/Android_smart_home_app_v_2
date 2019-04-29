@@ -15,7 +15,6 @@ import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnAction;
 import com.yuriialieksieiev.smarthome.framents.FragmentActions;
 import com.yuriialieksieiev.smarthome.utils.ActionUtils;
-import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import com.yuriialieksieiev.smarthome.utils.SharedPreferences;
 import com.yuriialieksieiev.smarthome.utils.UrlUtils;
 import org.json.JSONArray;
@@ -58,7 +57,7 @@ public class ControllerAction implements OnAction, IControllerAction {
                     protected Map<String, String> getParams() {
                         Map<String, String> param = new HashMap<>();
                         try {
-                            param.put("data", JsonManager.convertToAPI(action));
+                            param.put("data", Action.toAPI(action).toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
