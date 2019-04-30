@@ -10,6 +10,7 @@ public class UrlUtils
     private final static String TYPE_POST_ACTION = "postAction";
     private final static String TYPE_POST_TASK = "postTask";
     private final static String TYPE_GET_FREE_TASK_ID = "getFreeTaskId";
+    private final static String TYPE_GET_TASKS = "getTasks";
     private final static String MODULE_LISTENER_TASKS = "listenerTasks";
 
     public static String getUrlForHashCode(Context context)
@@ -95,6 +96,23 @@ public class UrlUtils
                 password +
                 "&type=" +
                 TYPE_GET_FREE_TASK_ID;
+    }
+
+    public static String getUrlForGettingTasks(Context context)
+    {
+        String url = SharedPreferences.getUrlToServer(context);
+        String nameModule = SharedPreferences.getServerName(context);
+        String password = SharedPreferences.getPasswordServer(context);
+
+        return url +
+                "/" +
+                nameModule +
+                "/" +
+                MODULE_LISTENER_TASKS +
+                "?p=" +
+                password +
+                "&type=" +
+                TYPE_GET_TASKS;
     }
 
     public static String getUrlForPostTask(Context context)

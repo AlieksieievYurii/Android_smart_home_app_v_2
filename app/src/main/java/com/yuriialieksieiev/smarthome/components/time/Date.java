@@ -2,6 +2,8 @@ package com.yuriialieksieiev.smarthome.components.time;
 
 public class Date
 {
+
+    public static final String NONE = "none";
     private int dd;
     private int mm;
     private int yy;
@@ -26,6 +28,9 @@ public class Date
 
     public static Date parse(String json)
     {
+        if(json.equals(NONE))
+            return null;
+
         final String[] s = json.split("\\.");
 
         final byte dd = Byte.parseByte(s[0]);

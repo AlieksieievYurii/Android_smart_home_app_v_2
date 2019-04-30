@@ -22,9 +22,9 @@ import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.AlertCreateAction;
 import com.yuriialieksieiev.smarthome.components.AlertDialogAction;
 import com.yuriialieksieiev.smarthome.components.RcActionsAdapter;
+import com.yuriialieksieiev.smarthome.components.jobs.TimerJob;
 import com.yuriialieksieiev.smarthome.components.time.Date;
 import com.yuriialieksieiev.smarthome.components.time.Time;
-import com.yuriialieksieiev.smarthome.utils.JsonManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -34,12 +34,8 @@ import java.util.Objects;
 
 public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.TakerJob,RcActionsAdapter.OnLongPressAction{
 
-    public static final String API_EXTRA_JOB_DATE = "data";
-    public static final String API_EXTRA_JOB_TIME = "time";
-    public static final String API_EXTRA_JOB_ACTIONS = "actions";
 
     private View root;
-    private RecyclerView rcActions;
     private RcActionsAdapter actionsAdapter;
     private List<Action> actions;
     private TextView tvDate;
@@ -58,12 +54,10 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
 
     private void init() {
         actions = new ArrayList<>();
-
         tvDate = root.findViewById(R.id.tv_date);
-
         tvTime = root.findViewById(R.id.tv_time);
 
-        rcActions = root.findViewById(R.id.rc_actions);
+        final RecyclerView rcActions = root.findViewById(R.id.rc_actions);
         actionsAdapter = new RcActionsAdapter(actions, this);
         rcActions.setAdapter(actionsAdapter);
         rcActions.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -99,7 +93,6 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
             }
         });
         tvDate.setClickable(false);
-
         tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,16 +139,12 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
     @Override
     public JSONObject getJob()
     {
-        final JSONObject job = new JSONObject();
         try {
-            job.put(API_EXTRA_JOB_TIME,time.toString());
-            job.put(API_EXTRA_JOB_DATE,(date != null?date.toString():"none"));
-            job.put(API_EXTRA_JOB_ACTIONS,JsonManager.getJsonArray(actions));
+            return TimerJob.toJsonObject(new TimerJob(date,time,actions));
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return job;
     }
 
 

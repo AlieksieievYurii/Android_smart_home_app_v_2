@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -12,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.enums.Device;
 import java.util.List;
@@ -34,6 +36,8 @@ public class AlertCreateAction extends AlertDialog
     private TextInputLayout analogTYpe;
     private List<Action> actions;
     private Action actionForEdit;
+    private TextView tvErrorPort;
+    private TextView tvErrorSignal;
 
     public AlertCreateAction(@NonNull Context context, CallBack callBack, List<Action> actions) {
         super(context);
@@ -63,12 +67,31 @@ public class AlertCreateAction extends AlertDialog
             }
         });
 
+        tvErrorPort = findViewById(R.id.tv_error_port);
+        tvErrorSignal = findViewById(R.id.tv_error_signal);
         spPortStatus = findViewById(R.id.sp_port_status);
         spPortStatus.setAdapter(new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, Action.PortStatus.values()));
         if(actionForEdit != null && actionForEdit.getTypePort() == Action.TypePort.DIGITAL)
             spPortStatus.setSelection(actionForEdit.getPortStatus().ordinal());
 
         edtSignalPort = findViewById(R.id.edt_port_signal);
+        edtSignalPort.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(tvErrorSignal.getVisibility() == View.VISIBLE)
+                    tvErrorSignal.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         if(actionForEdit != null && actionForEdit.getTypePort() == Action.TypePort.ANALOG)
             edtSignalPort.setText(String.valueOf(actionForEdit.getPortSignal()));
 
@@ -76,6 +99,23 @@ public class AlertCreateAction extends AlertDialog
         analogTYpe = findViewById(R.id.tool_analog);
 
         edtPort = findViewById(R.id.edt_port);
+        edtPort.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(tvErrorPort.getVisibility() == View.VISIBLE)
+                    tvErrorPort.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         if(actionForEdit != null)
             edtPort.setText(String.valueOf(actionForEdit.getPort()));
 
@@ -130,13 +170,15 @@ public class AlertCreateAction extends AlertDialog
 
     private boolean check() {
         if(edtPort.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(),"Port: Can not be empty",Toast.LENGTH_LONG).show();
+            tvErrorPort.setVisibility(View.VISIBLE);
+            tvErrorPort.setText("Can not be empty!");
             return false;
         }
 
         if(isExistedPort(Integer.parseInt(edtPort.getText().toString()), (Device) spDevice.getSelectedItem()))
         {
-            Toast.makeText(getContext(),"Port is exist here!",Toast.LENGTH_LONG).show();
+            tvErrorPort.setVisibility(View.VISIBLE);
+            tvErrorPort.setText("Port is exist here!");
             return false;
         }
 
@@ -146,14 +188,16 @@ public class AlertCreateAction extends AlertDialog
 
             if(sig.trim().length() == 0)
             {
-                Toast.makeText(getContext(),"Signal can not be empty!",Toast.LENGTH_LONG).show();
+               tvErrorSignal.setVisibility(View.VISIBLE);
+               tvErrorSignal.setText("Signal can not be empty!");
                 return false;
             }
 
             int signal = Integer.parseInt(sig);
             if (signal < 0 || signal > 255 )
             {
-                Toast.makeText(getContext(),"Signal: only 0..255",Toast.LENGTH_LONG).show();
+                tvErrorSignal.setVisibility(View.VISIBLE);
+                tvErrorSignal.setText("Signal: only 0..255");
                 return false;
             }
         }

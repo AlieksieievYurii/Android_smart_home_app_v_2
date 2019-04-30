@@ -10,8 +10,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class TimerJob
-{
+public class TimerJob {
     private static final String API_EXTRA_DATE = "date";
     private static final String API_EXTRA_TIME = "time";
     private static final String API_EXTRA_ACTIONS = "actions";
@@ -31,6 +30,15 @@ public class TimerJob
         final Time time = Time.parse(jsonObject.getString(API_EXTRA_TIME));
         final List<Action> actions = JsonManager.parseActions(jsonObject.getJSONArray(API_EXTRA_ACTIONS));
 
-        return new TimerJob(date,time,actions);
+        return new TimerJob(date, time, actions);
+    }
+
+    public static JSONObject toJsonObject(TimerJob timerJob) throws JSONException {
+        final JSONObject job = new JSONObject();
+        job.put(API_EXTRA_TIME, timerJob.time.toString());
+        job.put(API_EXTRA_DATE, (timerJob.date != null ? timerJob.date.toString() : Date.NONE));
+        job.put(API_EXTRA_ACTIONS, JsonManager.getJsonArray(timerJob.actions));
+
+        return job;
     }
 }

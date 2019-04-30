@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -191,6 +194,7 @@ public class FragmentCreatorTask extends Fragment {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> param = new HashMap<>();
+                        Log.i("DATA",jsonObject.toString());
                         param.put("data", jsonObject.toString());
                         return param;
                     }
