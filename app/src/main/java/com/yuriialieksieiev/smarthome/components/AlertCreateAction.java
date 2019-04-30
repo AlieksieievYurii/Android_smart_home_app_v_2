@@ -25,7 +25,6 @@ public class AlertCreateAction extends AlertDialog
     }
 
     private CallBack callBack;
-
     private EditText edtPort;
     private Spinner spTypePort;
     private Spinner spDevice;
@@ -33,7 +32,6 @@ public class AlertCreateAction extends AlertDialog
     private EditText edtSignalPort;
     private LinearLayout lnDigitalType;
     private TextInputLayout analogTYpe;
-
     private List<Action> actions;
     private Action actionForEdit;
 
@@ -166,9 +164,13 @@ public class AlertCreateAction extends AlertDialog
 
     private boolean isExistedPort(int port, Device device) {
 
+        if(actionForEdit != null && device == actionForEdit.getDevice() && port == actionForEdit.getPort())
+            return false;
+
         for(Action action : actions)
             if(action.getPort() == port && action.getDevice() == device)
                 return true;
+
         return false;
     }
 }
