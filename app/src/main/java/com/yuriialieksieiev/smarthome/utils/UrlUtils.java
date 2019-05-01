@@ -1,6 +1,12 @@
 package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.yuriialieksieiev.smarthome.components.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UrlUtils
 {
@@ -12,6 +18,7 @@ public class UrlUtils
     private final static String TYPE_GET_FREE_TASK_ID = "getFreeTaskId";
     private final static String TYPE_GET_TASKS = "getTasks";
     private final static String MODULE_LISTENER_TASKS = "listenerTasks";
+    private static final String TYPE_DELETE_TASK = "removeTask";
 
     public static String getUrlForHashCode(Context context)
     {
@@ -78,7 +85,7 @@ public class UrlUtils
                 "?p=" +
                 password +
                 "&type=" +
-                TYPE_POST_ACTION;
+                TYPE_DELETE_TASK;
     }
 
     public static String getUrlForGettingFreeId(Context context)
@@ -113,6 +120,23 @@ public class UrlUtils
                 password +
                 "&type=" +
                 TYPE_GET_TASKS;
+    }
+
+    public static String getUrlForDeleteTask(Context context)
+    {
+        String url = SharedPreferences.getUrlToServer(context);
+        String nameModule = SharedPreferences.getServerName(context);
+        String password = SharedPreferences.getPasswordServer(context);
+
+        return url +
+                "/" +
+                nameModule +
+                "/" +
+                MODULE_LISTENER_TASKS +
+                "?p=" +
+                password +
+                "&type=" +
+                TYPE_DELETE_TASK;
     }
 
     public static String getUrlForPostTask(Context context)

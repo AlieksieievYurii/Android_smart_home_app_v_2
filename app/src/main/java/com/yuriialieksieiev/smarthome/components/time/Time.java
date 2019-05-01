@@ -1,6 +1,9 @@
 package com.yuriialieksieiev.smarthome.components.time;
 
-public class Time {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Time implements Parcelable {
     private int hh;
     private int mm;
 
@@ -8,6 +11,23 @@ public class Time {
         this.hh = hh;
         this.mm = mm;
     }
+
+    private Time(Parcel in) {
+        hh = in.readInt();
+        mm = in.readInt();
+    }
+
+    public static final Creator<Time> CREATOR = new Creator<Time>() {
+        @Override
+        public Time createFromParcel(Parcel in) {
+            return new Time(in);
+        }
+
+        @Override
+        public Time[] newArray(int size) {
+            return new Time[size];
+        }
+    };
 
     public int getHh() {
         return hh;
@@ -29,5 +49,16 @@ public class Time {
         final byte mm = Byte.parseByte(p[1]);
 
         return new Time(hh, mm);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(hh);
+        dest.writeInt(mm);
     }
 }

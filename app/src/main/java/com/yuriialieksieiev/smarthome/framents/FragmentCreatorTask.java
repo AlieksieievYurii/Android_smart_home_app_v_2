@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.yuriialieksieiev.smarthome.R;
+import com.yuriialieksieiev.smarthome.activity.MakerView;
+import com.yuriialieksieiev.smarthome.components.Task;
 import com.yuriialieksieiev.smarthome.components.enums.TaskMode;
 import com.yuriialieksieiev.smarthome.components.enums.TaskStatus;
 import com.yuriialieksieiev.smarthome.components.enums.TypeTask;
+import com.yuriialieksieiev.smarthome.components.jobs.TimerJob;
 import com.yuriialieksieiev.smarthome.utils.UrlUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +46,7 @@ public class FragmentCreatorTask extends Fragment {
     private static final String API_EXTRA_TASK_STATUS = "status";
     private static final String API_EXTRA_TASK_MODE = "mode";
     private static final String API_EXTRA_TASK_JOB = "job";
+    public static final String EXTRA_TASK_JOB = "job_";
 
     private View root;
     private EditText edtName;
@@ -54,7 +57,7 @@ public class FragmentCreatorTask extends Fragment {
     private TakerJob takerJob;
     private Context context;
     private Button btnApply;
-
+    private Task taskForEdit = null;
     private int id = -1;
 
     @Nullable
@@ -62,8 +65,11 @@ public class FragmentCreatorTask extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_creator_task, container, false);
         context = getContext();
+        final Bundle arguments = getArguments();
+        if(arguments != null)
+            taskForEdit = arguments.getParcelable(MakerView.EXTRA_OBJECT_TASK);
         init();
-        getTaskIds();
+        getTaskId();
         return root;
     }
 
@@ -106,9 +112,21 @@ public class FragmentCreatorTask extends Fragment {
                 }}
         });
 
+        if(taskForEdit != null){
+            id = taskForEdit.getId();
+            edtName.setText(taskForEdit.getName());
+            edtDescription.setText(taskForEdit.getDescription());
+            spTaskType.setSelection(taskForEdit.getTypeTask().ordinal());
+            spMode.setSelection(taskForEdit.getTaskMode().ordinal());
+            spStatus.setSelection(taskForEdit.getTaskStatus().ordinal());
+        }
+
     }
 
-    private void getTaskIds() {
+    private void getTaskId() {
+        if(id != -1)
+            return;
+
         final StringRequest stringRequest =
                 new StringRequest(
                         Request.Method.GET,
@@ -208,6 +226,14 @@ public class FragmentCreatorTask extends Fragment {
     private void setFragmentTimerJob() {
         FragmentJobTimer f = new FragmentJobTimer();
         takerJob = f;
+
+        if(taskForEdit != null)
+        {
+            final Bundle bundle = new Bundle();
+            bundle.putParcelable(EXTRA_TASK_JOB,(TimerJob)taskForEdit.getJob());
+            f.setArguments(bundle);
+        }
+
         assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().replace(R.id.fl_job, f).commit();
     }

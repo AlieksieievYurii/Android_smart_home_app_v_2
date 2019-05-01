@@ -128,6 +128,15 @@ public class Action implements Parcelable {
         port = in.readInt();
         device = Device.getDeviceByName(Objects.requireNonNull(in.readString()));
         typePort = TypePort.getTypePort(Objects.requireNonNull(in.readString()));
+        switch (Objects.requireNonNull(typePort))
+        {
+            case DIGITAL:
+                portStatus = PortStatus.getPortStatus(Objects.requireNonNull(in.readString()));
+                break;
+            case ANALOG:
+                portSignal = in.readInt();
+                break;
+        }
     }
 
     public static final Creator<Action> CREATOR = new Creator<Action>() {
@@ -152,6 +161,16 @@ public class Action implements Parcelable {
         dest.writeInt(port);
         dest.writeString(device.getInJson());
         dest.writeString(typePort.inJson);
+        switch (typePort)
+        {
+            case DIGITAL:
+                dest.writeString(portStatus.getInJson());
+                break;
+            case ANALOG:
+                dest.writeInt(portSignal);
+                break;
+        }
+
     }
 
     //----------------------------------------------------------------------

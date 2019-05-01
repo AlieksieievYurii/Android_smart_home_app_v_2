@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:apps="http://schemas.android.com/tools"
     app:cardCornerRadius="4dp"
     app:cardBackgroundColor="#F1EDED"
     android:layout_marginBottom="4dp"
@@ -16,9 +17,10 @@
             android:id="@+id/tv_hint_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            style=""
-            android:textColor="@color/colorPrimary" />
+            android:text="@string/name"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            apps:ignore="RelativeOverlap" />
 
         <TextView
             android:id="@+id/tv_hint_mode"
@@ -26,23 +28,43 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/tv_name"
             android:layout_marginEnd="-40dp"
-            android:text="Mode"
+            android:text="@string/mode"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:textSize="12sp"/>
         <TextView
             android:id="@+id/tv_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_hint_mode"
             android:textColor="@android:color/holo_orange_dark"
-            android:text="once"
+            android:text="@string/once"
             android:layout_alignStart="@id/tv_hint_mode" />
+
+        <TextView
+            android:id="@+id/tv_hint_type_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_mode"
+            android:layout_alignStart="@id/tv_mode"
+            android:layout_alignTop="@id/tv_description"
+            android:layout_marginTop="-16dp"
+            android:text="@string/type_task"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+        <TextView
+            android:id="@+id/tv_type_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hint_type_task"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_alignStart="@id/tv_hint_type_task"
+            apps:text="timer" />
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="test"
+            apps:text="test"
             android:textSize="20sp"
             android:layout_marginTop="-5dp"
             android:layout_below="@id/tv_hint_name"
@@ -51,7 +73,7 @@
             android:id="@+id/tv_hint_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="12sp"
             android:textStyle="italic"
             android:layout_below="@id/tv_name"
@@ -63,7 +85,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_hint_description"
-            android:text="This is description of taskrfes"
+            apps:text="This is description of taskrfes"
             android:textSize="15sp"
             android:textColor="@android:color/darker_gray"/>
 
@@ -71,12 +93,12 @@
             android:id="@+id/tv_hint_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status"
+            android:text="@string/status"
             android:textSize="12sp"
             android:textStyle="italic"
             android:layout_alignStart="@id/sw_status"
             android:layout_alignBottom="@id/sw_status"
-            android:layout_marginBottom="-10dp"
+            android:layout_above="@id/sw_status"
             android:textColor="@color/colorPrimary" />
 
         <Switch

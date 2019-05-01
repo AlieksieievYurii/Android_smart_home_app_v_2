@@ -1,6 +1,9 @@
 package com.yuriialieksieiev.smarthome.components.time;
 
-public class Date
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Date implements Parcelable
 {
 
     public static final String NONE = "none";
@@ -13,6 +16,24 @@ public class Date
         this.mm = mm;
         this.yy = yy;
     }
+
+    private Date(Parcel in) {
+        dd = in.readInt();
+        mm = in.readInt();
+        yy = in.readInt();
+    }
+
+    public static final Creator<Date> CREATOR = new Creator<Date>() {
+        @Override
+        public Date createFromParcel(Parcel in) {
+            return new Date(in);
+        }
+
+        @Override
+        public Date[] newArray(int size) {
+            return new Date[size];
+        }
+    };
 
     public int getDd() {
         return dd;
@@ -43,5 +64,17 @@ public class Date
     @Override
     public String toString() {
         return (dd<10?"0"+dd:dd)+"."+(mm<10?"0"+mm:mm)+"."+yy;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(dd);
+        dest.writeInt(mm);
+        dest.writeInt(yy);
     }
 }

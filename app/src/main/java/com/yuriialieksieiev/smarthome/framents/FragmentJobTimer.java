@@ -20,7 +20,7 @@ import android.widget.TimePicker;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.AlertCreateAction;
-import com.yuriialieksieiev.smarthome.components.AlertDialogAction;
+import com.yuriialieksieiev.smarthome.components.AlertDialogEdition;
 import com.yuriialieksieiev.smarthome.components.RcActionsAdapter;
 import com.yuriialieksieiev.smarthome.components.jobs.TimerJob;
 import com.yuriialieksieiev.smarthome.components.time.Date;
@@ -34,7 +34,6 @@ import java.util.Objects;
 
 public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.TakerJob,RcActionsAdapter.OnLongPressAction{
 
-
     private View root;
     private RcActionsAdapter actionsAdapter;
     private List<Action> actions;
@@ -43,11 +42,17 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
 
     private Date date;
     private Time time = new Time(12,0);
+    private TimerJob timerJobForEdit = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_job_timer, container, false);
+
+        final Bundle arguments = getArguments();
+        if(arguments != null)
+            timerJobForEdit = arguments.getParcelable(FragmentCreatorTask.EXTRA_TASK_JOB);
+
         init();
         return root;
     }
@@ -57,20 +62,14 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
         tvDate = root.findViewById(R.id.tv_date);
         tvTime = root.findViewById(R.id.tv_time);
 
-        final RecyclerView rcActions = root.findViewById(R.id.rc_actions);
-        actionsAdapter = new RcActionsAdapter(actions, this);
-        rcActions.setAdapter(actionsAdapter);
-        rcActions.setLayoutManager(new LinearLayoutManager(getContext()));
-        rcActions.setHasFixedSize(true);
-
         root.findViewById(R.id.btn_add_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addAction();
             }
         });
-
-        ((Switch) root.findViewById(R.id.sw_enable_date)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final Switch swEnableDate = root.findViewById(R.id.sw_enable_date);
+        swEnableDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -99,6 +98,24 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
                 showTimePicker();
             }
         });
+
+        if(timerJobForEdit != null)
+        {
+            final Date date = timerJobForEdit.getDate();
+            if(date != null) {
+                swEnableDate.setChecked(true);
+                tvDate.setTextColor(Color.BLACK);
+                tvDate.setText(date.toString());
+            }
+            tvTime.setText(timerJobForEdit.getTime().toString());
+            actions = timerJobForEdit.getActions();
+        }
+
+        final RecyclerView rcActions = root.findViewById(R.id.rc_actions);
+        actionsAdapter = new RcActionsAdapter(actions, this);
+        rcActions.setAdapter(actionsAdapter);
+        rcActions.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcActions.setHasFixedSize(true);
     }
 
     private void showTimePicker() {
@@ -151,7 +168,7 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
     @Override
     public void onLongPressAction(final Action action)
     {
-        new AlertDialogAction(getContext(), new AlertDialogAction.CallBack() {
+        new AlertDialogEdition(getContext(), new AlertDialogEdition.CallBack() {
             @Override
             public void edit() {
                 new AlertCreateAction(Objects.requireNonNull(getContext()), new AlertCreateAction.CallBack() {
@@ -170,6 +187,6 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
                 actionsAdapter.notifyDataSetChanged();
 
             }
-        },action.getPort()).show();
+        },"Port: "+String.valueOf(action.getPort())).show();
     }
 }

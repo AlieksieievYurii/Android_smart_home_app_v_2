@@ -40,11 +40,11 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
 
         if(action.getTypePort() == Action.TypePort.DIGITAL)
         {
-            rcActionViewHolder.tvPortStatusHint.setText("Port status");
+            rcActionViewHolder.tvPortStatusHint.setText(R.string.port_status);
             rcActionViewHolder.tvPortStatus.setText(action.getPortStatus().getInJson());
         }else if(action.getTypePort() == Action.TypePort.ANALOG)
         {
-            rcActionViewHolder.tvPortStatusHint.setText("Port signal");
+            rcActionViewHolder.tvPortStatusHint.setText(R.string.signal);
             rcActionViewHolder.tvPortStatus.setText(String.valueOf(action.getPortSignal()));
         }
     }
@@ -54,7 +54,7 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
         return actions.size();
     }
 
-    public static class RcActionViewHolder extends RecyclerView.ViewHolder
+    static class RcActionViewHolder extends RecyclerView.ViewHolder
     {
         private TextView tvPort;
         private TextView tvPortType;
@@ -62,7 +62,7 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
         private TextView tvPortStatus;
         private TextView tvDevice;
 
-        public RcActionViewHolder(@NonNull View itemView, final List<Action> actions, final OnLongPressAction onLongClickListener) {
+        RcActionViewHolder(@NonNull View itemView, final List<Action> actions, final OnLongPressAction onLongClickListener) {
             super(itemView);
 
             tvPort = itemView.findViewById(R.id.tv_port);

@@ -2,8 +2,8 @@ package com.yuriialieksieiev.smarthome.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.yuriialieksieiev.smarthome.R;
+import com.yuriialieksieiev.smarthome.components.Task;
 import com.yuriialieksieiev.smarthome.components.button.ActionButton;
 import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
@@ -22,11 +22,13 @@ public class MakerView extends AppCompatActivity {
     public static final String EXTRA_ACTION_BUTTON = "action_button";
     public static final String EXTRA_ACTION_SEEK_BAR = "action_seek_bar";
     public static final String EXTRA_SENSOR_VAL = "sensor_val";
+    public static final String EXTRA_OBJECT_TASK = "obj_task";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maker_view);
+
         switch (getIntent().getStringExtra(EXTRA_WHAT_VIEW)) {
             case EXTRA_BUTTON:
                 creatorButton((ActionButton) getIntent().getParcelableExtra(EXTRA_ACTION_BUTTON));
@@ -38,16 +40,21 @@ public class MakerView extends AppCompatActivity {
                 creatorSensor((SensorVal) getIntent().getParcelableExtra(EXTRA_SENSOR_VAL));
                 break;
             case EXTRA_TASK:
-                creatorTask();
+                creatorTask((Task) getIntent().getParcelableExtra(EXTRA_OBJECT_TASK));
         }
-
     }
 
-    private void creatorTask() {
+    private void creatorTask(Task taskForEdit) {
+        if(taskForEdit != null)
+            setTitle("Edit Task");
+        else
+            setTitle("Create Task");
 
-        setTitle("Create Task");
+        final FragmentCreatorTask fragmentCreatorTask = new FragmentCreatorTask();
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_OBJECT_TASK,taskForEdit);
 
-        FragmentCreatorTask fragmentCreatorTask = new FragmentCreatorTask();
+        fragmentCreatorTask.setArguments(bundle);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -55,15 +62,18 @@ public class MakerView extends AppCompatActivity {
                 .commit();
     }
 
-    private void creatorSensor(SensorVal sensorVal)
+    private void creatorSensor(SensorVal sensorValForEdit)
     {
-        setTitle("Create Sensor");
+        if(sensorValForEdit != null)
+            setTitle("Edit Sensor");
+        else
+            setTitle("Create Sensor");
 
-        FragmentCreatorSensor fragmentCreatorSensor =
+        final FragmentCreatorSensor fragmentCreatorSensor =
                 new FragmentCreatorSensor();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_SENSOR_VAL, sensorVal);
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_SENSOR_VAL, sensorValForEdit);
 
         fragmentCreatorSensor.setArguments(bundle);
         getSupportFragmentManager()
@@ -72,14 +82,17 @@ public class MakerView extends AppCompatActivity {
                 .commit();
     }
 
-    private void creatorButton(ActionButton actionButton) {
-        setTitle("Create Button");
+    private void creatorButton(ActionButton actionButtonForEdit) {
+        if(actionButtonForEdit != null)
+            setTitle("Edit Button");
+        else
+            setTitle("Create Button");
 
-        FragmentCreatorButton fragmentCreatorButton =
+        final FragmentCreatorButton fragmentCreatorButton =
                 new FragmentCreatorButton();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_ACTION_BUTTON, actionButton);
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_ACTION_BUTTON, actionButtonForEdit);
 
         fragmentCreatorButton.setArguments(bundle);
         getSupportFragmentManager()
@@ -89,13 +102,18 @@ public class MakerView extends AppCompatActivity {
                 .commit();
     }
 
-    private void creatorSeekBar(ActionSeekBar actionSeekBar) {
-        setTitle("Create SeekBar");
-        FragmentCreatorSeekBar fragmentCreatorSeekBar =
+    private void creatorSeekBar(ActionSeekBar actionSeekBarForEdit)
+    {
+        if(actionSeekBarForEdit != null)
+            setTitle("Edit SeekBar");
+        else
+            setTitle("Create SeekBar");
+
+        final FragmentCreatorSeekBar fragmentCreatorSeekBar =
                 new FragmentCreatorSeekBar();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_ACTION_SEEK_BAR, actionSeekBar);
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_ACTION_SEEK_BAR, actionSeekBarForEdit);
 
         fragmentCreatorSeekBar.setArguments(bundle);
         getSupportFragmentManager()

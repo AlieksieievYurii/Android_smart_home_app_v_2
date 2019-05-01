@@ -3,10 +3,9 @@ package com.yuriialieksieiev.smarthome.components;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-
 import com.yuriialieksieiev.smarthome.R;
 
-public class AlertDialogAction
+public class AlertDialogEdition
 {
     public interface CallBack{
         void edit();
@@ -15,12 +14,12 @@ public class AlertDialogAction
 
     private Context context;
     private CallBack callBack;
-    private int port;
+    private String name;
 
-    public AlertDialogAction(Context context, CallBack callBack, int port) {
+    public AlertDialogEdition(Context context, CallBack callBack, String name) {
         this.context = context;
         this.callBack = callBack;
-        this.port = port;
+        this.name = name;
     }
 
     public void show()
@@ -29,7 +28,7 @@ public class AlertDialogAction
                 context.getString(R.string.remove)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle("Action-> port:"+port)
+                .setTitle("\""+name+"\"")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -49,7 +48,7 @@ public class AlertDialogAction
 
     private void alertRemove() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.remove) + " Action with port:" + port)
+                .setTitle(context.getString(R.string.remove) + name)
                 .setMessage(R.string.do_yo_want_to_remove)
                 .setCancelable(true)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -57,12 +56,7 @@ public class AlertDialogAction
                     public void onClick(DialogInterface dialog, int which) {
                         callBack.remove();
                     }})
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //nothing
-                    }
-                });
+                .setNegativeButton(R.string.no, null);
         builder.create().show();
     }
 }

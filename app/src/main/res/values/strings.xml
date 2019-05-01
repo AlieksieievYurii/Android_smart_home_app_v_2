@@ -7,7 +7,7 @@
     <string name="nav_drawer_close">Close navigation drawer</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="edit">Edit</string>
-    <string name="remove">Remove</string>
+    <string name="remove">Remove </string>
     <string name="do_yo_want_to_remove">Do you want to remove?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -54,4 +54,5 @@
     <string name="status">Status</string>
     <string name="job">Job</string>
     <string name="save">save</string>
+    <string name="once">once</string>
 </resources>
