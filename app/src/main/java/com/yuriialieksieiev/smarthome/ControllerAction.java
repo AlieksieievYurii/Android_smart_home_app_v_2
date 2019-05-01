@@ -136,7 +136,9 @@ public class ControllerAction implements OnAction, IControllerAction {
 
 
     @Override
-    public void stop() {
+    public void onStop()
+    {
+
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -154,11 +156,12 @@ public class ControllerAction implements OnAction, IControllerAction {
                     startProcess();
                 }
             });
-            stop();
+            onStop();
         }
 
         @Override
-        public void onResponse(String response) {
+        public void onResponse(String response)
+        {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 checkHashCode(jsonObject.getLong("hashCode"));
@@ -176,8 +179,10 @@ public class ControllerAction implements OnAction, IControllerAction {
             iView.error("Error connection: Actions ");
         }
 
+
         @Override
-        public void onResponse(String response) {
+        public void onResponse(String response)
+        {
             try {
                 currentlyHashCode = ActionUtils.setAllActions(new JSONObject(response), a);
             } catch (JSONException e) {

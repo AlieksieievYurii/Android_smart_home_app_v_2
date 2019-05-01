@@ -45,14 +45,14 @@ public class RcTasksAdapter extends RecyclerView.Adapter<RcTasksAdapter.TaskView
         return tasks.size();
     }
 
-    public static class  TaskViewHolder extends RecyclerView.ViewHolder
+    static class  TaskViewHolder extends RecyclerView.ViewHolder
     {
         private TextView tvName;
         private TextView tvDescription;
         private TextView tvMode;
         private Switch swStatus;
 
-        public TaskViewHolder(@NonNull View itemView) {
+        TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);

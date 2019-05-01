@@ -16,8 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -105,8 +103,7 @@ public class FragmentCreatorTask extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-            }
+                }}
         });
 
     }
@@ -194,7 +191,6 @@ public class FragmentCreatorTask extends Fragment {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> param = new HashMap<>();
-                        Log.i("DATA",jsonObject.toString());
                         param.put("data", jsonObject.toString());
                         return param;
                     }

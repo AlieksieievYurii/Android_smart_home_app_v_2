@@ -56,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Icon"
+                android:text="@string/icon"
                 android:textSize="13sp"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/colorPrimary"/>
@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Device"
+                android:text="@string/device"
                 android:textSize="13sp"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/colorPrimary"/>

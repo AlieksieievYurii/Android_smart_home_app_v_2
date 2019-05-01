@@ -15,7 +15,7 @@
     <string name="name_can_not_be_empty">Name can not be empty!</string>
     <string name="port_can_not_be_empty">Port can not be empty!</string>
     <string name="add_button">Add Button</string>
-    <string name="add_seekbar">Add SeekBar</string>
+    <string name="add_seek_bar">Add SeekBar</string>
     <string name="add_sensor">Add Sensor</string>
     <string name="settings_server">Settings Server</string>
     <string name="url_server">Url server</string>
@@ -25,7 +25,6 @@
     <string name="width_views">Width views</string>
     <string name="dp">Dp…</string>
     <string name="vibration_on_press">Vibration on press</string>
-    <string name="save">Save</string>
     <string name="height_views">Height views</string>
     <string name="apply">Apply</string>
     <string name="sensor_removed">Sensor removed!</string>
@@ -38,7 +37,21 @@
     <string name="retry">Retry</string>
     <string name="logo">logo</string>
     <string name="see_think_act">See.Think.Act</string>
-    <string name="smarthome">SmartHome</string>
+    <string name="smart_home">SmartHome</string>
     <string name="description">Desctiption</string>
     <string name="every">every</string>
+    <string name="port_empty">Can not be empty!</string>
+    <string name="port_exist">Port is exist here!</string>
+    <string name="signal_empty">Signal can not be empty!</string>
+    <string name="signal_hint">Signal: only 0..255</string>
+    <string name="device">Device</string>
+    <string name="type_port">Type port</string>
+    <string name="port_status">Port status</string>
+    <string name="signal">Signal</string>
+    <string name="icon">Icon</string>
+    <string name="type_task">Type Task</string>
+    <string name="mode">Mode</string>
+    <string name="status">Status</string>
+    <string name="job">Job</string>
+    <string name="save">save</string>
 </resources>

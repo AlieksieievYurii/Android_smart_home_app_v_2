@@ -25,7 +25,9 @@ import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
+
 import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class FragmentActions extends Fragment implements
         AlertMenu.MenuCallBack,
         IView {
 
-    public interface CallBack{
+    public interface CallBack {
         void onRetry();
     }
 
@@ -48,7 +50,9 @@ public class FragmentActions extends Fragment implements
     private List<ActionSeekBar> listSeekBars;
     private List<SensorView> listSensors;
 
-    private Snackbar snackbarError;
+    private Snackbar snackBarError;
+    private boolean isActive = false;
+
 
     @Nullable
     @Override
@@ -56,7 +60,7 @@ public class FragmentActions extends Fragment implements
         root = inflater.inflate(R.layout.fragment_actions, container, false);
         this.gl_root = root.findViewById(R.id.gl_actions);
 
-        ControllerAction controllerAction = new ControllerAction(getContext(),this);
+        ControllerAction controllerAction = new ControllerAction(getContext(), this);
         this.controller = controllerAction;
 
         factoryViews = new Factory(getContext(),
@@ -69,6 +73,7 @@ public class FragmentActions extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
+        isActive = true;
         upDate();
     }
 
@@ -106,31 +111,31 @@ public class FragmentActions extends Fragment implements
 
     @Override
     public void buildingFinished() {
-        A a = new A(listButtons,listSeekBars,listSensors);
+        A a = new A(listButtons, listSeekBars, listSensors);
         controller.onStart(a);
     }
 
     @Override
     public void onLongPressButtonAction(ActionButton actionButton) {
-        new AlertMenu(getContext(),this).startEdition(actionButton);
+        new AlertMenu(getContext(), this).startEdition(actionButton);
     }
 
     @Override
     public void onLongPressSeekBarAction(ActionSeekBar actionSeekBar) {
-        new AlertMenu(getContext(),this).startEdition(actionSeekBar);    }
-
-    @Override
-    public void onLongPressSensor(SensorVal sensorVal) {
-        new AlertMenu(getContext(),this).startEdition(sensorVal);
+        new AlertMenu(getContext(), this).startEdition(actionSeekBar);
     }
 
     @Override
-    public void removeAction(Action action)
-    {
+    public void onLongPressSensor(SensorVal sensorVal) {
+        new AlertMenu(getContext(), this).startEdition(sensorVal);
+    }
+
+    @Override
+    public void removeAction(Action action) {
         try {
-            JsonManager.remove(getContext(),action);
+            JsonManager.remove(getContext(), action);
             upDate();
-            Snackbar.make(root, R.string.action_removed,Snackbar.LENGTH_LONG).show();
+            Snackbar.make(root, R.string.action_removed, Snackbar.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,9 +144,9 @@ public class FragmentActions extends Fragment implements
     @Override
     public void removeSensor(SensorVal sensorVal) {
         try {
-            JsonManager.remove(getContext(),sensorVal);
+            JsonManager.remove(getContext(), sensorVal);
             upDate();
-            Snackbar.make(root, R.string.sensor_removed,Snackbar.LENGTH_LONG).show();
+            Snackbar.make(root, R.string.sensor_removed, Snackbar.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -149,27 +154,27 @@ public class FragmentActions extends Fragment implements
 
     @Override
     public void editActionButton(ActionButton actionButton) {
-        Intent intent = new Intent(getContext(),MakerView.class);
-        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_BUTTON);
-        intent.putExtra(MakerView.EXTRA_ACTION_BUTTON,actionButton);
+        Intent intent = new Intent(getContext(), MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW, MakerView.EXTRA_BUTTON);
+        intent.putExtra(MakerView.EXTRA_ACTION_BUTTON, actionButton);
 
         startActivity(intent);
     }
 
     @Override
     public void editActionSeekBar(ActionSeekBar actionSeekBar) {
-        Intent intent = new Intent(getContext(),MakerView.class);
-        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SEEK_BAR);
-        intent.putExtra(MakerView.EXTRA_ACTION_SEEK_BAR,actionSeekBar);
+        Intent intent = new Intent(getContext(), MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW, MakerView.EXTRA_SEEK_BAR);
+        intent.putExtra(MakerView.EXTRA_ACTION_SEEK_BAR, actionSeekBar);
 
         startActivity(intent);
     }
 
     @Override
     public void editSensor(SensorVal sensorVal) {
-        Intent intent = new Intent(getContext(),MakerView.class);
-        intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_SENSOR);
-        intent.putExtra(MakerView.EXTRA_SENSOR_VAL,sensorVal);
+        Intent intent = new Intent(getContext(), MakerView.class);
+        intent.putExtra(MakerView.EXTRA_WHAT_VIEW, MakerView.EXTRA_SENSOR);
+        intent.putExtra(MakerView.EXTRA_SENSOR_VAL, sensorVal);
 
         startActivity(intent);
     }
@@ -177,32 +182,36 @@ public class FragmentActions extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
-        if(snackbarError != null && snackbarError.isShown()) {
-            snackbarError.dismiss();
-            snackbarError = null;
+        isActive = false;
+        if (snackBarError != null && snackBarError.isShown()) {
+            snackBarError.dismiss();
+            snackBarError = null;
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        controller.stop();
+        controller.onStop();
     }
 
     @Override
     public void error(String mes) {
-        Snackbar.make(root,mes,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(root, mes, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void error(final CallBack callBack) {
-        snackbarError = Snackbar.make(root,"Error connection",Snackbar.LENGTH_INDEFINITE);
-        snackbarError.setAction(R.string.retry, new View.OnClickListener() {
+        if(!isActive)
+            return;
+
+        snackBarError = Snackbar.make(root, "Error connection", Snackbar.LENGTH_INDEFINITE);
+        snackBarError.setAction(R.string.retry, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callBack.onRetry();
             }
         });
-        snackbarError.show();
+        snackBarError.show();
     }
 }

@@ -171,14 +171,14 @@ public class AlertCreateAction extends AlertDialog
     private boolean check() {
         if(edtPort.getText().toString().trim().length() == 0) {
             tvErrorPort.setVisibility(View.VISIBLE);
-            tvErrorPort.setText("Can not be empty!");
+            tvErrorPort.setText(getContext().getString(R.string.port_empty));
             return false;
         }
 
         if(isExistedPort(Integer.parseInt(edtPort.getText().toString()), (Device) spDevice.getSelectedItem()))
         {
             tvErrorPort.setVisibility(View.VISIBLE);
-            tvErrorPort.setText("Port is exist here!");
+            tvErrorPort.setText(getContext().getString(R.string.port_exist));
             return false;
         }
 
@@ -189,7 +189,7 @@ public class AlertCreateAction extends AlertDialog
             if(sig.trim().length() == 0)
             {
                tvErrorSignal.setVisibility(View.VISIBLE);
-               tvErrorSignal.setText("Signal can not be empty!");
+               tvErrorSignal.setText(getContext().getString(R.string.signal_empty));
                 return false;
             }
 
@@ -197,7 +197,7 @@ public class AlertCreateAction extends AlertDialog
             if (signal < 0 || signal > 255 )
             {
                 tvErrorSignal.setVisibility(View.VISIBLE);
-                tvErrorSignal.setText("Signal: only 0..255");
+                tvErrorSignal.setText(getContext().getString(R.string.signal_hint));
                 return false;
             }
         }

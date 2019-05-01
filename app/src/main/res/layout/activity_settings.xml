@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_add_button"
-            android:text="@string/add_seekbar" />
+            android:text="@string/add_seek_bar" />
 
         <Button
             android:id="@+id/btn_add_sensor"
@@ -166,7 +166,7 @@
             android:layout_below="@id/ln_settings_app"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="@string/save" />
+            android:text="@string/save"/>
 
     </RelativeLayout>
 

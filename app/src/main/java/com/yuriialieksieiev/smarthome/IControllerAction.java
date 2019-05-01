@@ -10,5 +10,5 @@ import java.util.List;
 public interface IControllerAction
 {
     void onStart(A a);
-    void stop();
+    void onStop();
 }
