@@ -95,7 +95,7 @@
                     android:drawableEnd="@drawable/ic_list" />
             </LinearLayout>
             <TextView
-                android:id="@+id/tv_error_signal"
+                android:id="@+id/tv_error_port"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_error"

@@ -130,6 +130,20 @@ public class FragmentCreatorButton extends Fragment {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDevice.setAdapter(adapter2);
         spDevice.setSelection(0);
+
+        spDevice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                isAnalog = false;
+                root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
+                tryFindRegisteredPin();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void init() {
@@ -172,13 +186,8 @@ public class FragmentCreatorButton extends Fragment {
                 if(!mEnableTextWatcher || registeredPins == null)
                     return;
 
-                root.findViewById(R.id.tv_error_signal).setVisibility(View.GONE);
+                root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
 
-                if(edtPort.getText().toString().length() == 0)
-                {
-                    root.findViewById(R.id.til_edt_name_pin).setVisibility(View.GONE);
-                    return;
-                }
                 tryFindRegisteredPin();
             }
 
@@ -238,6 +247,7 @@ public class FragmentCreatorButton extends Fragment {
         root.findViewById(R.id.til_edt_name_pin).setVisibility(View.VISIBLE);
         edtNamePin.setText(pin.getName());
         edtPort.setText(String.valueOf(pin.getPin()));
+        spDevice.setSelection(pin.getDevice().ordinal());
         if(pin.getTypePort() != Action.TypePort.DIGITAL) {
             errorPort(R.string.error_its_analog);
             isAnalog = true;
@@ -324,7 +334,7 @@ public class FragmentCreatorButton extends Fragment {
 
     private void errorPort(int idTextRes)
     {
-        final TextView tvPortError = root.findViewById(R.id.tv_error_signal);
+        final TextView tvPortError = root.findViewById(R.id.tv_error_port);
         tvPortError.setVisibility(View.VISIBLE);
         tvPortError.setText(idTextRes);
 
@@ -332,10 +342,16 @@ public class FragmentCreatorButton extends Fragment {
 
     private void tryFindRegisteredPin()
     {
-        final int _port = Integer.parseInt(edtPort.getText().toString());
+        if(edtPort.getText().toString().length() == 0)
+        {
+            root.findViewById(R.id.til_edt_name_pin).setVisibility(View.GONE);
+            return;
+        }
 
+        final int _port = Integer.parseInt(edtPort.getText().toString());
+        final Device _device = (Device) spDevice.getSelectedItem();
         for(Pin pin : registeredPins) {
-            if (pin.getPin() == _port) {
+            if (pin.getPin() == _port && pin.getDevice() == _device) {
                 mEnableTextWatcher = false;
                 insertRegisteredPin(pin);
                 break;

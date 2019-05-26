@@ -69,7 +69,7 @@ public class AlertCreateAction extends AlertDialog
         });
 
         tvErrorPort = findViewById(R.id.tv_error_port);
-        tvErrorSignal = findViewById(R.id.tv_error_signal);
+        tvErrorSignal = findViewById(R.id.tv_error_port);
         spPortStatus = findViewById(R.id.sp_port_status);
         spPortStatus.setAdapter(new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, Action.PortStatus.values()));
         if(actionForEdit != null && actionForEdit.getTypePort() == Action.TypePort.DIGITAL)
