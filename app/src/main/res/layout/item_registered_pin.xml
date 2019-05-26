@@ -26,19 +26,19 @@
             android:id="@+id/tv_hint_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pin"
+            android:text="@string/pin"
             android:textColor="@color/colorPrimary"
             android:textStyle="italic"
             apps:ignore="RelativeOverlap"
-            android:layout_toEndOf="@id/tv_name"
-            android:layout_marginStart="50dp"
+            android:layout_toStartOf="@id/tv_hint_type_port"
+            android:layout_marginEnd="50dp"
             />
         <TextView
             android:id="@+id/tv_pin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             apps:text="terst"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginTop="-5sp"
             android:layout_alignStart="@id/tv_hint_pin"
             android:layout_below="@id/tv_hint_pin"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_hint_type_port"
             android:textColor="@android:color/holo_orange_dark"
-            android:text="analog"
+            apps:text="analog"
             android:layout_alignStart="@id/tv_hint_type_port" />
 
 
@@ -87,12 +87,11 @@
             apps:text="TCOD" />
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            apps:text="test_one"
-            android:textSize="20sp"
+            apps:text="tesfwefwefwefwefwefwft_one"
+            android:textSize="16sp"
             android:layout_marginTop="-5dp"
-            android:maxLength="15"
             android:layout_below="@id/tv_hint_name"
             android:textColor="@android:color/black"/>
         <TextView
@@ -112,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_hint_description"
             apps:text="This is description of taskrfes"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textColor="@android:color/darker_gray"/>
 
     </RelativeLayout>

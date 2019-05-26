@@ -60,7 +60,10 @@
     <string name="error_connection">Error connection</string>
     <string name="removed_successful">Removed successful</string>
     <string name="error_json">Error with JSON!</string>
-    <string name="pin">Pin name</string>
+    <string name="pin_name">Pin name</string>
     <string name="error_its_analog">It\'s analog!</string>
     <string name="port_is_analog">Port is analog!</string>
+    <string name="registered_pins">Registered Pins</string>
+    <string name="pin">Pin</string>
+    <string name="create_new_action">Create new Action</string>
 </resources>

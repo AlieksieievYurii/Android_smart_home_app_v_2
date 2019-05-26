@@ -61,7 +61,7 @@
                     android:id="@+id/edt_name_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/pin"
+                    android:hint="@string/pin_name"
                     android:enabled="false"
                     tools:ignore="Autofill,LabelFor,TextFields" />
             </android.support.design.widget.TextInputLayout>
