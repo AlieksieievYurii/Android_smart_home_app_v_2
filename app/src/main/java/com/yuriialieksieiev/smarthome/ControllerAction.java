@@ -176,7 +176,7 @@ public class ControllerAction implements OnAction, IControllerAction {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            iView.error("Error connection: Actions ");
+            iView.error(context.getString(R.string.error_connection));
         }
 
 
@@ -221,7 +221,7 @@ public class ControllerAction implements OnAction, IControllerAction {
                 try {
                     JSONObject resp = new JSONObject(response);
                     if (resp.getString("Response").equals("WRONG"))
-                        iView.error("Error with JSON!");
+                        iView.error(context.getString(R.string.error_json));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

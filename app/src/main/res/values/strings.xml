@@ -55,4 +55,12 @@
     <string name="job">Job</string>
     <string name="save">save</string>
     <string name="once">once</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="error_connection">Error connection</string>
+    <string name="removed_successful">Removed successful</string>
+    <string name="error_json">Error with JSON!</string>
+    <string name="pin">Pin name</string>
+    <string name="error_its_analog">It\'s analog!</string>
+    <string name="port_is_analog">Port is analog!</string>
 </resources>

@@ -88,26 +88,4 @@ public class PatternActionButton implements Parcelable
         dest.writeString(name);
         dest.writeParcelable(action, flags);
     }
-
-
-    /*
-
-    [
-
-        {
-            "type":"button"
-            "icon":"lamp",
-            "name":"lamp_one",
-            "action": {
-                        "type_port":"DIGITAL",
-                        "port":23,
-                        "port_status":"HIGH"
-                      }
-        }
-
-    ]
-
-
-
-     */
 }

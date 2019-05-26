@@ -1,18 +1,13 @@
 package com.yuriialieksieiev.smarthome.utils;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.yuriialieksieiev.smarthome.components.Task;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class UrlUtils
 {
     private final static String TYPE_HASH_CODE_ACTIONS = "getHashCodeActions";
     private final static String TYPE_GET_ACTIONS = "getActions";
     private final static String TYPE_GET_SENSORS = "getSensors";
+    private final static String TYPE_GET_REGISTERED_PINS = "getRegisteredPins";
     private final static String TYPE_POST_ACTION = "postAction";
     private final static String TYPE_POST_TASK = "postTask";
     private final static String TYPE_GET_FREE_TASK_ID = "getFreeTaskId";
@@ -24,7 +19,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -32,7 +27,7 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_HASH_CODE_ACTIONS;
     }
@@ -41,7 +36,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -49,7 +44,7 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_GET_ACTIONS;
     }
@@ -58,7 +53,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -66,7 +61,7 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_GET_SENSORS;
     }
@@ -75,7 +70,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -83,16 +78,16 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
-                TYPE_DELETE_TASK;
+                TYPE_POST_ACTION;
     }
 
     public static String getUrlForGettingFreeId(Context context)
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -100,7 +95,7 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_GET_FREE_TASK_ID;
     }
@@ -109,7 +104,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -117,7 +112,7 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_GET_TASKS;
     }
@@ -126,7 +121,7 @@ public class UrlUtils
     {
         String url = SharedPreferences.getUrlToServer(context);
         String nameModule = SharedPreferences.getServerName(context);
-        String password = SharedPreferences.getPasswordServer(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
 
         return url +
                 "/" +
@@ -134,9 +129,26 @@ public class UrlUtils
                 "/" +
                 MODULE_LISTENER_TASKS +
                 "?p=" +
-                password +
+                apiToken +
                 "&type=" +
                 TYPE_DELETE_TASK;
+    }
+
+    public static String getUrlForGetRegisteredPins(Context context)
+    {
+        final String url = SharedPreferences.getUrlToServer(context);
+        String nameModule = SharedPreferences.getServerName(context);
+        String apiToken = SharedPreferences.getPasswordServer(context);
+
+        return url +
+                "/" +
+                nameModule +
+                "/" +
+                MODULE_LISTENER_TASKS +
+                "?p=" +
+                apiToken +
+                "&type=" +
+                TYPE_GET_REGISTERED_PINS;
     }
 
     public static String getUrlForPostTask(Context context)
@@ -155,4 +167,6 @@ public class UrlUtils
                 "&type=" +
                 TYPE_POST_TASK;
     }
+
+
 }

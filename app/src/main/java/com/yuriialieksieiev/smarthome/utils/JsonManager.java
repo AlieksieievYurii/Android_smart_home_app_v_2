@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.yuriialieksieiev.smarthome.Factory;
 import com.yuriialieksieiev.smarthome.components.Action;
+import com.yuriialieksieiev.smarthome.components.Pin;
 import com.yuriialieksieiev.smarthome.components.button.PatternActionButton;
 import com.yuriialieksieiev.smarthome.components.enums.Device;
 import com.yuriialieksieiev.smarthome.components.enums.Icons;
@@ -188,6 +189,11 @@ public class JsonManager {
         return jsonArray;
     }
 
-
+    public static List<Pin> parsePins(JSONArray jsonArray) throws JSONException {
+        final List<Pin> pins = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++)
+            pins.add(Pin.parse(jsonArray.getJSONObject(i)));
+        return pins;
+    }
 
 }

@@ -23,52 +23,76 @@
             apps:ignore="RelativeOverlap" />
 
         <TextView
-            android:id="@+id/tv_hint_mode"
+            android:id="@+id/tv_hint_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/tv_name"
-            android:layout_marginEnd="-40dp"
-            android:text="@string/mode"
+            android:text="Pin"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            apps:ignore="RelativeOverlap"
+            android:layout_toEndOf="@id/tv_name"
+            android:layout_marginStart="50dp"
+            />
+        <TextView
+            android:id="@+id/tv_pin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            apps:text="terst"
+            android:textSize="20sp"
+            android:layout_marginTop="-5sp"
+            android:layout_alignStart="@id/tv_hint_pin"
+            android:layout_below="@id/tv_hint_pin"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/tv_hint_type_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/type_port"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
-            android:textStyle="italic"/>
+            android:paddingEnd="30dp"
+            android:textStyle="italic"
+            apps:ignore="RtlSymmetry" />
         <TextView
-            android:id="@+id/tv_mode"
+            android:id="@+id/tv_type_port"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_hint_mode"
+            android:layout_below="@id/tv_hint_type_port"
             android:textColor="@android:color/holo_orange_dark"
-            android:text="@string/once"
-            android:layout_alignStart="@id/tv_hint_mode" />
+            android:text="analog"
+            android:layout_alignStart="@id/tv_hint_type_port" />
 
 
         <TextView
-            android:id="@+id/tv_hint_type_task"
+            android:id="@+id/tv_hint_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_mode"
-            android:layout_alignStart="@id/tv_mode"
+            android:layout_below="@id/tv_type_port"
+            android:layout_alignStart="@id/tv_type_port"
             android:layout_alignTop="@id/tv_description"
             android:layout_marginTop="-16dp"
-            android:text="@string/type_task"
+            android:text="@string/device"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             android:textStyle="italic" />
         <TextView
-            android:id="@+id/tv_type_task"
+            android:id="@+id/tv_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_hint_type_task"
+            android:layout_below="@id/tv_hint_device"
             android:textColor="@android:color/holo_orange_dark"
-            android:layout_alignStart="@id/tv_hint_type_task"
-            apps:text="timer" />
+            android:layout_alignStart="@id/tv_hint_type_port"
+            apps:text="TCOD" />
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            apps:text="test"
+            apps:text="test_one"
             android:textSize="20sp"
             android:layout_marginTop="-5dp"
+            android:maxLength="15"
             android:layout_below="@id/tv_hint_name"
             android:textColor="@android:color/black"/>
         <TextView
@@ -91,24 +115,6 @@
             android:textSize="15sp"
             android:textColor="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/tv_hint_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            android:layout_alignStart="@id/sw_status"
-            android:layout_alignBottom="@id/sw_status"
-            android:layout_above="@id/sw_status"
-            android:textColor="@color/colorPrimary" />
-
-        <Switch
-            android:id="@+id/sw_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

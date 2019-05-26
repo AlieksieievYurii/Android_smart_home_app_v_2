@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components;
+package com.yuriialieksieiev.smarthome.components.dialoges;
 
 import android.content.Context;
 import android.content.DialogInterface;

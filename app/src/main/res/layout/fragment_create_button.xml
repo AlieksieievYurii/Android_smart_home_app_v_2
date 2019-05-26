@@ -37,29 +37,72 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/name"
+                    android:maxLines="1"
                     tools:ignore="Autofill,LabelFor,TextFields" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_edt_name_pin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <EditText
-                    android:id="@+id/edt_pin"
+                    android:id="@+id/edt_name_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/port"
-                    android:inputType="number"
+                    android:hint="@string/pin"
+                    android:enabled="false"
+                    android:maxLength="5"
                     tools:ignore="Autofill,LabelFor,TextFields" />
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/edt_pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/port"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_select_from_registered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:drawableEnd="@drawable/ic_list" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_error_signal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_error"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:text="It's analog pin!"
+                android:textColor="@android:color/holo_red_light" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/icon"
-                android:textSize="13sp"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/colorPrimary"/>
+                android:text="@string/icon"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp" />
 
             <Spinner
                 android:id="@+id/sp_icon"
@@ -67,13 +110,15 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/device"
-                android:textSize="13sp"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/colorPrimary"/>
+                android:text="@string/device"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp" />
+
             <Spinner
                 android:id="@+id/sp_device"
                 android:layout_width="match_parent"

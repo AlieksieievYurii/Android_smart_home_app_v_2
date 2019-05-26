@@ -17,7 +17,7 @@ public class SensorVal implements Parcelable {
     public enum Sensors {
         TEMPERATURE("temperature", R.drawable.ic_celsius),
         LIGHT("light",R.drawable.ic_day),
-        HUMIDITY("humidity",R.drawable.ic_moon);
+        HUMIDITY("humidity",R.drawable.ic_hum);
 
         private String inJson;
         private int res;

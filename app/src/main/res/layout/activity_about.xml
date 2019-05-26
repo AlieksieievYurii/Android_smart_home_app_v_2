@@ -6,10 +6,52 @@
     tools:context=".activity.ActivityAbout"
     android:padding="10dp">
     <TextView
+        android:id="@+id/tv_name_project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/about"
+        android:layout_marginTop="50dp"
+        android:text="Project SmartHome"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_name_project"/>
+    <TextView
+        android:id="@+id/tv_created_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created by:"
+        android:layout_below="@id/img_logo"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal"
         android:textColor="@android:color/black"
         android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_yurii_alieksieiev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_created_by"
+        android:layout_centerHorizontal="true"
+        android:text="Yurii Alieksieiev"/>
+    <TextView
+        android:id="@+id/tv_yurii_oleg_horb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_yurii_alieksieiev"
+        android:layout_centerHorizontal="true"
+        android:text="Oleg Horbatiuk"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WSINF 2019 Lodz, Poland"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.yuriialieksieiev.smarthome.components;
+package com.yuriialieksieiev.smarthome.components.dialoges;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.yuriialieksieiev.smarthome.R;
+import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.enums.Device;
 import java.util.List;
 import java.util.Objects;

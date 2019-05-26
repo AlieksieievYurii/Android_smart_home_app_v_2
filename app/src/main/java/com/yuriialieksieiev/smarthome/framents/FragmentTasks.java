@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.activity.MakerView;
-import com.yuriialieksieiev.smarthome.components.AlertDialogEdition;
+import com.yuriialieksieiev.smarthome.components.dialoges.AlertDialogEdition;
 import com.yuriialieksieiev.smarthome.components.RcTasksAdapter;
 import com.yuriialieksieiev.smarthome.components.Task;
 import com.yuriialieksieiev.smarthome.components.exceptions.TaskException;
@@ -39,6 +38,7 @@ public class FragmentTasks extends Fragment
     private Context context;
     private List<Task> tasks = new ArrayList<>();
     private View root;
+    private Snackbar snackBarErrorConnection;
 
     @Nullable
     @Override
@@ -140,7 +140,7 @@ public class FragmentTasks extends Fragment
                                     if (responseJson.getString("Response").equals("WRONG"))
                                         Snackbar.make(root, responseJson.getString("description"), Snackbar.LENGTH_SHORT).show();
                                     else {
-                                        Snackbar.make(root, "Removed successful", Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(root, R.string.removed_successful, Snackbar.LENGTH_SHORT).show();
                                         rcAdapter.notifyDataSetChanged();
                                         tasks.remove(task);
                                     }
@@ -187,7 +187,14 @@ public class FragmentTasks extends Fragment
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        snackBarErrorConnection = Snackbar.make(root, R.string.error_connection, Snackbar.LENGTH_INDEFINITE);
+                        snackBarErrorConnection.setAction(R.string.retry, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                setTasks();
+                            }
+                        });
+                        snackBarErrorConnection.show();
                     }
                 });
         Volley.newRequestQueue(context).add(stringRequest);
@@ -209,5 +216,14 @@ public class FragmentTasks extends Fragment
         intent.putExtra(MakerView.EXTRA_WHAT_VIEW,MakerView.EXTRA_TASK);
         intent.putExtra(MakerView.EXTRA_OBJECT_TASK,task);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (snackBarErrorConnection != null && snackBarErrorConnection.isShown()) {
+            snackBarErrorConnection.dismiss();
+            snackBarErrorConnection = null;
+        }
     }
 }

@@ -16,7 +16,7 @@ import com.yuriialieksieiev.smarthome.IControllerAction;
 import com.yuriialieksieiev.smarthome.IView;
 import com.yuriialieksieiev.smarthome.activity.MakerView;
 import com.yuriialieksieiev.smarthome.components.A;
-import com.yuriialieksieiev.smarthome.components.AlertMenu;
+import com.yuriialieksieiev.smarthome.components.dialoges.AlertMenu;
 import com.yuriialieksieiev.smarthome.components.Action;
 import com.yuriialieksieiev.smarthome.components.OnLongPressAction;
 import com.yuriialieksieiev.smarthome.R;
@@ -25,9 +25,7 @@ import com.yuriialieksieiev.smarthome.components.seekbar.ActionSeekBar;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorVal;
 import com.yuriialieksieiev.smarthome.components.sensor.SensorView;
 import com.yuriialieksieiev.smarthome.utils.JsonManager;
-
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +43,9 @@ public class FragmentActions extends Fragment implements
     private Factory factoryViews;
     private IControllerAction controller;
     private GridLayout gl_root;
-
     private List<ActionButton> listButtons;
     private List<ActionSeekBar> listSeekBars;
     private List<SensorView> listSensors;
-
     private Snackbar snackBarError;
     private boolean isActive = false;
 
@@ -205,7 +201,7 @@ public class FragmentActions extends Fragment implements
         if(!isActive)
             return;
 
-        snackBarError = Snackbar.make(root, "Error connection", Snackbar.LENGTH_INDEFINITE);
+        snackBarError = Snackbar.make(root, R.string.error_connection, Snackbar.LENGTH_INDEFINITE);
         snackBarError.setAction(R.string.retry, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
