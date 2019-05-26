@@ -45,10 +45,6 @@ public class FragmentCreatorButton extends Fragment {
     private EditText edtPort;
     private Spinner spDevice;
     private Spinner spIcon;
-    private Icons icons;
-    private String name;
-    private int port;
-    private Device device;
     private ActionButton actionButton;
     private Button btnSelectRegisteredPin;
     private List<Pin> registeredPins;
@@ -102,16 +98,10 @@ public class FragmentCreatorButton extends Fragment {
 
     private void setFields()
     {
-        name = actionButton.getName();
-        icons = actionButton.getIcons();
-        port = actionButton.getAction().getPort();
-        icons = actionButton.getIcons();
-        device = actionButton.getAction().getDevice();
-
-        edtName.setText(name);
-        edtPort.setText(String.valueOf(port));
-        spIcon.setSelection(icons.ordinal());
-        spDevice.setSelection(device.ordinal());
+        edtName.setText(actionButton.getName());
+        edtPort.setText(String.valueOf(actionButton.getAction().getPort()));
+        spIcon.setSelection(actionButton.getIcons().ordinal());
+        spDevice.setSelection(actionButton.getAction().getDevice().ordinal());
     }
 
     private void initSpinnerIcon() {
@@ -124,8 +114,7 @@ public class FragmentCreatorButton extends Fragment {
         spIcon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                icons = (Icons) spIcon.getSelectedItem();
-                upDateExample();
+                btnExample.setBackgroundResource(((Icons) spIcon.getSelectedItem()).getDrawable());
             }
 
             @Override
@@ -141,19 +130,6 @@ public class FragmentCreatorButton extends Fragment {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDevice.setAdapter(adapter2);
         spDevice.setSelection(0);
-
-
-        spDevice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                device = (Device) spDevice.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void init() {
@@ -180,8 +156,8 @@ public class FragmentCreatorButton extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                name = edtName.getText().toString();
-                upDateExample();
+                root.findViewById(R.id.tv_error_name).setVisibility(View.GONE);
+               btnExample.setText(edtName.getText().toString());
             }});
 
         edtPort.addTextChangedListener(new TextWatcher() {
@@ -192,6 +168,7 @@ public class FragmentCreatorButton extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isAnalog = false;
                 if(!mEnableTextWatcher || registeredPins == null)
                     return;
 
@@ -226,8 +203,6 @@ public class FragmentCreatorButton extends Fragment {
             public void onClick(View v) {
                 if (!checkFields())
                     return;
-
-                port = Integer.parseInt(edtPort.getText().toString());
 
                 if (actionButton != null)
                     editAction(actionButton);
@@ -270,7 +245,12 @@ public class FragmentCreatorButton extends Fragment {
         mEnableTextWatcher = true;
     }
 
-    private void createNewAction() {
+    private void createNewAction()
+    {
+        final String name = edtName.getText().toString();
+        final int port = Integer.parseInt(edtPort.getText().toString());
+        final Icons icon = (Icons) spIcon.getSelectedItem();
+        final Device device = (Device) spDevice.getSelectedItem();
 
         if (JsonManager.isExist(port, device, getContext())) {
             Snackbar.make(root, R.string.port_existed, Snackbar.LENGTH_LONG).show();
@@ -279,7 +259,7 @@ public class FragmentCreatorButton extends Fragment {
             Snackbar.make(root, R.string.port_is_analog, Snackbar.LENGTH_LONG).show();
         else
             try {
-                JsonManager.addActionButton(getContext(), name, port, icons, device);
+                JsonManager.addActionButton(getContext(), name, port, icon, device);
                 Objects.requireNonNull(getActivity()).finish();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -288,6 +268,11 @@ public class FragmentCreatorButton extends Fragment {
 
 
     private void editAction(ActionButton actionButton) {
+
+        final String name = edtName.getText().toString();
+        final int port = Integer.parseInt(edtPort.getText().toString());
+        final Icons icon = (Icons) spIcon.getSelectedItem();
+        final Device device = (Device) spDevice.getSelectedItem();
 
         if(isAnalog)
         {
@@ -306,7 +291,7 @@ public class FragmentCreatorButton extends Fragment {
         try {
             JsonManager.replaceActionButton(getContext(),
                     new PatternActionButton(
-                            icons,
+                            icon,
                             name,
                             new Action(device, port, Action.PortStatus.LOW)),
                     actionButton.getAction());
@@ -317,9 +302,13 @@ public class FragmentCreatorButton extends Fragment {
         }
     }
 
-    private boolean checkFields() {
-        if (name == null || name.trim().length() == 0) {
+    private boolean checkFields()
+    {
+        final String name = edtName.getText().toString();
+
+        if (name.trim().length() == 0) {
             Snackbar.make(root, R.string.name_can_not_be_empty, Snackbar.LENGTH_LONG).show();
+            root.findViewById(R.id.tv_error_name).setVisibility(View.VISIBLE);
             return false;
         }
 
@@ -332,10 +321,6 @@ public class FragmentCreatorButton extends Fragment {
         return true;
     }
 
-    private void upDateExample() {
-        btnExample.setText(name);
-        btnExample.setBackgroundResource(icons.getDrawable());
-    }
 
     private void errorPort(int idTextRes)
     {

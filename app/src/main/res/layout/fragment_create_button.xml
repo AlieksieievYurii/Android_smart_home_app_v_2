@@ -40,6 +40,16 @@
                     android:maxLines="1"
                     tools:ignore="Autofill,LabelFor,TextFields" />
             </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/tv_error_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_error"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:text="@string/name_can_not_be_empty"
+                android:textColor="@android:color/holo_red_light" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_edt_name_pin"
@@ -53,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/pin"
                     android:enabled="false"
-                    android:maxLength="5"
                     tools:ignore="Autofill,LabelFor,TextFields" />
             </android.support.design.widget.TextInputLayout>
 
