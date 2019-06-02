@@ -50,6 +50,7 @@ public class FragmentCreatorSeekBar extends Fragment {
     private List<Pin> registeredPins;
     private boolean isDigital;
     private boolean mEnableTextWatcher = true;
+    private boolean fragmentIsActive = false;
 
     @Nullable
     @Override
@@ -67,7 +68,14 @@ public class FragmentCreatorSeekBar extends Fragment {
             setFields();
 
         takeListOfRegisteredPins();
+
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fragmentIsActive = true;
     }
 
     private void takeListOfRegisteredPins() {
@@ -78,9 +86,17 @@ public class FragmentCreatorSeekBar extends Fragment {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                if(!fragmentIsActive)
+                                    return;
+
                                 try {
                                     registeredPins = JsonManager.parsePins(new JSONArray(response));
                                     btnSelectRegisteredPin.setEnabled(true);
+                                    btnSelectRegisteredPin.setAlpha(1);
+
+                                    if(actionSeekBar != null)
+                                        tryFindRegisteredPin();
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Snackbar.make(root,"Can not get registered pins!",Snackbar.LENGTH_SHORT).show();
@@ -90,6 +106,8 @@ public class FragmentCreatorSeekBar extends Fragment {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                if(!fragmentIsActive)
+                                    return;
                                 Snackbar.make(root,"Can not get registered pins!",Snackbar.LENGTH_SHORT).show();
                             }
                         });
@@ -98,7 +116,7 @@ public class FragmentCreatorSeekBar extends Fragment {
 
     private void setFields() {
         edtName.setText(actionSeekBar.getName());
-        edtPort.setText(String.valueOf(actionSeekBar.getAction().getPort()));
+        edtPort.setText(String.valueOf(actionSeekBar.getAction().getPin()));
         spDevice.setSelection(actionSeekBar.getAction().getDevice().ordinal());
     }
 
@@ -144,7 +162,7 @@ public class FragmentCreatorSeekBar extends Fragment {
                 if(!mEnableTextWatcher || registeredPins == null)
                     return;
 
-                root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
+                root.findViewById(R.id.tv_error_pin).setVisibility(View.GONE);
 
                 tryFindRegisteredPin();
             }
@@ -213,13 +231,13 @@ public class FragmentCreatorSeekBar extends Fragment {
     {
         mEnableTextWatcher = false;
         isDigital = false;
-        root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
+        root.findViewById(R.id.tv_error_pin).setVisibility(View.GONE);
         final EditText edtNamePin = root.findViewById(R.id.edt_name_pin);
         root.findViewById(R.id.til_edt_name_pin).setVisibility(View.VISIBLE);
         edtNamePin.setText(pin.getName());
         edtPort.setText(String.valueOf(pin.getPin()));
         spDevice.setSelection(pin.getDevice().ordinal());
-        if(pin.getTypePort() != Action.TypePort.ANALOG) {
+        if(pin.getTypePin() != Action.TypePin.ANALOG) {
             errorPort(R.string.error_its_digital);
             isDigital = true;
         }
@@ -249,7 +267,7 @@ public class FragmentCreatorSeekBar extends Fragment {
         final int port = Integer.parseInt(edtPort.getText().toString());
         final Device device = (Device) spDevice.getSelectedItem();
 
-        if(port != actionSeekBar.getAction().getPort())
+        if(port != actionSeekBar.getAction().getPin())
             if(!checkPort())
                 return;
 
@@ -269,8 +287,8 @@ public class FragmentCreatorSeekBar extends Fragment {
         final Device device = (Device) spDevice.getSelectedItem();
 
         if (JsonManager.isExist(port, device, getContext())) {
-            errorPort(R.string.port_existed);
-            Snackbar.make(root, R.string.port_existed, Snackbar.LENGTH_LONG).show();
+            errorPort(R.string.pin_existed);
+            Snackbar.make(root, R.string.pin_existed, Snackbar.LENGTH_LONG).show();
             return false;
         } else
             return true;
@@ -286,8 +304,8 @@ public class FragmentCreatorSeekBar extends Fragment {
         }
 
         if (edtPort.getText() == null || edtPort.getText().toString().trim().length() == 0) {
-            errorPort(R.string.port_can_not_be_empty);
-            Snackbar.make(root, R.string.port_can_not_be_empty, Snackbar.LENGTH_LONG).show();
+            errorPort(R.string.pin_can_not_be_empty);
+            Snackbar.make(root, R.string.pin_can_not_be_empty, Snackbar.LENGTH_LONG).show();
             return false;
         }
 
@@ -302,7 +320,7 @@ public class FragmentCreatorSeekBar extends Fragment {
     }
     private void errorPort(int idTextRes)
     {
-        final TextView tvPortError = root.findViewById(R.id.tv_error_port);
+        final TextView tvPortError = root.findViewById(R.id.tv_error_pin);
         tvPortError.setVisibility(View.VISIBLE);
         tvPortError.setText(idTextRes);
     }
@@ -324,7 +342,11 @@ public class FragmentCreatorSeekBar extends Fragment {
             }
             root.findViewById(R.id.til_edt_name_pin).setVisibility(View.GONE);
         }
-
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentIsActive = false;
+    }
 }

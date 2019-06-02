@@ -12,23 +12,23 @@ import java.util.Objects;
 
 public class Action implements Parcelable {
     private static final String F_ACTION_EXTRA_DEVICE = "device";
-    private static final String F_ACTION_EXTRA_TYPE_PORT = "type_port";
-    private static final String F_ACTION_EXTRA_PORT = "port";
-    private static final String F_ACTION_EXTRA_PORT_STATUS = "port_status";
-    private static final String F_ACTION_EXTRA_SIGNAL_ON_PORT = "signal_on_port";
+    private static final String F_ACTION_EXTRA_TYPE_PIN = "type_port";
+    private static final String F_ACTION_EXTRA_PIN = "port";
+    private static final String F_ACTION_EXTRA_PIN_STATUS = "port_status";
+    private static final String F_ACTION_EXTRA_SIGNAL_ON_PIN = "signal_on_port";
 
-    private static final String API_EXTRA_PORT_TYPE = "port_type";
-    private static final String API_EXTRA_PORT_ID = "port_id";
+    private static final String API_EXTRA_PIN_TYPE = "pin_type";
+    private static final String API_EXTRA_PIN_ID = "pin_id";
     private static final String API_EXTRA_FOR_DEVICE = "for_device";
-    private static final String API_EXTRA_PORT_STATUS = "port_status";
-    private static final String API_EXTRA_PORT_VALUE = "port_value";
+    private static final String API_EXTRA_PIN_STATUS = "pin_status";
+    private static final String API_EXTRA_PIN_VALUE = "pin_value";
 
-    public enum TypePort {
+    public enum TypePin {
         DIGITAL("digital"), ANALOG("analog");
 
         private String inJson;
 
-        TypePort(String inJson) {
+        TypePin(String inJson) {
             this.inJson = inJson;
         }
 
@@ -36,7 +36,7 @@ public class Action implements Parcelable {
             return inJson;
         }
 
-        public static TypePort getTypePort(String inJson) {
+        public static TypePin getTypePin(String inJson) {
             if (inJson.equals(DIGITAL.inJson))
                 return DIGITAL;
             else if (inJson.equals(ANALOG.inJson))
@@ -47,12 +47,12 @@ public class Action implements Parcelable {
 
     }
 
-    public enum PortStatus {
+    public enum PinStatus {
         HIGH("HIGH"), LOW("LOW");
 
         private String inJson;
 
-        PortStatus(String inJson) {
+        PinStatus(String inJson) {
             this.inJson = inJson;
         }
 
@@ -60,7 +60,7 @@ public class Action implements Parcelable {
             return inJson;
         }
 
-        public static PortStatus getPortStatus(String inJson) {
+        public static PinStatus getPinStatus(String inJson) {
             if (inJson.equals(HIGH.inJson))
                 return HIGH;
             else if (inJson.equals(LOW.inJson))
@@ -70,48 +70,48 @@ public class Action implements Parcelable {
         }
     }
 
-    private TypePort typePort;
-    private int port;
-    private PortStatus portStatus;
-    private int portSignal;
+    private TypePin typePin;
+    private int pin;
+    private PinStatus pinStatus;
+    private int pinSignal;
     private Device device;
 
-    public Action(Device device, int port, PortStatus portStatus) {
+    public Action(Device device, int pin, PinStatus pinStatus) {
         this.device = device;
-        this.typePort = TypePort.DIGITAL;
-        this.port = port;
-        this.portStatus = portStatus;
+        this.typePin = TypePin.DIGITAL;
+        this.pin = pin;
+        this.pinStatus = pinStatus;
     }
 
-    public Action(Device device,int port, int portSignal) {
-        this.typePort = TypePort.ANALOG;
-        this.port = port;
-        this.portSignal = portSignal;
+    public Action(Device device, int pin, int pinSignal) {
+        this.typePin = TypePin.ANALOG;
+        this.pin = pin;
+        this.pinSignal = pinSignal;
         this.device = device;
     }
 
-    public TypePort getTypePort() {
-        return typePort;
+    public TypePin getTypePin() {
+        return typePin;
     }
 
-    public int getPort() {
-        return port;
+    public int getPin() {
+        return pin;
     }
 
-    public PortStatus getPortStatus() {
-        return portStatus;
+    public PinStatus getPinStatus() {
+        return pinStatus;
     }
 
-    public int getPortSignal() {
-        return portSignal;
+    public int getPinSignal() {
+        return pinSignal;
     }
 
-    public void setPortStatus(PortStatus portStatus) {
-        this.portStatus = portStatus;
+    public void setPinStatus(PinStatus pinStatus) {
+        this.pinStatus = pinStatus;
     }
 
-    public void setPortSignal(int portSignal) {
-        this.portSignal = portSignal;
+    public void setPinSignal(int pinSignal) {
+        this.pinSignal = pinSignal;
     }
 
     public Device getDevice() {
@@ -120,22 +120,22 @@ public class Action implements Parcelable {
 
     public boolean equals(Action action)
     {
-            return (action.typePort == this.typePort &&
-                    action.port == this.port &&
+            return (action.typePin == this.typePin &&
+                    action.pin == this.pin &&
                     action.device == this.device);
     }
 
     protected Action(Parcel in) {
-        port = in.readInt();
+        pin = in.readInt();
         device = Device.getDeviceByName(Objects.requireNonNull(in.readString()));
-        typePort = TypePort.getTypePort(Objects.requireNonNull(in.readString()));
-        switch (Objects.requireNonNull(typePort))
+        typePin = TypePin.getTypePin(Objects.requireNonNull(in.readString()));
+        switch (Objects.requireNonNull(typePin))
         {
             case DIGITAL:
-                portStatus = PortStatus.getPortStatus(Objects.requireNonNull(in.readString()));
+                pinStatus = PinStatus.getPinStatus(Objects.requireNonNull(in.readString()));
                 break;
             case ANALOG:
-                portSignal = in.readInt();
+                pinSignal = in.readInt();
                 break;
         }
     }
@@ -159,16 +159,16 @@ public class Action implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(port);
+        dest.writeInt(pin);
         dest.writeString(device.getInJson());
-        dest.writeString(typePort.inJson);
-        switch (typePort)
+        dest.writeString(typePin.inJson);
+        switch (typePin)
         {
             case DIGITAL:
-                dest.writeString(portStatus.getInJson());
+                dest.writeString(pinStatus.getInJson());
                 break;
             case ANALOG:
-                dest.writeInt(portSignal);
+                dest.writeInt(pinSignal);
                 break;
         }
 
@@ -179,32 +179,32 @@ public class Action implements Parcelable {
 
 
     public static Action parseFactoryJson(JSONObject jsonObject) throws JSONException {
-        Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(F_ACTION_EXTRA_TYPE_PORT));
-        int port = jsonObject.getInt(F_ACTION_EXTRA_PORT);
+        TypePin typePin = TypePin.getTypePin(jsonObject.getString(F_ACTION_EXTRA_TYPE_PIN));
+        int pin = jsonObject.getInt(F_ACTION_EXTRA_PIN);
 
-        if (typePort == TypePort.DIGITAL) {
-            PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(F_ACTION_EXTRA_PORT_STATUS));
-            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)),port, portStatus);
+        if (typePin == TypePin.DIGITAL) {
+            PinStatus pinStatus = PinStatus.getPinStatus(jsonObject.getString(F_ACTION_EXTRA_PIN_STATUS));
+            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)),pin, pinStatus);
 
-        } else if (typePort == TypePort.ANALOG) {
-            int signalOnPort = jsonObject.getInt(F_ACTION_EXTRA_SIGNAL_ON_PORT);
-            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)), port,signalOnPort);
+        } else if (typePin == TypePin.ANALOG) {
+            int pinSignal = jsonObject.getInt(F_ACTION_EXTRA_SIGNAL_ON_PIN);
+            return new Action(Device.getDeviceByName(jsonObject.getString(F_ACTION_EXTRA_DEVICE)), pin,pinSignal);
         } else
             throw new JSONException("From Building:: Can not convert " + jsonObject.toString() + " to Action object!");
     }
 
     public static Action parseAPI(JSONObject jsonObject) throws JSONException {
-        Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(API_EXTRA_PORT_TYPE));
-        int port = jsonObject.getInt(API_EXTRA_PORT_ID);
+        TypePin typePin = TypePin.getTypePin(jsonObject.getString(API_EXTRA_PIN_TYPE));
+        int pin = jsonObject.getInt(API_EXTRA_PIN_ID);
         Device device = Device.getDeviceByName(jsonObject.getString(API_EXTRA_FOR_DEVICE));
 
-        if (typePort == TypePort.DIGITAL) {
-            PortStatus portStatus = PortStatus.getPortStatus(jsonObject.getString(API_EXTRA_PORT_STATUS));
-            return new Action(device,port, portStatus);
+        if (typePin == TypePin.DIGITAL) {
+            PinStatus pinStatus = PinStatus.getPinStatus(jsonObject.getString(API_EXTRA_PIN_STATUS));
+            return new Action(device,pin, pinStatus);
 
-        } else if (typePort == TypePort.ANALOG) {
-            int signalOnPort = jsonObject.getInt(API_EXTRA_PORT_VALUE);
-            return new Action(device, port,signalOnPort);
+        } else if (typePin == TypePin.ANALOG) {
+            int pinSignal = jsonObject.getInt(API_EXTRA_PIN_VALUE);
+            return new Action(device, pin,pinSignal);
         } else
             throw new JSONException("From API:: Can not convert " + jsonObject.toString() + " to Action object!");
     }
@@ -212,13 +212,13 @@ public class Action implements Parcelable {
     public static JSONObject toFactoryJson(Action action) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(F_ACTION_EXTRA_DEVICE,action.getDevice().getInJson());
-        jsonObject.put(F_ACTION_EXTRA_TYPE_PORT, action.getTypePort().inJson);
-        jsonObject.put(F_ACTION_EXTRA_PORT, action.getPort());
+        jsonObject.put(F_ACTION_EXTRA_TYPE_PIN, action.getTypePin().inJson);
+        jsonObject.put(F_ACTION_EXTRA_PIN, action.getPin());
 
-        if (action.getTypePort() == TypePort.ANALOG)
-            jsonObject.put(F_ACTION_EXTRA_SIGNAL_ON_PORT, action.getPortSignal());
-        else if(action.getTypePort() == TypePort.DIGITAL)
-            jsonObject.put(F_ACTION_EXTRA_PORT_STATUS,action.getPortStatus().inJson);
+        if (action.getTypePin() == TypePin.ANALOG)
+            jsonObject.put(F_ACTION_EXTRA_SIGNAL_ON_PIN, action.getPinSignal());
+        else if(action.getTypePin() == TypePin.DIGITAL)
+            jsonObject.put(F_ACTION_EXTRA_PIN_STATUS,action.getPinStatus().inJson);
 
         return jsonObject;
     }
@@ -226,13 +226,13 @@ public class Action implements Parcelable {
     public static JSONObject toAPI(Action action) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(API_EXTRA_FOR_DEVICE, action.getDevice().getInJson());
-        jsonObject.put(API_EXTRA_PORT_TYPE, action.getTypePort().getInJson());
-        jsonObject.put(API_EXTRA_PORT_ID, action.getPort());
+        jsonObject.put(API_EXTRA_PIN_TYPE, action.getTypePin().getInJson());
+        jsonObject.put(API_EXTRA_PIN_ID, action.getPin());
 
-        if (action.getTypePort() == Action.TypePort.DIGITAL)
-            jsonObject.put(API_EXTRA_PORT_STATUS, action.getPortStatus().getInJson());
-        else if (action.getTypePort() == Action.TypePort.ANALOG)
-            jsonObject.put(API_EXTRA_PORT_VALUE, action.getPortSignal());
+        if (action.getTypePin() == TypePin.DIGITAL)
+            jsonObject.put(API_EXTRA_PIN_STATUS, action.getPinStatus().getInJson());
+        else if (action.getTypePin() == TypePin.ANALOG)
+            jsonObject.put(API_EXTRA_PIN_VALUE, action.getPinSignal());
 
         return jsonObject;
     }

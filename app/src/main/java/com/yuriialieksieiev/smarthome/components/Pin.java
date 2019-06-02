@@ -14,14 +14,14 @@ public class Pin
     private static final String API_DESCRIPTION = "description";
 
     private int pin;
-    private Action.TypePort typePort;
+    private Action.TypePin typePin;
     private Device device;
     private String name;
     private String description;
 
-    public Pin(int pin, Action.TypePort typePort, Device device, String name, String description) {
+    private Pin(int pin, Action.TypePin typePin, Device device, String name, String description) {
         this.pin = pin;
-        this.typePort = typePort;
+        this.typePin = typePin;
         this.device = device;
         this.name = name;
         this.description = description;
@@ -31,8 +31,8 @@ public class Pin
         return pin;
     }
 
-    public Action.TypePort getTypePort() {
-        return typePort;
+    public Action.TypePin getTypePin() {
+        return typePin;
     }
 
     public Device getDevice() {
@@ -49,11 +49,11 @@ public class Pin
 
     public static Pin parse(JSONObject jsonObject) throws JSONException {
         final int pin = jsonObject.getInt(API_PIN);
-        final Action.TypePort typePort = Action.TypePort.getTypePort(jsonObject.getString(API_TYPE_PORT));
+        final Action.TypePin typePin = Action.TypePin.getTypePin(jsonObject.getString(API_TYPE_PORT));
         final Device device = Device.getDeviceByName(jsonObject.getString(API_DEVICE));
         final String name = jsonObject.getString(API_NAME);
         final String description = jsonObject.getString(API_DESCRIPTION);
 
-        return new Pin(pin,typePort,device,name,description);
+        return new Pin(pin, typePin,device,name,description);
     }
 }

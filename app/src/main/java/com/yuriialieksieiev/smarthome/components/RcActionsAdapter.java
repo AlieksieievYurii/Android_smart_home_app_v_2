@@ -34,18 +34,18 @@ public class RcActionsAdapter extends RecyclerView.Adapter<RcActionsAdapter.RcAc
     public void onBindViewHolder(@NonNull RcActionViewHolder rcActionViewHolder, int i) {
         final Action action = actions.get(i);
 
-        rcActionViewHolder.tvPort.setText(String.valueOf(action.getPort()));
-        rcActionViewHolder.tvPortType.setText(action.getTypePort().getInJson());
+        rcActionViewHolder.tvPort.setText(String.valueOf(action.getPin()));
+        rcActionViewHolder.tvPortType.setText(action.getTypePin().getInJson());
         rcActionViewHolder.tvDevice.setText(action.getDevice().getInJson());
 
-        if(action.getTypePort() == Action.TypePort.DIGITAL)
+        if(action.getTypePin() == Action.TypePin.DIGITAL)
         {
-            rcActionViewHolder.tvPortStatusHint.setText(R.string.port_status);
-            rcActionViewHolder.tvPortStatus.setText(action.getPortStatus().getInJson());
-        }else if(action.getTypePort() == Action.TypePort.ANALOG)
+            rcActionViewHolder.tvPortStatusHint.setText(R.string.pin_status);
+            rcActionViewHolder.tvPortStatus.setText(action.getPinStatus().getInJson());
+        }else if(action.getTypePin() == Action.TypePin.ANALOG)
         {
             rcActionViewHolder.tvPortStatusHint.setText(R.string.signal);
-            rcActionViewHolder.tvPortStatus.setText(String.valueOf(action.getPortSignal()));
+            rcActionViewHolder.tvPortStatus.setText(String.valueOf(action.getPinSignal()));
         }
     }
 

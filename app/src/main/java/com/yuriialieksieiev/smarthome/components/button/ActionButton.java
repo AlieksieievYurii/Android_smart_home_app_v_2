@@ -63,9 +63,9 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
     }
 
     public void setAction(Action action) {
-        if (action.getPortStatus() == Action.PortStatus.HIGH)
+        if (action.getPinStatus() == Action.PinStatus.HIGH)
             button.setActivated(true);
-        else if (action.getPortStatus() == Action.PortStatus.LOW)
+        else if (action.getPinStatus() == Action.PinStatus.LOW)
             button.setActivated(false);
     }
 
@@ -73,7 +73,7 @@ public class ActionButton implements View.OnClickListener, View.OnLongClickListe
     @Override
     public void onClick(View v) {
         changeState();
-        action.setPortStatus(button.isActivated() ? Action.PortStatus.HIGH : Action.PortStatus.LOW);
+        action.setPinStatus(button.isActivated() ? Action.PinStatus.HIGH : Action.PinStatus.LOW);
         onAction.onAction(action);
     }
 

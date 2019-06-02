@@ -42,7 +42,7 @@ public class FragmentCreatorButton extends Fragment {
     private View root;
     private Button btnExample;
     private EditText edtName;
-    private EditText edtPort;
+    private EditText edtPin;
     private Spinner spDevice;
     private Spinner spIcon;
     private ActionButton actionButton;
@@ -50,6 +50,7 @@ public class FragmentCreatorButton extends Fragment {
     private List<Pin> registeredPins;
     private boolean mEnableTextWatcher = true;
     private boolean isAnalog = false;
+    private boolean fragmentIsActive = false;
 
     @Nullable
     @Override
@@ -76,9 +77,14 @@ public class FragmentCreatorButton extends Fragment {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
+                                if(!fragmentIsActive)
+                                    return;
+
                                 try {
                                     registeredPins = JsonManager.parsePins(new JSONArray(response));
                                     btnSelectRegisteredPin.setEnabled(true);
+                                    btnSelectRegisteredPin.setAlpha(1);
                                     if(actionButton != null)
                                         tryFindRegisteredPin();
                                 } catch (JSONException e) {
@@ -90,16 +96,24 @@ public class FragmentCreatorButton extends Fragment {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                if(!fragmentIsActive)
+                                    return;
                                 Snackbar.make(root,"Can not get registered pins!",Snackbar.LENGTH_SHORT).show();
                             }
                         });
         Volley.newRequestQueue(Objects.requireNonNull(getContext())).add(requestGetRegisteredPins);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        fragmentIsActive = true;
+    }
+
     private void setFields()
     {
         edtName.setText(actionButton.getName());
-        edtPort.setText(String.valueOf(actionButton.getAction().getPort()));
+        edtPin.setText(String.valueOf(actionButton.getAction().getPin()));
         spIcon.setSelection(actionButton.getIcons().ordinal());
         spDevice.setSelection(actionButton.getAction().getDevice().ordinal());
     }
@@ -135,7 +149,11 @@ public class FragmentCreatorButton extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 isAnalog = false;
-                root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
+                root.findViewById(R.id.tv_error_pin).setVisibility(View.GONE);
+
+                if(!mEnableTextWatcher || registeredPins == null)
+                    return;
+
                 tryFindRegisteredPin();
             }
 
@@ -149,7 +167,7 @@ public class FragmentCreatorButton extends Fragment {
     private void init() {
         btnExample = root.findViewById(R.id.btn_example);
         edtName = root.findViewById(R.id.edt_name);
-        edtPort = root.findViewById(R.id.edt_pin);
+        edtPin = root.findViewById(R.id.edt_pin);
         spIcon = root.findViewById(R.id.sp_icon);
         spDevice = root.findViewById(R.id.sp_device);
         btnSelectRegisteredPin = root.findViewById(R.id.btn_select_from_registered);
@@ -174,7 +192,7 @@ public class FragmentCreatorButton extends Fragment {
                btnExample.setText(edtName.getText().toString());
             }});
 
-        edtPort.addTextChangedListener(new TextWatcher() {
+        edtPin.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -186,7 +204,7 @@ public class FragmentCreatorButton extends Fragment {
                 if(!mEnableTextWatcher || registeredPins == null)
                     return;
 
-                root.findViewById(R.id.tv_error_port).setVisibility(View.GONE);
+                root.findViewById(R.id.tv_error_pin).setVisibility(View.GONE);
 
                 tryFindRegisteredPin();
             }
@@ -246,9 +264,9 @@ public class FragmentCreatorButton extends Fragment {
         final EditText edtNamePin = root.findViewById(R.id.edt_name_pin);
         root.findViewById(R.id.til_edt_name_pin).setVisibility(View.VISIBLE);
         edtNamePin.setText(pin.getName());
-        edtPort.setText(String.valueOf(pin.getPin()));
+        edtPin.setText(String.valueOf(pin.getPin()));
         spDevice.setSelection(pin.getDevice().ordinal());
-        if(pin.getTypePort() != Action.TypePort.DIGITAL) {
+        if(pin.getTypePin() != Action.TypePin.DIGITAL) {
             errorPort(R.string.error_its_analog);
             isAnalog = true;
         }
@@ -258,15 +276,15 @@ public class FragmentCreatorButton extends Fragment {
     private void createNewAction()
     {
         final String name = edtName.getText().toString();
-        final int port = Integer.parseInt(edtPort.getText().toString());
+        final int port = Integer.parseInt(edtPin.getText().toString());
         final Icons icon = (Icons) spIcon.getSelectedItem();
         final Device device = (Device) spDevice.getSelectedItem();
 
         if (JsonManager.isExist(port, device, getContext())) {
-            Snackbar.make(root, R.string.port_existed, Snackbar.LENGTH_LONG).show();
-            errorPort(R.string.port_exist);
+            Snackbar.make(root, R.string.pin_existed, Snackbar.LENGTH_LONG).show();
+            errorPort(R.string.pin_existed);
         }else if(isAnalog)
-            Snackbar.make(root, R.string.port_is_analog, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(root, R.string.pin_is_analog, Snackbar.LENGTH_LONG).show();
         else
             try {
                 JsonManager.addActionButton(getContext(), name, port, icon, device);
@@ -280,21 +298,21 @@ public class FragmentCreatorButton extends Fragment {
     private void editAction(ActionButton actionButton) {
 
         final String name = edtName.getText().toString();
-        final int port = Integer.parseInt(edtPort.getText().toString());
+        final int port = Integer.parseInt(edtPin.getText().toString());
         final Icons icon = (Icons) spIcon.getSelectedItem();
         final Device device = (Device) spDevice.getSelectedItem();
 
         if(isAnalog)
         {
-            errorPort(R.string.port_is_analog);
-            Snackbar.make(root, R.string.port_is_analog, Snackbar.LENGTH_LONG).show();
+            errorPort(R.string.pin_is_analog);
+            Snackbar.make(root, R.string.pin_is_analog, Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        if (port != actionButton.getAction().getPort())
+        if (port != actionButton.getAction().getPin())
             if (JsonManager.isExist(port, device,getContext())) {
-                Snackbar.make(root, R.string.port_existed, Snackbar.LENGTH_LONG).show();
-                errorPort(R.string.port_exist);
+                Snackbar.make(root, R.string.pin_existed, Snackbar.LENGTH_LONG).show();
+                errorPort(R.string.pin_existed);
                 return;
             }
 
@@ -303,7 +321,7 @@ public class FragmentCreatorButton extends Fragment {
                     new PatternActionButton(
                             icon,
                             name,
-                            new Action(device, port, Action.PortStatus.LOW)),
+                            new Action(device, port, Action.PinStatus.LOW)),
                     actionButton.getAction());
 
             Objects.requireNonNull(getActivity()).finish();
@@ -322,9 +340,9 @@ public class FragmentCreatorButton extends Fragment {
             return false;
         }
 
-        if (edtPort.getText() == null || edtPort.getText().toString().trim().length() == 0) {
-            errorPort(R.string.port_can_not_be_empty);
-            Snackbar.make(root, R.string.port_can_not_be_empty, Snackbar.LENGTH_LONG).show();
+        if (edtPin.getText() == null || edtPin.getText().toString().trim().length() == 0) {
+            errorPort(R.string.pin_can_not_be_empty);
+            Snackbar.make(root, R.string.pin_can_not_be_empty, Snackbar.LENGTH_LONG).show();
             return false;
         }
 
@@ -334,7 +352,7 @@ public class FragmentCreatorButton extends Fragment {
 
     private void errorPort(int idTextRes)
     {
-        final TextView tvPortError = root.findViewById(R.id.tv_error_port);
+        final TextView tvPortError = root.findViewById(R.id.tv_error_pin);
         tvPortError.setVisibility(View.VISIBLE);
         tvPortError.setText(idTextRes);
 
@@ -342,13 +360,13 @@ public class FragmentCreatorButton extends Fragment {
 
     private void tryFindRegisteredPin()
     {
-        if(edtPort.getText().toString().length() == 0)
+        if(edtPin.getText().toString().length() == 0)
         {
             root.findViewById(R.id.til_edt_name_pin).setVisibility(View.GONE);
             return;
         }
 
-        final int _port = Integer.parseInt(edtPort.getText().toString());
+        final int _port = Integer.parseInt(edtPin.getText().toString());
         final Device _device = (Device) spDevice.getSelectedItem();
         for(Pin pin : registeredPins) {
             if (pin.getPin() == _port && pin.getDevice() == _device) {
@@ -358,5 +376,11 @@ public class FragmentCreatorButton extends Fragment {
             }
             root.findViewById(R.id.til_edt_name_pin).setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentIsActive = false;
     }
 }

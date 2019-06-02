@@ -79,8 +79,8 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
 
     public void setAction(Action action)
     {
-        this.action.setPortSignal(action.getPortSignal());
-        boxedVertical.setValue(action.getPortSignal());
+        this.action.setPinSignal(action.getPinSignal());
+        boxedVertical.setValue(action.getPinSignal());
     }
 
     public void setName(String name) {
@@ -94,7 +94,7 @@ public class ActionSeekBar implements BoxedVertical.OnValuesChangeListener, View
 
     @Override
     public void onStopTrackingTouch(BoxedVertical boxedVertical) {
-        action.setPortSignal(boxedVertical.getValue());
+        action.setPinSignal(boxedVertical.getValue());
         onAction.onAction(action);
     }
 

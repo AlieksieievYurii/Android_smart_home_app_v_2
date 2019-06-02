@@ -35,7 +35,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PinViewHolder>
         pinViewHolder.tvPin.setText(String.valueOf(pin.getPin()));
         pinViewHolder.tvName.setText(pin.getName());
         pinViewHolder.tvDescription.setText(pin.getDescription());
-        pinViewHolder.tvTypePort.setText(pin.getTypePort().getInJson());
+        pinViewHolder.tvTypePort.setText(pin.getTypePin().getInJson());
         pinViewHolder.tvDevice.setText(pin.getDevice().getInJson());
     }
 

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="58dp"
             android:layout_toEndOf="@+id/tv_hint_port"
-            android:text="Type port"
+            android:text="Type pin"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             android:textStyle="italic" />

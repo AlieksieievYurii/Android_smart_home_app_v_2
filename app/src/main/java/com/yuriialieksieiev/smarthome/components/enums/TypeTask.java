@@ -2,8 +2,7 @@ package com.yuriialieksieiev.smarthome.components.enums;
 
 import com.yuriialieksieiev.smarthome.components.exceptions.TypeTaskException;
 
-public enum  TypeTask
-{
+public enum TypeTask {
     timer("timer");
 
     private String inJson;
@@ -17,10 +16,10 @@ public enum  TypeTask
     }
 
     public static TypeTask getTypeTaskByJson(String inJson) throws TypeTaskException {
-        if(timer.inJson.equals(inJson))
-            return timer;
-        else
-            throw new TypeTaskException(inJson);
+        for (TypeTask t : TypeTask.class.getEnumConstants())
+            if (t.inJson.equals(inJson))
+                return t;
+        throw new TypeTaskException(inJson);
     }
 
 }

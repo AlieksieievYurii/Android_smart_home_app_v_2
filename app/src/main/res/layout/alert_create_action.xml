@@ -1,130 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
-        android:text="@string/create_new_action"
-        android:textColor="@android:color/white"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
+        android:text="@string/create_new_action"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:ignore="RtlSymmetry" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/edt_port"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/port"
-            android:inputType="number"
-            android:maxLines="1"
-            android:maxLength="6"
-            tools:ignore="Autofill" />
-    </android.support.design.widget.TextInputLayout>
-    <TextView
-        android:id="@+id/tv_error_port"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_error"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:visibility="gone"
-        android:textColor="@android:color/holo_red_light" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/device"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        android:textStyle="italic" />
-
-    <Spinner
-        android:id="@+id/sp_device"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/type_port"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        android:textStyle="italic" />
-
-    <Spinner
-        android:id="@+id/sp_type_port"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/ln_tool_digital"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/port_status"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            android:textStyle="italic" />
-
-        <Spinner
-            android:id="@+id/sp_port_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tool_analog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/edt_port_signal"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_edt_name_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLines="1"
-            android:hint="@string/signal"
-            android:maxLength="3"
-            tools:ignore="Autofill" />
+            android:visibility="gone">
+            <EditText
+                android:id="@+id/edt_pin_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pin_name"
+                android:inputType="number"
+                android:enabled="false"
+                android:maxLines="1"
+                tools:ignore="Autofill" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edt_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pin"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    tools:ignore="Autofill" />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/btn_select_from_registered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:alpha="0.5"
+                android:drawableEnd="@drawable/ic_list" />
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/tv_error_port"
+            android:id="@+id/tv_error_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_error"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:visibility="gone"
-            android:textColor="@android:color/holo_red_light" />
-    </android.support.design.widget.TextInputLayout>
+            android:textColor="@android:color/holo_red_light"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/btn_apply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apply"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="end"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/device"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/sp_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/type_pin"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/sp_type_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/ln_tool_digital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/pin_status"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+            <Spinner
+                android:id="@+id/sp_port_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tool_analog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edt_port_signal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/signal"
+                android:inputType="number"
+                android:maxLength="3"
+                android:maxLines="1"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/tv_error_signal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_error"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/holo_red_light"
+                android:visibility="gone" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:text="@string/apply" />
 
     </LinearLayout>
 

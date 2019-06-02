@@ -26,7 +26,7 @@ public class JsonManager {
     public static final String JSON_EXTRA_SENSOR = "sensor";
     public static final String JSON_EXTRA_SENSOR_VALUE = "value";
 
-    public static boolean isExist(int port, Device device, Context context) {
+    public static boolean isExist(int oin, Device device, Context context) {
         try {
             JSONArray jsonArray = SharedPreferences.getActionsViewsJson(context);
 
@@ -36,7 +36,7 @@ public class JsonManager {
                 if (isAction(jsonObject)) {
                     Action action = Action.parseFactoryJson(jsonObject.getJSONObject(JSON_EXTRA_ACTION));
 
-                    if (action.getPort() == port && device == action.getDevice())
+                    if (action.getPin() == oin && device == action.getDevice())
                         return true;
                 }
             }
@@ -55,8 +55,8 @@ public class JsonManager {
     }
 
 
-    public static void addActionButton(Context context, String name, int port, Icons icon, Device device) throws JSONException {
-        Action action = new Action(device, port, Action.PortStatus.LOW);
+    public static void addActionButton(Context context, String name, int pin, Icons icon, Device device) throws JSONException {
+        Action action = new Action(device, pin, Action.PinStatus.LOW);
         PatternActionButton patternActionButton = new PatternActionButton(icon, name, action);
 
         JSONArray jsonArray = SharedPreferences.getActionsViewsJson(context);
@@ -64,8 +64,8 @@ public class JsonManager {
         SharedPreferences.saveActionsViews(context, jsonArray);
     }
 
-    public static void addActionSeekBar(Context context, String name, int port, Device device) throws JSONException {
-        Action action = new Action(device, port, 0);
+    public static void addActionSeekBar(Context context, String name, int pin, Device device) throws JSONException {
+        Action action = new Action(device, pin, 0);
         PatternActionSeekBar patternActionSeekBar = new PatternActionSeekBar(name, action);
 
         JSONArray jsonArray = SharedPreferences.getActionsViewsJson(context);

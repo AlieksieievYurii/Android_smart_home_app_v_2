@@ -80,7 +80,7 @@
                         android:id="@+id/edt_pin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/port"
+                        android:hint="@string/pin"
                         android:inputType="number"
                         android:maxLength="5"
                         tools:ignore="Autofill,LabelFor,TextFields" />
@@ -92,10 +92,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:enabled="false"
+                    android:alpha="0.5"
                     android:drawableEnd="@drawable/ic_list" />
             </LinearLayout>
             <TextView
-                android:id="@+id/tv_error_port"
+                android:id="@+id/tv_error_pin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_error"

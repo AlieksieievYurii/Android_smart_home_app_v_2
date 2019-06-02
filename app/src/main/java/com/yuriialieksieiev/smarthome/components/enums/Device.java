@@ -12,12 +12,11 @@ public enum Device
 
     public static Device getDeviceByName(String name)
     {
-        if(name.equals(TCOD.inJson))
-            return TCOD;
-        else if(name.equals(TWCOD.inJson))
-            return TWCOD;
-        else
-            return null;
+
+        for(Device d : Device.class.getEnumConstants())
+            if(d.inJson.equals(name))
+                return d;
+        return null;
     }
 
     public String getInJson() {

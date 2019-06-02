@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
 import com.yuriialieksieiev.smarthome.R;
 import com.yuriialieksieiev.smarthome.components.Pin;
 import java.util.List;
@@ -30,8 +33,18 @@ public class AlertSelectRegisteredPin extends AlertDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alert_select_registered_pins);
+
         RecyclerView recyclerView = findViewById(R.id.rc_registered_pins);
         assert recyclerView != null;
+        if(pins.isEmpty())
+        {
+            final TextView tvEmpty = findViewById(R.id.registered_pins_empty);
+            assert tvEmpty != null;
+            tvEmpty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            return;
+        }
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new ListAdapter(pins, new OnSelectedRegisteredPin() {

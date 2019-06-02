@@ -187,6 +187,6 @@ public class FragmentJobTimer extends Fragment implements FragmentCreatorTask.Ta
                 actionsAdapter.notifyDataSetChanged();
 
             }
-        },"Port: "+String.valueOf(action.getPort())).show();
+        },"Pin: "+String.valueOf(action.getPin())).show();
     }
 }
